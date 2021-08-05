@@ -28,7 +28,7 @@
               </div>
               <!-- login form start -->
               <div class="card-body">
-              <form  id="submit_login_Form">
+              <form id="submit_login_Form">
                 @csrf
                
                   <div class="form-group">
@@ -54,25 +54,66 @@
                </div>  
               @endif
                   <div id="login_msg" class="mt-3 btn btn-block btn-warning" role="alert" style="display: none">
-                  
                </div>  
                 </div>
-            
               </form>
+             
                 <div class="mt-4">
                     <div class="d-flex justify-content-center links">
-                        Not registered? <a href="#" id="sign_up" class="ml-2">Sign Up</a>
+                        Not registered? <a href="#" class="sign_up" class="ml-2">Sign Up</a>
                     </div>
                     <div class="d-flex justify-content-center links">
-                        <a href="#">Forgot your password?</a>
+                        <a class="forgot_password" href="#">Forgot your password?</a>
                     </div>
                 </div>
             </div>
-            
-        
             </div>
+            {{-- forgot form --}}
+
+            <div class="forgot_password_Form card card-primary mt-4" style="display: none">
+              <div class="card-header style="float:inherit !important;">
+                <h3 class="card-title">Forgot <small>Password</small></h3>
+              </div>
+              <!-- forgot form start -->
+              <div class="card-body">
+                <form id="submit_forgot_password_Form">
+                  @csrf
+                    <div class="form-group">
+                      <label for="forgotpassword">Email address</label>
+                      <input type="email"  oninput="lemailvalidation()" name="forgot_password_email" class="form-control" id="forgot_password_email" placeholder="Enter email">
+                      <span id="error_f_email" class="text-danger" role="alert">
+                        
+                      </span>
+                    </div>
+                    <div>
+                      <button type="submit" class="btn btn-block btn-primary">Send link</button>
+                  </div>
+                  <div id="forgot_pass_msg" class="mt-3 btn btn-block btn-success" role="alert" style="display: none">
+                  </div>
+                </form>
+                <div class="mt-4">
+                  <div class="d-flex justify-content-center links">
+                      <a href="#" class="sign_up" class="ml-2">Sign Up</a>&nbsp;&nbsp;
+                      <a href="#" class="sign_in" class="ml-2">Sign In</a>
+                  </div>
+                </div>
+             </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
             {{-- signup form --}}
-            <div id="signup_Form" style="display:none" class="card card-primary mt-4">
+            <div class="signup_Form" style="display:none" class="card card-primary mt-4">
                 <div class="card-header style="float:inherit !important;">
                     
                   <h3 class="card-title">User <small>Signup</small></h3>
@@ -131,7 +172,7 @@
                 </form>
                   <div class="mt-4">
                   <div class="d-flex justify-content-center links">
-                    Already registered <a href="#" id="sign_in" class="ml-2">Sign In</a>
+                    Already registered <a href="#" class="sign_in" class="ml-2">Sign In</a>
                   </div>
                   </div>
               </div>
@@ -152,7 +193,7 @@
 <!-- jquery-validation -->
 <script src="../../plugins/jquery-validation/additional-methods.min.js"></script>
 <!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
+{{-- <script src="../../dist/js/adminlte.min.js"></script> --}}
 <!-- AdminLTE for demo purposes -->
 {{-- <script src="../../dist/js/demo.js"></script> --}}
 <!-- Page specific script -->
@@ -162,13 +203,17 @@
   var s_email = 0;
   var s_password = 0;
   var s_confirm_password=0;
-  $("#sign_up").click(function(){
-    $("#signup_Form").css("display", "block");
-    $("#login_Form").css("display", "none");
+  $(".sign_up").click(function(){
+    $(".signup_Form").css("display", "block");
+    $("#login_Form,.forgot_password_Form ").css("display", "none");
   });
-  $("#sign_in").click(function(){
-    $("#signup_Form").css("display", "none");
+  $(".sign_in").click(function(){
+    $(".signup_Form,.forgot_password_Form").css("display", "none");
     $("#login_Form").css("display", "block");
+  });
+  $(".forgot_password").click(function(){
+    $(".forgot_password_Form").css("display", "block");
+    $("#login_Form,.signup_Form").css("display", "none");
   });
   // this.validation_check();
   function namevalidation(){
@@ -295,7 +340,21 @@
           $('#submit_login_Form')['0'].reset();
          }
       })
-    
+    })
+    $('#submit_forgot_password_Form').submit(function(e){
+      e.preventDefault();
+     $.ajax({
+         url: '{{url('forgot_password_process')}}',
+         data:$('#submit_forgot_password_Form').serialize(),
+         type:'post',
+         success:function(result){
+           console.log(result);
+          
+            $("#forgot_pass_msg").css("display", "block");
+            $('#forgot_pass_msg').html(result.msg);
+           
+         }
+      })
     })
 // });  
 </script>

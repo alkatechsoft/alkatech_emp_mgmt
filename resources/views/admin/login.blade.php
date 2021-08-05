@@ -34,7 +34,7 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Email address</label>
-                    <input type="text" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
                     @error('email')
                     <span class="text-danger" role="alert">
                       Email required

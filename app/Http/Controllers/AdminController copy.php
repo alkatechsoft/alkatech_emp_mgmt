@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Crypt;
 
 class AdminController extends Controller
 {
@@ -32,22 +31,21 @@ class AdminController extends Controller
         ]);
         $email = $request->post('email');
         $password = $request->post('password');
-       
-        $result=Admin::where(['email'=>$email])->get();
-        if(isset($result[0])){
-            $db_password=Crypt::decrypt($result[0]->password);
-            if($db_password == $request->post('password')){
+        $result = Admin::where(['email'=>$email])->get();
+            if(isset($result[0])){
+                if(Hash::check($password, $result[0]->password)){
                 $request->session()->put('ADMIN_LOGIN',true);
-                $request->session()->put('ADMIN_ID',$result[0]->id);
+                $request->session()->put('ADMIN_ID',$result->id);
                 return redirect ('admin/dashboard');
             } else {
                 $request->session()->flash('error','Invalid login details');
                 return redirect ('admin');
             }
         }
-            if(isset($result[0]->id)){
+            if(isset($result['0']->id)){
                 $request->session()->put('ADMIN_LOGIN',true);
-                $request->session()->put('ADMIN_ID',$result[0]->id);
+                $request->session()->put('ADMIN_ID',$result['0']->id);
+                print_r($result['0']->id);
                 return redirect ('admin/dashboard');
     
             } else {

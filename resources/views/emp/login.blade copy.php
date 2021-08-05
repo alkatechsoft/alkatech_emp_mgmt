@@ -157,12 +157,14 @@
 {{-- <script src="../../dist/js/demo.js"></script> --}}
 <!-- Page specific script -->
 <script>
-// $(document).ready(function(){
+$(document).ready(function(){
   var s_name = 0;
   var s_email = 0;
   var s_password = 0;
   var s_confirm_password=0;
   $("#sign_up").click(function(){
+  alert('aa');
+
     $("#signup_Form").css("display", "block");
     $("#login_Form").css("display", "none");
   });
@@ -172,6 +174,7 @@
   });
   // this.validation_check();
   function namevalidation(){
+    alert('kl');
         if($('#s_full_name').val().length<2){
           s_name=0;
           $('#error_full_name').html('please enter full name');
@@ -240,13 +243,9 @@
          type:'post',
          success:function(result){
            console.log(result);
-      $('#signup_validation').attr('disabled', true);
-
            $("#register_success").css("display", "block");
            $("#register_success").html(result.msg);
         $('#submit_signup_form')['0'].reset();
-      $('#signup_validation').attr('disabled', true);
-
         //   s_name = 0;
         // s_email = 0;
         // s_password = 0;
@@ -297,7 +296,7 @@
       })
     
     })
-// });  
+});  
 </script>
 </body>
 </html>

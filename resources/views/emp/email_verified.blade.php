@@ -1,0 +1,1 @@
+<center><h1>email verified successfully</h1></center>
