@@ -59,14 +59,11 @@ class AdminController extends Controller
     {
         return view('admin.dashboard');
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+ 
+    public function emp_list()
     {
         //
+        return view('admin.emp');
     }
 
     /**
