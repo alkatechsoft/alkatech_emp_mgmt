@@ -12,6 +12,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{asset('front_assets/css/all.min.css')}}">
+  <link rel="stylesheet" href="{{asset('admin_asset/css/select2.min.css')}}">
   <!-- Theme style -->
   <link href="{{ asset('admin_asset/css/fontawesome.min.css') }}" rel="stylesheet">
   <link href="{{ asset('admin_asset/css/font-awesome.min.css') }}" rel="stylesheet">
@@ -142,7 +143,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{url('admin/emp')}}" class="nav-link">
+                <a href="{{url('admin/upload_attendance')}}" class="nav-link">
                   <i class="nav-icon fa fa-th"></i>
                   <p>
                     All employee
@@ -225,7 +226,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2014-2020 <a href="https://alkatechsoft.com/">Alkatech soft</a>.</strong> All rights reserved.
   </footer>
 </div>
 <!-- ./wrapper -->
@@ -235,9 +236,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- jQuery -->
 {{-- <script src="{{asset('front_assets/js/jquery.min.js')}}"></script> --}}
 <!-- Bootstrap 4 -->
+
+
 <script src="{{asset('admin_asset/js/jquery.min.js')}}"></script>
 <script src="{{asset('admin_asset/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('admin_asset/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('admin_asset/js/select2.full.min.js')}}"></script>
+<script src="{{asset('admin_asset/js/main.js')}}"></script>
+
 <script src="{{asset('admin_asset/js/dataTables.responsive.min.js')}}"></script>
 <script src="{{asset('admin_asset/js/responsive.bootstrap4.min.js')}}"></script>
 <script src="{{asset('admin_asset/js/dataTables.buttons.min.js')}}"></script>
@@ -248,9 +254,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{asset('admin_asset/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('admin_assets/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script>
 <script>
   $(function () {
+//Initialize Select2 Elements
+    $('.select2').select2();
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');

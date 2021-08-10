@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Attendance;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Crypt;
 
@@ -106,20 +108,29 @@ class AdminController extends Controller
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Admin $admin)
-    {
-        //
-    }
-
+ 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Admin $admin)
+    public function upload_attendance(Request $request)
     {
         //
+        return view('admin.upload_attendance');
+
+    }
+    public function upload_attendance_process(Request $request){
+
+        $attendance = new Attendance();
+        $attendance->emp_id=$request->post('emp_id');
+        $attendance->date=$request->post('date');
+        $attendance->in_time=$request->post('in_time');
+        $attendance->out_time=$request->post('out_time');
+        $attendance->save();
+        return view('admin.upload_attendance');
+
     }
     public function updatepassword()
     {
