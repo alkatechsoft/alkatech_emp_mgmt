@@ -13,6 +13,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{asset('front_assets/css/all.min.css')}}">
   <link rel="stylesheet" href="{{asset('admin_asset/css/select2.min.css')}}">
+  
+<link href="{{ asset('admin_asset/css/sweetalert2.bootstrap-4.min.css') }}" rel="stylesheet">
+<link href="{{ asset('admin_asset/css/toastr.min.css') }}" rel="stylesheet">
   <!-- Theme style -->
   <link href="{{ asset('admin_asset/css/fontawesome.min.css') }}" rel="stylesheet">
   <link href="{{ asset('admin_asset/css/font-awesome.min.css') }}" rel="stylesheet">
@@ -242,8 +245,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{asset('admin_asset/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('admin_asset/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('admin_asset/js/select2.full.min.js')}}"></script>
-<script src="{{asset('admin_asset/js/main.js')}}"></script>
-
+{{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 <script src="{{asset('admin_asset/js/dataTables.responsive.min.js')}}"></script>
 <script src="{{asset('admin_asset/js/responsive.bootstrap4.min.js')}}"></script>
 <script src="{{asset('admin_asset/js/dataTables.buttons.min.js')}}"></script>
@@ -251,7 +253,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{asset('admin_asset/js/buttons.html5.min.js')}}"></script>
 <script src="{{asset('admin_asset/js/buttons.print.min.js')}}"></script>
 <script src="{{asset('admin_asset/js/buttons.colVis.min.js')}}"></script>
+<script src="{{asset('admin_asset/js/toastr.min.js')}}"></script>
+<script src="{{asset('admin_asset/js/sweetalert2.min.js')}}"></script>
 <script src="{{asset('admin_asset/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{asset('admin_asset/js/main.js')}}"></script>
+
 <script src="{{asset('admin_assets/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script>

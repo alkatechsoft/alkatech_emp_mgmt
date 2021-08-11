@@ -170,9 +170,15 @@ function namevalidation1(){
        }
     })
   })
+
   $('#upload_attendance_form').submit(function(e){
     e.preventDefault();
-    alert('uiui');
+    var Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 2000
+    });
    $.ajax({
        url: 'upload_attendance_process',
        data:$('#upload_attendance_form').serialize(),
@@ -180,11 +186,52 @@ function namevalidation1(){
        success:function(result){
          console.log(result);
          if(result.status=="success"){
-           window.location.href='user';
-         }
+          $("#mesg").html(result.msg);
+          alert('You clicked the button!');
+          $("#wrap>div").remove();
+
+          Toast.fire({
+            icon: 'success',
+            title:'&nbsp;&nbsp;'+result.msg
+          })
+        } else{
+
+          Toast.fire({
+            icon: 'error',
+            title:'&nbsp;&nbsp;'+result.msg
+          })
+          }
          $("#login_msg").css("display", "block");
-         $("#login_msg").html(result.msg);
         $('#upload_attendance_form')['0'].reset();
        }
     })
   })
+
+  // 
+  function executeExample(){
+    alert('You clicked the button!');
+    Swal.fire(
+      'Good job!',
+      'You clicked the button!',
+      'success'
+    );
+  }
+
+
+  function add_more(){
+    var box_count=jQuery("#box_count").val();
+    box_count++;
+    jQuery("#box_count").val(box_count);
+    // jQuery("#wrap").append('<div class="my_box" id="box_loop_'+box_count+'"><div class="field_box"><input type="textbox" name="name[]" id="name"></div><div class="button_box"><input type="button" name="submit" id="submit" value="Remove" onclick=remove_more("'+box_count+'")></div></div>');
+    // jQuery("#wrap").append('<div class="row mt-2" id="box_loop_'+box_count+'"><div class="col-3"><input type="date" name="date[]" id="date" class="form-control"  placeholder=""></div><div class="col-3"><input type="time" id="in_time" name="in_time[]" class="form-control"  placeholder=""></div><div class="col-3"><input type="time" name="out_time[]" id="in_time" class="form-control"  placeholder=""></div><div class="col-3"><input type="button" class="btn btn-block btn-danger" name="submit" id="submit" value="Remove" onclick=remove_more("'+box_count+'")></div></div>');
+    jQuery("#wrap").append('<div class="row mt-2" id="box_loop_'+box_count+'"><div class="col-3"><input type="date" required name="date[]" id="date" class="form-control"  placeholder=""></div><div class="col-3"><input type="time" required id="in_time" name="in_time[]" class="form-control"  placeholder=""></div><div class="col-3"><input type="time" required name="out_time[]" id="in_time" class="form-control"  placeholder=""></div><div class="col-3"><button class="btn btn-block btn-danger" name="submit" id="submit" value="&times" onclick=remove_more("'+box_count+'")><i class="fa fa-trash" aria-hidden="true"></i></button></div></div>');
+  
+  
+  }
+  function remove_more(box_count){
+    jQuery("#box_loop_"+box_count).remove();
+    var box_count=jQuery("#box_count").val();
+    box_count--;
+    jQuery("#box_count").val(box_count);
+  }
+  

@@ -122,14 +122,23 @@ class AdminController extends Controller
 
     }
     public function upload_attendance_process(Request $request){
-
-        $attendance = new Attendance();
-        $attendance->emp_id=$request->post('emp_id');
-        $attendance->date=$request->post('date');
-        $attendance->in_time=$request->post('in_time');
-        $attendance->out_time=$request->post('out_time');
-        $attendance->save();
-        return view('admin.upload_attendance');
+        // return count($request->date);
+        $request->validate([
+            'emp_id'=>'required',
+            'date'=>'required',
+            'in_time'=>'required',
+            'out_time'=>'required'
+        ]);
+        for ($i=0; $i < count($request->date); $i++) { 
+            $data=[
+            'emp_id'=>$request->emp_id,
+            'date'=> $request->date[$i],
+            'in_time'=>$request->in_time[$i],
+            'out_time'=>$request->out_time[$i]
+            ];
+          $result=DB::table('attendances')->insert($data);
+        }        
+        return response()->json(["status"=>"success", "msg"=>"Attendance submited successfully"]);
 
     }
     public function updatepassword()

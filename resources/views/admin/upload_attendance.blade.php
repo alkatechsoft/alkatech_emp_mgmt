@@ -41,31 +41,37 @@
                     <option value="4">Texas</option>
                   </select>
                 </div>
-              </div>
-              <div class="card-body">
+              
+              <div id="wrap" class="card-body">
                 
                   @csrf
                 <div class="row" id="TextBoxContainer">
-                  <div class="col-3">
-                    <input type="date" name="date" class="form-control" required placeholder="">
+                  <div class="col-4">
+                    <input type="date" name="date[]" class="form-control" required  placeholder="">
                   </div>
-                  <div class="col-3">
-                    <input type="time" name="in_time" class="form-control" required placeholder="">
+                  <div class="col-4">
+                    <input type="time" name="in_time[]" class="form-control" required placeholder="">
                   </div>
-                  <div class="col-3">
-                    <input type="time" name="out_time" class="form-control" required placeholder="">
-                  </div>
-                  <div class="col-3">
-                    <button  id="btnAdd" class="btn btn-primary btn-block start"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;ADD </button>
+                  <div class="col-4">
+                    <input type="time" name="out_time[]" class="form-control" required placeholder="">
                   </div>
                 </div>
-                
-                <br>
-                <div class="col-3">
-                  <button type="submit" class="btn btn-primary btn-block start">UPLOAD</button>
-                </div>
+	            <input type="hidden" id="box_count" value="1">
+ 
+              </div>
+            <div class="row">
+              <div class="col-2 mb-4 ml-4" style="margin: 0">
+                <a onclick="add_more()" class="btn btn-primary btn-block start"><i class="fa fa-plus"></i></a>
+              </div> 
+            </div>
+              <div class="col-12 pb-4">
+                <button type="submit" class="btn btn-primary btn-block start">UPLOAD</button>
+              </div>
+            </div>
               </form>
               <!-- /.card-body -->
+             
+           
             </div>
               <!-- /.card-body -->
             </div>
