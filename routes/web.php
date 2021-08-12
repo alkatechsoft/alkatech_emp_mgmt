@@ -39,6 +39,8 @@ Route::post('forgot_password_process_change_update', [EmpController::class, 'for
 Route::group(['middleware'=>'admin_auth'], function(){
 Route::get('admin/dashboard', [AdminController::class, 'dashboard']);
 Route::get('admin/emp', [AdminController::class, 'emp_list']);
+Route::post('admin/search_employee', [AdminController::class, 'search_employee'])->name('admin.search_employee');
+
 Route::get('admin/upload_attendance', [AdminController::class, 'upload_attendance']);
 Route::post('admin/upload_attendance_process', [AdminController::class, 'upload_attendance_process'])->name('admin.upload_attendance_process');
 Route::get('admin/logout', function(){

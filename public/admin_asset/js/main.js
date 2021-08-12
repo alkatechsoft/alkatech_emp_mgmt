@@ -235,3 +235,9 @@ function namevalidation1(){
     jQuery("#box_count").val(box_count);
   }
   
+  // $("#emp_search").on('keyup',function(){
+  //   // alert($("#emp_search").val());
+  //   alert('as');
+    
+  // })
+  

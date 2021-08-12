@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\Attendance;
+use App\Models\Emp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -147,4 +148,31 @@ class AdminController extends Controller
         $r->password=Hash::make('admin');
         $r->save();
     }
+    public function search_employee(Request $request)
+    {
+ $search= $request->search;
+//  return $search.'serach result';
+if ($search == '') {
+     $employees_by_search = Emp::orderby('name','asc')
+    ->select('id','name')
+    ->limit(5)
+    ->get();
+
+}else{
+    $employees_by_search = Emp::orderby('name','asc')
+    ->select('id','name')
+    ->where('name','like','%'.$search.'%')
+    ->limit(5)
+    ->get();
+    }
+    // return response()->json(["status"=>"success", "data"=>$employees_by_search]);
+    $response= array();
+    foreach ($employees_by_search as $employee) {
+    $response[] = array(
+    'id'=>$employee->id,
+    'text'=>$employee->name
+    );
+}
+  return response()->json($response);
+}
 }

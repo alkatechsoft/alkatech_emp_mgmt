@@ -8,7 +8,6 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>DataTables</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -31,20 +30,18 @@
               </div>
               <!-- /.card-header -->
               <form id="upload_attendance_form">
+                @csrf
+
               <div class="card-body">
                 <div class="form-group">
                   <label>SELECT EMPLOYEE</label>
-                  <select name="emp_id" class="form-control select2" style="width: 100%;">
-                    <option value="1">Alaska</option>
-                    <option value="2">Delaware</option>
-                    <option value="3">Tennessee</option>
-                    <option value="4">Texas</option>
+                  <select name="emp_id" id="emp_search" class="form-control select2" style="width: 100%;">
+                    <option id="search_value" value="0">select</option>
                   </select>
                 </div>
               
               <div id="wrap" class="card-body">
                 
-                  @csrf
                 <div class="row" id="TextBoxContainer">
                   <div class="col-4">
                     <input type="date" name="date[]" class="form-control" required  placeholder="">

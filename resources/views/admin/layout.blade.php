@@ -7,6 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>@yield('page_title')</title>
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -140,7 +141,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a href="#" class="nav-link">
                   <i class="nav-icon fa fa-th"></i>
                   <p>
-                    New Registration 
+                    All Employee 
                     <span class="right badge badge-danger">New</span>
                   </p>
                 </a>
@@ -149,7 +150,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a href="{{url('admin/upload_attendance')}}" class="nav-link">
                   <i class="nav-icon fa fa-th"></i>
                   <p>
-                    All employee
+                    Attendance
                   </p>
                 </a>
               </li>
@@ -261,7 +262,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{asset('admin_assets/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script>
+
+$( document ).ready(function() {
   $(function () {
+    var CSRF_TOKEN =  $('meta[name="csrf_token"]').attr('content'); 
+  $('#emp_search').select2({
+    ajax:{
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+      url: "search_employee",
+      type :'post',
+      dataType : 'json',
+      delay : 200,
+      data: function(params){
+        return{
+          search: params.term
+        }
+      },
+      processResults: function(response){
+        return {
+          results: response
+        }
+      },
+      cache: true
+    }
+  });
+});
 //Initialize Select2 Elements
     $('.select2').select2();
     $("#example1").DataTable({
