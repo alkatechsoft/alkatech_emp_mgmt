@@ -66,7 +66,26 @@ class AdminController extends Controller
     public function emp_list()
     {
         //
-        return view('admin.emp');
+        $employees=Emp::all();
+        return view('admin.emp')->with('employees',$employees);
+    }
+    public function status(Request $request,$status,$id)
+    {
+        //
+        echo $status;
+       if($status == 1){
+        $msg = 'Employee activated successfuly';
+       }else{
+        $msg = 'Employee deactivated successfuly';
+       }
+        
+        $model=Emp::find($id);
+        $model->status=$status;
+        $model->save();
+        
+        $request->session()->flash('message',$msg);
+        return redirect('admin/emp');
+        
     }
 
     /**

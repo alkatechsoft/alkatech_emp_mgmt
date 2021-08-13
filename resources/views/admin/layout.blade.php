@@ -138,7 +138,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{url('admin/emp')}}"  class="@yield('all_employee_selected') nav-link">
                   <i class="nav-icon fa fa-th"></i>
                   <p>
                     All Employee 
@@ -147,7 +147,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{url('admin/upload_attendance')}}" class="nav-link">
+                <a href="{{url('admin/upload_attendance')}}"  class="@yield('attendance_selected') nav-link">
                   <i class="nav-icon fa fa-th"></i>
                   <p>
                     Attendance
@@ -292,8 +292,9 @@ $( document ).ready(function() {
 //Initialize Select2 Elements
     $('.select2').select2();
     $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "paging": true,"responsive": true, "lengthChange": true, "autoWidth": true,
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
