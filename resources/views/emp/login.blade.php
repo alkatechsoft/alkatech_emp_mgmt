@@ -96,18 +96,6 @@
              </div>
             </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
             {{-- signup form --}}
             <div class="signup_Form card card-primary mt-4" style="display:none" class="card card-primary mt-4">
                 <div class="card-header style="float:inherit !important;">
@@ -186,7 +174,7 @@
 <script src="{{asset('admin_asset/js/jquery.min.js')}}"></script>
 
 {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> --}}
-<script src="{{asset('admin_assets/js/main.js')}}"></script>
+<script src="{{asset('admin_asset/js/main.js')}}"></script>
  
 <script>
 // $(document).ready(function(){
