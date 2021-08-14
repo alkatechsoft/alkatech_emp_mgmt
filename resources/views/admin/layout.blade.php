@@ -3,7 +3,7 @@
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
-<html lang="en">
+ 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,7 +18,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <link href="{{ asset('admin_asset/css/sweetalert2.bootstrap-4.min.css') }}" rel="stylesheet">
 <link href="{{ asset('admin_asset/css/toastr.min.css') }}" rel="stylesheet">
   <!-- Theme style -->
-  <link href="{{ asset('admin_asset/css/fontawesome.min.css') }}" rel="stylesheet">
   <link href="{{ asset('admin_asset/css/font-awesome.min.css') }}" rel="stylesheet">
   <link href="{{ asset('admin_asset/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
   <link href="{{ asset('admin_asset/css/responsive.bootstrap4.min.css') }}" rel="stylesheet">
@@ -166,7 +165,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{url('admin/attendance-reporting')}}" class="nav-link">
                   <i class="nav-icon fa fa-th"></i>
                   <p>
                     Attendance Filter 
@@ -202,15 +201,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <!-- Content Wrapper. Contains page content -->
   
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
 
     @section('container')
+
     @show
 
     <!-- Control Sidebar -->
@@ -253,6 +246,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{asset('admin_asset/js/buttons.bootstrap4.min.js')}}"></script>
 <script src="{{asset('admin_asset/js/buttons.html5.min.js')}}"></script>
 <script src="{{asset('admin_asset/js/buttons.print.min.js')}}"></script>
+<script src="{{asset('admin_asset/js/pdfmake.min.js')}}"></script>
+<script src="{{asset('admin_asset/js/vfs_fonts.js')}}"></script>
+<script src="{{asset('admin_asset/js/jszip.min.js')}}"></script>
 <script src="{{asset('admin_asset/js/buttons.colVis.min.js')}}"></script>
 <script src="{{asset('admin_asset/js/toastr.min.js')}}"></script>
 <script src="{{asset('admin_asset/js/sweetalert2.min.js')}}"></script>
@@ -265,6 +261,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 $( document ).ready(function() {
   $(function () {
+    function attendance_filter_handler(){
+    alert('kl');
+    e.preventDefault();
+    $.ajax({
+      url: "attendance_reporting_process",
+      type :'post',
+      dataType : 'json',
+      delay : 200,
+      data: function(params){
+        return{
+          search: params.term
+        }
+      },
+        success:function(result){
+          console.log(result);
+          if(result.status=="success"){
+            window.location.href='user/dashboard';
+          }
+          $("#login_msg").css("display", "block");
+          $("#login_msg").html(result.msg);
+         $('#submit_login_Form')['0'].reset();
+        }
+     })
+    }
+ 
     var CSRF_TOKEN =  $('meta[name="csrf_token"]').attr('content'); 
   $('#emp_search').select2({
     ajax:{
@@ -293,6 +314,8 @@ $( document ).ready(function() {
     $('.select2').select2();
     $("#example1").DataTable({
       "paging": true,"responsive": true, "lengthChange": true, "autoWidth": true,
+      "buttons": ["csv", "excel"]
+
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     
     $('#example2').DataTable({

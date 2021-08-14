@@ -28,7 +28,7 @@
           <div class="col-12">
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title"><b>UPLOAD ATTANDANCE</b></h3>
+                <h3 class="card-title"><b>UPLOAD ATTENDANCE</b></h3>
               </div>
               <!-- /.card-header -->
               <form id="upload_attendance_form">

@@ -235,5 +235,28 @@ function namevalidation1(){
     jQuery("#box_count").val(box_count);
   }
   
-  
-  
+  function attendance_filter_handler(){
+    alert('kl');
+    // event.preventDefault();
+    $.ajax({
+      url: "attendance_reporting_process",
+      type :'post',
+      dataType : 'json',
+      delay : 200,
+      data: function(params){
+        return{
+          search: params.term
+        }
+      },
+        success:function(result){
+          console.log(result);
+          if(result.status=="success"){
+            window.location.href='user/dashboard';
+          }
+          $("#login_msg").css("display", "block");
+          $("#login_msg").html(result.msg);
+         $('#submit_login_Form')['0'].reset();
+        }
+     })
+    }
+ 

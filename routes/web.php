@@ -41,9 +41,14 @@ Route::get('admin/dashboard', [AdminController::class, 'dashboard']);
 Route::get('admin/emp', [AdminController::class, 'emp_list']);
 Route::get('admin/emp/status/{status}/{id}', [AdminController::class, 'status']);
 Route::get('admin/emp/status/{status}/{id}', [AdminController::class, 'status']);
+
 Route::post('admin/search_employee', [AdminController::class, 'search_employee'])->name('admin.search_employee');
 Route::get('admin/upload_attendance', [AdminController::class, 'upload_attendance']);
 Route::post('admin/upload_attendance_process', [AdminController::class, 'upload_attendance_process'])->name('admin.upload_attendance_process');
+
+Route::get('admin/attendance-reporting', [AdminController::class, 'attendance_reporting']);
+Route::post('admin/attendance_reporting_process', [AdminController::class, 'attendance_reporting_process'])->name('admin.attendance_reporting_process');
+
 Route::get('admin/logout', function(){
     session()->forget('ADMIN_LOGIN');
     session()->forget('ADMIN_ID');

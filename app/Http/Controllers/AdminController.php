@@ -161,6 +161,33 @@ class AdminController extends Controller
         return response()->json(["status"=>"success", "msg"=>"Attendance submited successfully"]);
 
     }
+    public function attendance_reporting(Request $request)
+    {
+        //
+    return view('admin.attendance_reporting');
+    }
+
+    public function attendance_reporting_process(Request $request)
+    {
+        if ($search == '') {
+            $filterd_data = Attendance::orderby('name','asc')
+           ->select('id','name')
+           ->limit(5)
+           ->get();
+       
+       }else{
+           $filterd_data = Attendance::orderby('name','asc')
+           ->select('id','name')
+           ->where('name','like','%'.$search.'%')
+           ->limit(5)
+           ->get();
+           }
+           // return response()->json(["status"=>"success", "data"=>$employees_by_search]);
+        return response()->json(["status"=>"success", "data"=>$filterd_data]);
+
+       }
+     
+
     public function updatepassword()
     {
         $r = Admin::find(1);
