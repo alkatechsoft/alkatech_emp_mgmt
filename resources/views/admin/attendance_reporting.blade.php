@@ -1,6 +1,6 @@
 @extends('admin/layout')
-@section('page_title','Admin | Dashboard')
-@section('attendance_selected','active')
+@section('page_title','Admin | Attendance  | Report')
+@section('attendance_filter_selected','active')
 
 @section('container')
  <!-- Content Wrapper. Contains page content -->
@@ -31,31 +31,32 @@
                 <h3 class="card-title"><b>ATTENDANCE REPORTING</b></h3>
               </div>
               <!-- /.card-header -->
-              <form id="upload_attendance_form">
+              <form id="test_ajax">
                 @csrf
 
               <div class="card-body">
-                <DIV class="row">
-                  <div class="col-4">
+                <div class="row">
+                    <div class="col-4">
                     <div class="form-group">
                       <label>SELECT EMPLOYEE</label>
-                      <select required name="emp_id" id="emp_search"  class="form-control select2" style="width: 100%;">slect
+                      <select required onchange="attendance_filter_handler();" name="emp_id" id="emp_search"  class="form-control select2" style="width: 100%;">slect
                         <option id="search_value" value="">Search employee</option>
                       </select>
                     </div>
-                  </div>
-              <div class="col-4">
-                <div class="form-group">
-                  <label>FROM</label>
-                  <input type="date" name="from" class="form-control" required  placeholder="">
-                </div>
-              </div>
-               <div class="col-4">
-                <div class="form-group">
-                  <label>TO</label>
-                  <input type="date" name="to" onchange="attendance_filter_handler();" class="form-control" required  placeholder="">
-                </div>
-               </div>
+                    </div>
+                    <div class="col-4">
+                    <div class="form-group">
+                    <label>FROM</label>
+                    <input type="date" name="from" id="from_date" onchange="attendance_filter_handler();" class="form-control" required  placeholder="">
+                    </div>
+                    </div>
+                    <div class="col-4">
+                    <div class="form-group">
+                    <label>TO</label>
+                    <input type="date" name="to" id="to_date" onchange="attendance_filter_handler();" class="form-control" required  placeholder="">
+                    </div>
+                    <button type="submit">get</button>
+                    </div>
               </div>
 
                 {{-- <div class="card card-primary"> --}}
@@ -63,878 +64,197 @@
                     <h3 class="card-title">DataTable with default features</h3>
                   </div> --}}
                   <!-- /.card-header -->
-                  <div class="card-body" >
-                    <table id="example1"  class="table table-bordered table-striped">
-                      <thead style="visibility: hidden;">
+                  <div class="card-body">
+                    <table id="attendance_reporting" class="table table-bordered table-striped">
+                      <thead>
                       <tr>
-                       <th> 1 </th>
-                       <th> 2 </th>
-                       <th> 3 </th>
-                       <th> 4 </th>
-                       <th> 5 </th>
-                       
-                       <th> 6 </th>
-                       <th> 7 </th>
-                       <th> 7 </th>
-                       <th> 8 </th>
-                       <th> 9 </th>
-                       <th> 10 </th>
+                        <th>Rendering engine</th>
+                        <th>Browser</th>
+                        <th>Platform(s)</th> 
                       </tr>
                       </thead>
                       <tbody>
                       <tr>
-                        <td>
-                          <span cl ass="badge badge-primary">1</span>
-                          <span class="badge badge-primary">p</span>
-                             
+                        <td>Trident</td>
+                        <td>Internet
+                          Explorer 4.0
                         </td>
-                        <td>
-                          <span cl ass="badge badge-primary">2</span>
-                          <span class="badge badge-primary">p</span>
-                             
+                        <td>Win 95+</td>
+                        
+                      </tr>
+                      <tr>
+                        <td>Trident</td>
+                        <td>Internet
+                          Explorer 5.0
                         </td>
-                        <td>
-                          <span cl ass="badge badge-primary">3</span>
-                          <span class="badge badge-primary">p</span>
-                             
-                        </td>
-                        <td>
-                          <span cl ass="badge badge-primary">3</span>
-                          <span class="badge badge-primary">p</span>
-                             
-                        </td>
-                        <td>
-                          <span cl ass="badge badge-primary">4</span>
-                          <span class="badge badge-primary">p</span>
-                             
-                        </td>
-                        <td>
-                          <span cl ass="badge badge-primary">5</span>
-                          <span class="badge badge-primary">p</span>
-                             
-                        </td>
-                        <td>
-                          <span cl ass="badge badge-primary">6</span>
-                          <span class="badge badge-primary">p</span>
-                             
-                        </td>
-                        <td>
-                          <span cl ass="badge badge-primary">7</span>
-                          <span class="badge badge-primary">p</span>
-                             
-                        </td>
-                        <td>
-                          <span cl ass="badge badge-primary">8</span>
-                          <span class="badge badge-danger">A</span>
-                             
-                        </td>
-                        <td>
-                          <span cl ass="badge badge-primary">9</span>
-                          <span class="badge badge-primary">p</span>
-                             
-                        </td>
-                        <td>
-                          <span cl ass="badge badge-primary">10</span>
-                          <span class="badge badge-primary">p</span>
-                             
-                        </td>
+                        <td>Win 95+</td>
                          
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Trident</td>
+                        <td>Internet
+                          Explorer 5.5
+                        </td>
+                        <td>Win 95+</td>
                         
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Trident</td>
+                        <td>Internet
+                          Explorer 6
+                        </td>
+                        <td>Win 98+</td>
+                         
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Trident</td>
+                        <td>Internet Explorer 7</td>
+                        <td>Win XP SP2+</td>
                         
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Trident</td>
+                        <td>AOL browser (AOL desktop)</td>
+                        <td>Win XP</td>
+                       
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Gecko</td>
+                        <td>Firefox 1.0</td>
+                        <td>Win 98+ / OSX.2+</td>
                         
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Gecko</td>
+                        <td>Firefox 1.5</td>
+                        <td>Win 98+ / OSX.2+</td>
                         
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Gecko</td>
+                        <td>Firefox 2.0</td>
+                        <td>Win 98+ / OSX.2+</td>
+                       
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Gecko</td>
+                        <td>Firefox 3.0</td>
+                        <td>Win 2k+ / OSX.3+</td>
+                      
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Gecko</td>
+                        <td>Camino 1.0</td>
+                        <td>OSX.2+</td>
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Gecko</td>
+                        <td>Camino 1.5</td>
+                        <td>OSX.3+</td>
+                      
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Gecko</td>
+                        <td>Netscape 7.2</td>
+                        <td>Win 95+ / Mac OS 8.6-9.2</td>
+                         
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Gecko</td>
+                        <td>Netscape Browser 8</td>
+                        <td>Win 98SE+</td>
+                     
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Gecko</td>
+                        <td>Netscape Navigator 9</td>
+                        <td>Win 98+ / OSX.2+</td>
+                     
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Gecko</td>
+                        <td>Mozilla 1.0</td>
+                        <td>Win 95+ / OSX.1+</td>
                         
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Gecko</td>
+                        <td>Mozilla 1.1</td>
+                        <td>Win 95+ / OSX.1+</td>
+                       
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Gecko</td>
+                        <td>Mozilla 1.2</td>
+                        <td>Win 95+ / OSX.1+</td>
+                    
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Gecko</td>
+                        <td>Mozilla 1.3</td>
+                        <td>Win 95+ / OSX.1+</td>
+                     
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Gecko</td>
+                        <td>Mozilla 1.4</td>
+                        <td>Win 95+ / OSX.1+</td>
+                       
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Gecko</td>
+                        <td>Mozilla 1.5</td>
+                        <td>Win 95+ / OSX.1+</td>
+                       
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Gecko</td>
+                        <td>Mozilla 1.6</td>
+                        <td>Win 95+ / OSX.1+</td>
                         
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Gecko</td>
+                        <td>Mozilla 1.7</td>
+                        <td>Win 98+ / OSX.1+</td>
+                       
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Gecko</td>
+                        <td>Mozilla 1.8</td>
+                        <td>Win 98+ / OSX.1+</td>
+                     
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Gecko</td>
+                        <td>Seamonkey 1.1</td>
+                        <td>Win 98+ / OSX.2+</td>
+                       
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Gecko</td>
+                        <td>Epiphany 2.20</td>
+                        <td>Gnome</td>
                         
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Webkit</td>
+                        <td>Safari 1.2</td>
+                        <td>OSX.3</td>
                         
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
                       </tr>
                       <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
+                        <td>Webkit</td>
+                        <td>Safari 1.3</td>
+                        <td>OSX.3</td>
+                      
                       </tr>
-                      <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                      </tr>
-                      <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                      </tr>
-                      <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                      </tr>
-                      <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                      </tr>
-                      <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                      </tr>
-                      <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                      </tr>
-                      <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                      </tr>
-                      <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                      </tr>
-                      <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                      </tr>
-                      <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                      </tr>
-                      <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                      </tr>
-                      <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                      </tr>
-                      <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                      </tr>
-                      <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                      </tr>
+                      
+                      
                       </tfoot>
                     </table>
                   </div>
-                  <div class="card-body" style="display:none;">
-                    <table id="example1"  class="table table-bordered table-striped">
-                      <thead>
-                      <tr>
-                        <th>1</th>
-                        <th>2</th>
-                        <th>3</th>
-                        <th>4</th>
-                        <th>5</th>
-                        <th>6</th>
-                        <th>7</th>
-                        <th>8</th>
-                        <th>9</th>
-                        <th>10</th>
-                        <th>11</th>
-                        <th>12</th>
-                        <th>13</th>
-                        <th>14</th>
-                        <th>15</th>
-                        <th>16</th>
-                        <th>17</th>
-                        <th>18</th>
-                        <th>19</th>
-                        <th>20</th>
-                        <th>21</th>
-                        <th>22</th>
-                        <th>23</th>
-                        <th>24</th>
-                        <th>25</th>
-                        <th>26</th>
-                        <th>27</th>
-                        <th>28</th>
-                        <th>29</th>
-                        <th>30</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>   
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                      </tr>
-                      <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>   
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                      </tr>
-                      <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>   
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                      </tr>
-                      <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>   
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                      </tr>
-                      <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>   
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                      </tr>
-                      <tr>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>   
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                        <td>p</td>
-                      </tr>
-                      </tfoot>
-                    </table>
-                  </div>
+              
                   <!-- /.card-body -->
                 {{-- </div> --}}
                

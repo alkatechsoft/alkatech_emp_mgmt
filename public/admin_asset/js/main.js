@@ -236,27 +236,75 @@ function namevalidation1(){
   }
   
   function attendance_filter_handler(){
-    alert('kl');
     // event.preventDefault();
+    
+    var data = 'aa'+'|'+$("#emp_search").val()+'|'+$("#from_date").val()+'|'+$("#to_date").val();
     $.ajax({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
       url: "attendance_reporting_process",
       type :'post',
       dataType : 'json',
       delay : 200,
-      data: function(params){
-        return{
-          search: params.term
-        }
-      },
+      data:data,
         success:function(result){
-          console.log(result);
           if(result.status=="success"){
-            window.location.href='user/dashboard';
-          }
-          $("#login_msg").css("display", "block");
-          $("#login_msg").html(result.msg);
-         $('#submit_login_Form')['0'].reset();
+            console.log(result.data);
+            var counter=0;
+            var tableDataHTML = '';
+          $.each(result.data, function (key,item){
+            // $('tbody').append('<tr role="row" class="odd"><td> '+item.date+' </td><td> P </td><td><div class="btn-group"><a class="btn btn-primary">EDIT</a></div></td></tr>');
+
+            tableDataHTML += '<tr id="searched-row-'+counter+'" class="js-result-tbl-tbody-tr">'+
+            '<td>'+item.date+'</td>'+
+            '<td> P </td>'+
+            '<td><div class="btn-group"><a class="btn btn-primary">EDIT</a></div></td>'+ 
+            '</tr>';    
+          });
+          $('tbody').empty();  
+          $('tbody').append(tableDataHTML);  
+          // alert('a');
+          
+
+        }
         }
      })
     }
+  
+
+ $('#test_ajax').submit(function(e){
+   alert('aa'+$(this).data('page'));
+  e.preventDefault();
+console.log('a');
  
+ $.ajax({
+     url: 'attendance_reporting_process',
+     data:$('#test_ajax').serialize(),
+     type:'post',
+     async: false,
+     success:function(result){
+      if(result.status=="success"){
+        console.log(result.data);
+        var counter=0;
+        var tableDataHTML = '';
+      $.each(result.data, function (key,item){
+        // $('tbody').append('<tr role="row" class="odd"><td> '+item.date+' </td><td> P </td><td><div class="btn-group"><a class="btn btn-primary">EDIT</a></div></td></tr>');
+
+        tableDataHTML += '<tr id="searched-row-'+counter+'" class="js-result-tbl-tbody-tr">'+
+        '<td>'+item.date+'</td>'+
+        '<td> P </td>'+
+        '<td><div class="btn-group"><a class="btn btn-primary">EDIT</a></div></td>'+ 
+        '</tr>';    
+      });
+      $('tbody').empty();  
+      $('tbody').append(tableDataHTML);  
+      $('tbody').html(tableDataHTML);
+      // alert('a');
+      
+
+    }
+   
+     }
+  })
+})

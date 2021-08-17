@@ -167,26 +167,40 @@ class AdminController extends Controller
     return view('admin.attendance_reporting');
     }
 
-    public function attendance_reporting_process(Request $request)
+    public function attendance_reporting_process1(Request $request)
     {
-        if ($search == '') {
-            $filterd_data = Attendance::orderby('name','asc')
-           ->select('id','name')
-           ->limit(5)
-           ->get();
-       
-       }else{
-           $filterd_data = Attendance::orderby('name','asc')
-           ->select('id','name')
-           ->where('name','like','%'.$search.'%')
-           ->limit(5)
-           ->get();
-           }
-           // return response()->json(["status"=>"success", "data"=>$employees_by_search]);
+        $get_data=$request;
+        $data = explode("|",$get_data);
+        if($data[1] !='' && $data[2] !='' && $data[3] !=''){
+        // $filterd_data = $filterd_data = Attendance::whereBetween('date',[$data[2],$data[3]])->get();
+        $filterd_data = $filterd_data = Attendance::where('date', '>=', $data[2])
+                                                    ->where('date', '<=', $data[3])
+                                                    ->where('emp_id', $data[1])
+                                                    ->get();
         return response()->json(["status"=>"success", "data"=>$filterd_data]);
 
        }
-     
+       else
+       { 
+        return response()->json(["status"=>"error", "data"=>'Please select required details']);
+
+        }
+
+       }
+       public function attendance_reporting_process(Request $request)
+       {
+        //   return $request->from.$request->to.$request->emp_id;
+           
+           // $filterd_data = $filterd_data = Attendance::whereBetween('date',[$data[2],$data[3]])->get();
+           $filterd_data = $filterd_data = Attendance::where('date', '>=', $request->from)
+                                                       ->where('date', '<=', $request->to)
+                                                       ->where('emp_id', $request->emp_id)
+                                                       ->get();
+           return response()->json(["status"=>"success", "data"=>$filterd_data]);
+   
+         
+   
+          }
 
     public function updatepassword()
     {

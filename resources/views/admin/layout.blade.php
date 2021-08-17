@@ -165,10 +165,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{url('admin/attendance-reporting')}}" class="nav-link">
+                <a href="{{url('admin/attendance-reporting')}}" class="@yield('attendance_filter_selected') nav-link">
                   <i class="nav-icon fa fa-th"></i>
                   <p>
-                    Attendance Filter 
+                    Attendance Filter
                     <span class="right badge badge-danger">New</span>
                   </p>
                 </a>
@@ -261,30 +261,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 $( document ).ready(function() {
   $(function () {
-    function attendance_filter_handler(){
-    alert('kl');
-    e.preventDefault();
-    $.ajax({
-      url: "attendance_reporting_process",
-      type :'post',
-      dataType : 'json',
-      delay : 200,
-      data: function(params){
-        return{
-          search: params.term
-        }
-      },
-        success:function(result){
-          console.log(result);
-          if(result.status=="success"){
-            window.location.href='user/dashboard';
-          }
-          $("#login_msg").css("display", "block");
-          $("#login_msg").html(result.msg);
-         $('#submit_login_Form')['0'].reset();
-        }
-     })
-    }
+
  
     var CSRF_TOKEN =  $('meta[name="csrf_token"]').attr('content'); 
   $('#emp_search').select2({
@@ -311,22 +288,19 @@ $( document ).ready(function() {
   });
 });
 //Initialize Select2 Elements
+
     $('.select2').select2();
-    $("#example1").DataTable({
+    $("#attendance_reporting").DataTable({
+      "paging": true,"responsive": true, "lengthChange": true, "autoWidth": true,
+      "buttons": ["csv", "excel", "pdf"]
+
+    }).buttons().container().appendTo('#attendance_reporting_wrapper .col-md-6:eq(0)');
+    $("#emp_list").DataTable({
       "paging": true,"responsive": true, "lengthChange": true, "autoWidth": true,
       "buttons": ["csv", "excel"]
 
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
+    }).buttons().container().appendTo('#empl_list_wrapper .col-md-6:eq(0)');
+ 
   });
 </script>
 </body>
