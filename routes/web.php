@@ -49,6 +49,8 @@ Route::post('admin/upload_attendance_process', [AdminController::class, 'upload_
 Route::get('admin/attendance-reporting', [AdminController::class, 'attendance_reporting']);
 Route::post('admin/attendance_reporting_process', [AdminController::class, 'attendance_reporting_process'])->name('admin.attendance_reporting_process');
 
+Route::post('admin/attendance_filter_before_upload_process', [AdminController::class, 'attendance_filter_before_upload_process'])->name('admin.attendance_filter_before_upload_process');
+
 Route::get('admin/logout', function(){
     session()->forget('ADMIN_LOGIN');
     session()->forget('ADMIN_ID');

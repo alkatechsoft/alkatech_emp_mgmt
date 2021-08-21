@@ -142,13 +142,27 @@ class AdminController extends Controller
 
     }
     public function upload_attendance_process(Request $request){
-        // return count($request->date);
+
         $request->validate([
             'emp_id'=>'required',
             'date'=>'required',
             'in_time'=>'required',
             'out_time'=>'required'
         ]);
+        if($request->__update_id>0){
+        $updated_result = DB::table('attendances')
+        ->where('id',$request->__update_id)
+        ->where('emp_id',$request->emp_id)
+        ->where('date',$request->date[0])
+        ->update(['in_time'=>$request->in_time[0],'out_time'=>$request->out_time[0]]);
+        // return $updated_result;
+        if($updated_result){
+            return response()->json(["status"=>"updated", "emp_id"=>$request->emp_id, "code"=>$updated_result, "msg"=>"updated successfully"]);
+        }else{
+            return response()->json(["status"=>"no_changed_data", "code"=>$updated_result, "msg"=>"No change found"]);
+        }
+
+        }else{
         for ($i=0; $i < count($request->date); $i++) { 
             $data=[
             'emp_id'=>$request->emp_id,
@@ -157,9 +171,9 @@ class AdminController extends Controller
             'out_time'=>$request->out_time[$i]
             ];
           $result=DB::table('attendances')->insert($data);
-        }        
-        return response()->json(["status"=>"success", "msg"=>"Attendance submited successfully"]);
-
+        }
+      }        
+        return response()->json(["status"=>"success", "emp_id"=>$request->emp_id, "msg"=>"Attendance submited successfully"]);
     }
     public function attendance_reporting(Request $request)
     {
@@ -187,6 +201,24 @@ class AdminController extends Controller
         }
 
        }
+       public function attendance_filter_before_upload_process(Request $request)
+       {
+           $get_data=$request;
+           $data = explode("|",$get_data);
+           if($data[1] !='' && $data[2] !=''){
+           // $filterd_data = $filterd_data = Attendance::whereBetween('date',[$data[2],$data[3]])->get();
+           $filterd_data = $filterd_data = Attendance::where('date', '=', $data[2])
+                                                       ->where('emp_id', $data[1])
+                                                       ->get();
+            if(isset($filterd_data[0]->id)){
+                return response()->json(["status"=>"success", "data"=>$filterd_data]);
+            } else{ 
+            return response()->json(["status"=>"error", "data"=>'']);
+            }
+   
+          }
+        }
+   
        public function attendance_reporting_process(Request $request)
        {
         //   return $request->from.$request->to.$request->emp_id;
