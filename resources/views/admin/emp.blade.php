@@ -30,9 +30,73 @@
 
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title"><b>EMPLOYEE LIST</b></h3>
+                <a class="card-title"><b>EMPLOYEE LIST</b></a>
+                <button type="button" style="float: right" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-info">
+                  <i class="fa fa-plus"></i>
+                </button>
               </div>
+              @if(session('message')!==null)
+                            <div class="alert alert-success m-3" role="alert">
+                                {{ session('message') }}
+                            </div>
+              @endif
               <!-- /.card-header -->
+              <div class="modal modal-info fade" id="modal-info" style="display: none;">
+                <div class="modal-dialog" style="pointer-events: all">
+                        
+                    <div class="card card-primary mt-4">
+                      <div class="card-header style="float:inherit !important;">
+                          
+                        <h3 class="card-title">CREATE NEW USER </h3><button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span></button>
+                       </div>
+                      <!-- /.card-header -->
+                      <!-- form start -->
+                      <form id="create_user">
+                        @csrf
+                        <div class="card-body">
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">NAME</label>
+                            <input type="text" name="name" class="form-control" id="name" oninput="user_name();" placeholder="Enter email">
+                            <span id="error_name" class="text-danger" role="alert">
+                            
+                            </span>
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">USER EMAIL</label>
+                            <input type="email" name="email" class="form-control" id="email" oninput="user_personal_email();" placeholder="Enter email">
+                            
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">OFFICIAL EMAIL</label>
+                            <input type="email" name="official_email" class="form-control" id="official_email" oninput="user_official_email();" placeholder="Enter email">
+                            <span id="error_official_email" class="text-danger" role="alert">
+                            
+                            </span>
+                          </div>
+                          <div class="form-group">
+                            <label for="Password">Password</label>
+                            <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                            <span id="error_password" class="text-danger" role="alert">
+                            
+                            </span>
+                          </div>
+                          
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                          <button type="submit" class="btn btn-block btn-primary">CREATE</button>
+                          
+                        </div>
+                    
+                      </form>
+                    </div>
+                
+                    
+                   <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+              </div>
               <div class="card-body">
                 <table id="emp_list" class="table table-bordered table-striped">
                   <thead>
@@ -43,7 +107,6 @@
                   </tr>
                   </thead>
                   <tbody>
-                   
                   @foreach ($employees as $employee)
                   <tr>
                     <td>{{$employee->name}}</td>
@@ -60,8 +123,15 @@
                                 href="{{ url('admin/emp/status/0') }}/{{ $employee->id }}">
                                 Active
                             </a>
+                            {{-- <form id="send_emp_login_form">
+                              @csrf
+                              <button class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Send login details!">
+                                <input name="emp_id" type="hidden" value="{{ $employee->id }}">
+                                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                              </button>
+                            </form> --}}
                             <a class="btn btn-warning"
-                            href="{{ url('admin/emp/status/0') }}/{{ $employee->id }}"
+                            href="{{url('admin/emp/send_login_details_to_emp')}}/{{ $employee->id }}"
                             data-toggle="tooltip" data-placement="top" title="Send login details!">
                             <i class="fa fa-paper-plane" aria-hidden="true"></i>
                         </a>

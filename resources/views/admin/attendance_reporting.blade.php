@@ -36,7 +36,7 @@
 
               <div class="card-body">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-3">
                     <div class="form-group">
                       <label>SELECT EMPLOYEE</label>
                       <select required onchange="attendance_filter_handler();" name="emp_id" id="emp_search"  class="form-control select2" style="width: 100%;">slect
@@ -44,19 +44,24 @@
                       </select>
                     </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                     <div class="form-group">
                     <label>FROM</label>
                     <input type="date" name="from" id="from_date" onchange="attendance_filter_handler();" class="form-control" required  placeholder="">
                     </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                     <div class="form-group">
                     <label>TO</label>
                     <input type="date" name="to" id="to_date" onchange="attendance_filter_handler();" class="form-control" required  placeholder="">
                     </div>
-                    <button type="submit">get</button>
                     </div>
+                    <div class="col-3">
+                      <div class="form-group">
+                      <label style="visibility: hidden">search </label>
+                      <button type="submit" class="btn-info form-control">GO</button>
+                    </div>
+                  </div>
               </div>
 
                 {{-- <div class="card card-primary"> --}}

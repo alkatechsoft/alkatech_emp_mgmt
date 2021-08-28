@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Emp;
 use Illuminate\Http\Request;
+use App\Models\Emp_personal_info;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -160,5 +161,49 @@ class EmpController extends Controller
         );
         return response()->json(["status"=>"success", "msg"=>"Password Changed"]);
 }
+function personal_info(){
+    $personal_info=Emp_personal_info::where(['emp_id'=>session('USER_ID')])->get();
+
+    if(isset($personal_info[0]->id)){
+    return view('emp.personal_info')->with('personal_info',$personal_info);
+    }
+    return view('emp.manage_personal_info_process');
+
+ }
+ function manage_personal_info_process(Request $request){
+    $personal_info = new Emp_personal_info();
+    $personal_info->emp_id=session('USER_ID');
+    $personal_info->p_address=$request->post('p_address');
+    $personal_info->p_state=$request->post('p_state');
+    $personal_info->p_city=$request->post('p_city');
+    $personal_info->p_pincode=$request->post('p_pincode');
+    $personal_info->contact='2323';
+    $personal_info->guardian_contact='1212';
+
+    if($request->is_it_curent_address){
+        $personal_info->c_address=$request->post('p_address');
+        $personal_info->c_state=$request->post('p_state');
+        $personal_info->c_city=$request->post('p_city');
+        $personal_info->c_pincode=$request->post('p_pincode');
+    
+    } else{
+        $personal_info->c_address=$request->post('c_address');
+        $personal_info->c_state=$request->post('c_state');
+        $personal_info->c_city=$request->post('c_city');
+        $personal_info->c_pincode=$request->post('c_pincode');
+    }
+
+
+     if($personal_info->save()){
+        $request->session()->put('MY_PERSONAL_INFO',true);
+        return response()->json(["status"=>"success", "msg"=>"personal info saved successfully"]);
+     } else{
+        return response()->json(["status"=>"error", "msg"=>"something went wrong"]);
+     }
+
+
  
+ }
+
+
 }

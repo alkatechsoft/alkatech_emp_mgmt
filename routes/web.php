@@ -51,6 +51,11 @@ Route::post('admin/attendance_reporting_process', [AdminController::class, 'atte
 
 Route::post('admin/attendance_filter_before_upload_process', [AdminController::class, 'attendance_filter_before_upload_process'])->name('admin.attendance_filter_before_upload_process');
 
+Route::post('admin/create_user', [AdminController::class, 'create_user'])->name('admin.create_user');
+// Route::post('admin/emp/send_login_details_to_emp', [AdminController::class, 'send_login_details_to_emp'])->name('admin.send_login_details_to_emp');
+Route::get('admin/emp/send_login_details_to_emp/{id}', [AdminController::class, 'send_login_details_to_emp']);
+
+
 Route::get('admin/logout', function(){
     session()->forget('ADMIN_LOGIN');
     session()->forget('ADMIN_ID');
@@ -60,6 +65,10 @@ return redirect('admin');
 });
 Route::group(['middleware'=>'emp_auth'], function(){
     Route::get('user/dashboard', [EmpController::class, 'dashboard']);
+    Route::get('user/personal-info', [EmpController::class, 'personal_info']);
+    Route::get('user/manage-personal-info/{id}', [EmpController::class, 'manage_personal_info']);
+    Route::post('user/manage-personal-info', [EmpController::class, 'manage_personal_info_process'])->name('emp.manage_personal_info_process');
+    
     Route::get('user/logout', function(){
         session()->forget('USER_LOGIN');
         session()->forget('USER_ID');

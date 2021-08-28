@@ -345,3 +345,282 @@ function namevalidation1(){
           }
        })
       }
+
+      
+    $('#create_user').submit(function(e){
+      e.preventDefault();
+      if($("#name").val().length<1){
+        $("#error_name").html("This field required");
+      }
+      if($("#email").val().length<1){
+        $("#error_email").html("This field required");
+      }
+      if($("#official_email").val().length<1){
+        $("#error_official_email").html("This field required");
+      }
+      if($("#password").val().length<1){
+        $("#error_password").html("This field required");
+      }
+
+      if($("#name").val().length>0 && $("#email").val().length>0 && $("#official_email").val().length>0 && $("#password").val().length>0){
+        create_user();
+      } 
+
+    })
+
+    function user_name(){
+      var user_name = /^[a-zA-Z'\s]{1,40}$/;
+      if(user_name.test($('#name').val())){
+           $('#error_name').html('');
+          }else{
+            $('#error_name').html('Please enter full name');
+      }
+    }
+  
+    function user_personal_email(){
+      var regex_personal_email = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      if(regex_personal_email.test($('#email').val())){
+           $('#error_email').html('');
+          }else{
+            $('#error_email').html('Please enter email');
+      }
+    }  
+    function user_official_email(){
+      var regex_official_email = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      if(regex_official_email.test($('#official_email').val())){
+           $('#error_official_email').html('');
+          }else{
+            $('#error_official_email').html('Please enter email');
+      }
+    }
+  
+
+    function create_user(){
+      var table = $('#emp_list').DataTable();
+      var Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000
+      });
+       $.ajax({
+           url: 'create_user',
+           data:$('#create_user').serialize(),
+           type:'post',
+           async: false,
+           success:function(result){
+             if(result.status=="success"){
+              Toast.fire({
+                icon: 'success',
+                title:'&nbsp;&nbsp;'+result.msg
+              })
+             }else{
+              Toast.fire({
+                icon: 'warning',
+                title:'&nbsp;&nbsp;'+result.msg
+              })
+             }
+              
+          } 
+         
+         })
+    }
+    $('#send_emp_login_form').submit(function(e){
+      e.preventDefault();
+       var Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000
+      });
+     $.ajax({
+         url: 'send_login_details_to_emp',
+         data:$('#send_emp_login_form').serialize(),
+         type:'post',
+         success:function(result){
+           console.log(result);
+           if(result.status=="success"){
+              $("#wrap").find(".created_row").remove();
+              $(".fa-upload").show();
+              $(".fa-spinner").hide();
+            Toast.fire({
+              icon: 'success',
+              title:'&nbsp;&nbsp;'+result.msg
+            })
+          $('#upload_attendance_form')['0'].reset();
+          $("#emp_search").select2("val",result.emp_id);
+          }else if(result.status=="updated"){
+          $("#emp_search").select2("val",result.emp_id);
+          $(".fa-upload").show();
+          $(".fa-spinner").hide();
+            Toast.fire({
+              icon: 'success',
+              title:'&nbsp;&nbsp;'+result.msg
+            })
+            }else{
+              $(".fa-upload").show();
+              $(".fa-spinner").hide();
+              Toast.fire({
+                icon: 'warning',
+                title:'&nbsp;&nbsp;'+result.msg
+              })
+            }
+          }
+      })
+    })
+
+    // $('#send_emp_login_form').submit(function(e){
+    //   alert("jk");
+    //   e.preventDefault();
+    //    var Toast = Swal.mixin({
+    //     toast: true,
+    //     position: 'top-end',
+    //     showConfirmButton: false,
+    //     timer: 2000
+    //   });
+    //    $.ajax({
+    //        url: 'emp/send_login_details_to_emp',
+    //        data:$('#send_emp_login_form').serialize(),
+    //        type:'post',
+    //        async: false,
+    //        success:function(result){
+    //          if(result.status=="success"){
+    //           Toast.fire({
+    //             icon: 'success',
+    //             title:'&nbsp;&nbsp;'+result.msg
+    //           })
+    //          }else{
+    //           Toast.fire({
+    //             icon: 'warning',
+    //             title:'&nbsp;&nbsp;'+result.msg
+    //           })
+    //          }
+              
+    //       } 
+         
+    //      })
+    // }
+    // new here
+    function field_validation1(name1,id, errid){
+      var regex_name = /^[a-zA-Z'\s]{1,40}$/;
+    
+      if($("#"+ id).val().length<2){
+        $('#'+ errid).html('Please enter '+name);
+       }else{
+      $('#'+ errid).html('');
+    }
+    }
+    function field_validation(name,id, errid){
+      var regex_name = /^[a-zA-Z'\s]{1,40}$/;
+    if(regex_name.test($("#"+ id).val())){
+      $('#'+ errid).html('');
+     }else{
+       $('#'+ errid).html('Please enter '+name+' field');
+    }
+    }
+    
+    function pincode_validation(name,id, errid){
+      var regex_name = /^[0-9]{6,6}$/;
+    if(regex_name.test($("#"+ id).val())){
+      $('#'+ errid).html('');
+     }else{
+       $('#'+ errid).html('Please enter '+name+' field');
+    }
+    }
+    
+    $('#submit_personal_info_form').submit(function(e){
+      alert("ioio");
+      e.preventDefault();
+  
+      if($("#p_address").val().length<2){
+        $("#error_p_address").html("Please enter address field");
+       }else{
+        $("#error_p_address").html("");
+      }
+      if($("#p_city").val().length<2){
+        $("#error_p_city").html("Please enter city field");
+       }else{
+        $("#error_p_city").html("");
+      }
+      if($("#p_state").val().length<2){
+        $("#error_p_state").html("Please enter state field");
+       }else{
+        $("#error_p_state").html("");
+      }
+      if($("#p_pincode").val().length === 6){
+        $("#error_p_pincode").html("");
+  
+       }else{
+      $("#error_p_pincode").html("Please enter pincode field");
+  
+      }
+  
+  if($("#p_address").val().length>2 && $("#p_city").val().length>2 && $("#p_state").val().length>2 && $("#p_pincode").val().length === 6){
+    emp_personal_info();
+  }
+  
+      // emp_personal_info();
+    //   var Toast = Swal.mixin({
+    //     toast: true,
+    //     position: 'top-end',
+    //     showConfirmButton: false,
+    //     timer: 2000
+    //   });
+    //   console.log("submit_personal_info_form");
+    //  $.ajax({
+    //      url: 'manage-personal-info',
+    //      data:$('#submit_personal_info_form').serialize(),
+    //      type:'post',
+    //      success:function(result){
+    //        console.log(result);
+    //        if(result.status=="success"){
+    //         Toast.fire({
+    //           icon: 'success',
+    //           title:'&nbsp;&nbsp;'+result.msg
+    //         })
+    //         window.location.href="personal-info"
+    //       }else{
+    //         Toast.fire({
+    //           icon: 'error',
+    //           title:'&nbsp;&nbsp;'+result.msg
+    //         })
+    //       }
+    //      }
+    //   })
+    })
+    $("#is_it_curent_address").click(function(){
+      $('#curent_address').hide();
+      })
+      $("#no_curent_address").click(function(){
+      $('#curent_address').show();
+      })
+
+      function emp_personal_info(){
+         var Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        console.log("submit_personal_info_form");
+       $.ajax({
+           url: 'manage-personal-info',
+           data:$('#submit_personal_info_form').serialize(),
+           type:'post',
+           success:function(result){
+             console.log(result);
+             if(result.status=="success"){
+              Toast.fire({
+                icon: 'success',
+                title:'&nbsp;&nbsp;'+result.msg
+              })
+              window.location.href="personal-info"
+            }else{
+              Toast.fire({
+                icon: 'error',
+                title:'&nbsp;&nbsp;'+result.msg
+              })
+            }
+           }
+        })
+      }

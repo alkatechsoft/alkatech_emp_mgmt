@@ -129,28 +129,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
             
           </li>
           <li class="nav-item menu-open mb-2">
-            <a href="#" class="nav-link active">
+            <a  href="" class="nav-link active">
               <i class="fa fa-users"></i>
               <p>
-                Personal Info
+                My Info
                 <i class="right fa fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{url('user/emp')}}"  class="@yield('all_employee_selected') nav-link">
+                <a href="{{url('user/personal-info')}}"  class="@yield('all_employee_selected') nav-link">
                   <i class="nav-icon fa fa-th"></i>
                   <p>
-                    All Employee 
+                    Personal Info
                     <span class="right badge badge-danger">New</span>
                   </p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{url('user/upload_attendance')}}"  class="@yield('attendance_selected') nav-link">
+                <a href="{{url('user/acadmic-info')}}"  class="@yield('attendance_selected') nav-link">
                   <i class="nav-icon fa fa-th"></i>
                   <p>
-                    Attendance
+                    Acadmic Info
                   </p>
                 </a>
               </li>
@@ -201,14 +201,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
 
     @section('container')
     @show
