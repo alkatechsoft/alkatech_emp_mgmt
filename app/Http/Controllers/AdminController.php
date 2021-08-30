@@ -8,6 +8,7 @@ use App\Models\Emp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Mail;
 use Crypt;
 
 class AdminController extends Controller
@@ -142,13 +143,27 @@ class AdminController extends Controller
 
     }
     public function upload_attendance_process(Request $request){
-        // return count($request->date);
+
         $request->validate([
             'emp_id'=>'required',
             'date'=>'required',
             'in_time'=>'required',
             'out_time'=>'required'
         ]);
+        if($request->__update_id>0){
+        $updated_result = DB::table('attendances')
+        ->where('id',$request->__update_id)
+        ->where('emp_id',$request->emp_id)
+        ->where('date',$request->date[0])
+        ->update(['in_time'=>$request->in_time[0],'out_time'=>$request->out_time[0]]);
+        // return $updated_result;
+        if($updated_result){
+            return response()->json(["status"=>"updated", "emp_id"=>$request->emp_id, "code"=>$updated_result, "msg"=>"updated successfully"]);
+        }else{
+            return response()->json(["status"=>"no_changed_data", "code"=>$updated_result, "msg"=>"No change found"]);
+        }
+
+        }else{
         for ($i=0; $i < count($request->date); $i++) { 
             $data=[
             'emp_id'=>$request->emp_id,
@@ -157,9 +172,9 @@ class AdminController extends Controller
             'out_time'=>$request->out_time[$i]
             ];
           $result=DB::table('attendances')->insert($data);
-        }        
-        return response()->json(["status"=>"success", "msg"=>"Attendance submited successfully"]);
-
+        }
+      }        
+        return response()->json(["status"=>"success", "emp_id"=>$request->emp_id, "msg"=>"Attendance submited successfully"]);
     }
     public function attendance_reporting(Request $request)
     {
@@ -187,6 +202,24 @@ class AdminController extends Controller
         }
 
        }
+       public function attendance_filter_before_upload_process(Request $request)
+       {
+           $get_data=$request;
+           $data = explode("|",$get_data);
+           if($data[1] !='' && $data[2] !=''){
+           // $filterd_data = $filterd_data = Attendance::whereBetween('date',[$data[2],$data[3]])->get();
+           $filterd_data = $filterd_data = Attendance::where('date', '=', $data[2])
+                                                       ->where('emp_id', $data[1])
+                                                       ->get();
+            if(isset($filterd_data[0]->id)){
+                return response()->json(["status"=>"success", "data"=>$filterd_data]);
+            } else{ 
+            return response()->json(["status"=>"error", "data"=>'']);
+            }
+   
+          }
+        }
+   
        public function attendance_reporting_process(Request $request)
        {
         //   return $request->from.$request->to.$request->emp_id;
@@ -235,4 +268,52 @@ if ($search == '') {
 }
   return response()->json($response);
 }
+
+public function create_user(Request $request){
+     $is_user_email_exist=Emp::where(['email'=>$request->post('email')])->get();
+    if(isset($is_user_email_exist[0])){
+        return response()->json(["status"=>"error", "msg"=>"User email allready exist"]);
+    }else{
+     $is_official_email_exist=Emp::where(['official_email'=>$request->post('official_email')])->get();
+    if(isset($is_official_email_exist[0])){
+        return response()->json(["status"=>"error", "msg"=>"Official email allready exist"]);
+    }else{
+        $emp_create = new Emp();
+        $emp_create->name = $request->post('name');
+        $emp_create->email = $request->post('email');
+        $emp_create->official_email = $request->post('official_email');
+        $emp_create->password = Crypt::encrypt($request->post('password'));
+        $rand_id=rand(111111111,999999999);
+        $emp_create->rand_id = $rand_id;
+        $emp_create->save();
+        
+        return response()->json(["status"=>"success", "msg"=>"User created successfully"]);
+
+    }
+}
+  
+}
+public function send_login_details_to_emp(Request $request, $id){
+     $emp_detail=Emp::where(['id'=>$id])->get();
+     $rand_id= $emp_detail[0]->rand_id;
+     $password=Crypt::decrypt($emp_detail[0]->password);
+     $personal_email=$emp_detail[0]->email;
+     $official_email=$emp_detail[0]->official_email;
+     $data=['name'=>'sudhir','rand_id'=>$rand_id,"email"=>$personal_email, "official_email"=>$official_email, "password"=>$password];
+     $user['to_personal_email'] = $personal_email;
+     $user['to_official_email'] = $official_email;
+     Mail::send('email.send_login_mail_to_emp', $data, function($messages) use ($user){
+        $messages->to($user['to_personal_email']);
+        $messages->subject('Login details');
+    });  
+    Mail::send('email.verify_mail', $data, function($messages) use ($user){
+        $messages->to($user['to_official_email']);
+        $messages->subject('Verify Email');
+    });
+    $msg = "Login details send  successfully";
+    $request->session()->flash('message',$msg);
+
+    return redirect('admin/emp');
+}
+
 }

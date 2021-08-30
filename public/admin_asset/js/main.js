@@ -173,6 +173,8 @@ function namevalidation1(){
 
   $('#upload_attendance_form').submit(function(e){
     e.preventDefault();
+    $(".fa-upload").hide();
+    $(".upload_update").prepend('<i class="fa fa-spinner fa-pulse"></i>');
     var Toast = Swal.mixin({
       toast: true,
       position: 'top-end',
@@ -186,24 +188,32 @@ function namevalidation1(){
        success:function(result){
          console.log(result);
          if(result.status=="success"){
-          $("#mesg").html(result.msg);
-          alert('You clicked the button!');
-          $("#wrap>div").remove();
-
+            $("#wrap").find(".created_row").remove();
+            $(".fa-upload").show();
+            $(".fa-spinner").hide();
           Toast.fire({
             icon: 'success',
             title:'&nbsp;&nbsp;'+result.msg
           })
-        } else{
-
+        $('#upload_attendance_form')['0'].reset();
+        $("#emp_search").select2("val",result.emp_id);
+        }else if(result.status=="updated"){
+        $("#emp_search").select2("val",result.emp_id);
+        $(".fa-upload").show();
+        $(".fa-spinner").hide();
           Toast.fire({
-            icon: 'error',
+            icon: 'success',
             title:'&nbsp;&nbsp;'+result.msg
           })
+          }else{
+            $(".fa-upload").show();
+            $(".fa-spinner").hide();
+            Toast.fire({
+              icon: 'warning',
+              title:'&nbsp;&nbsp;'+result.msg
+            })
           }
-         $("#login_msg").css("display", "block");
-        $('#upload_attendance_form')['0'].reset();
-       }
+        }
     })
   })
 
@@ -224,7 +234,7 @@ function namevalidation1(){
     jQuery("#box_count").val(box_count);
     // jQuery("#wrap").append('<div class="my_box" id="box_loop_'+box_count+'"><div class="field_box"><input type="textbox" name="name[]" id="name"></div><div class="button_box"><input type="button" name="submit" id="submit" value="Remove" onclick=remove_more("'+box_count+'")></div></div>');
     // jQuery("#wrap").append('<div class="row mt-2" id="box_loop_'+box_count+'"><div class="col-3"><input type="date" name="date[]" id="date" class="form-control"  placeholder=""></div><div class="col-3"><input type="time" id="in_time" name="in_time[]" class="form-control"  placeholder=""></div><div class="col-3"><input type="time" name="out_time[]" id="in_time" class="form-control"  placeholder=""></div><div class="col-3"><input type="button" class="btn btn-block btn-danger" name="submit" id="submit" value="Remove" onclick=remove_more("'+box_count+'")></div></div>');
-    jQuery("#wrap").append('<div class="row mt-2" id="box_loop_'+box_count+'"><div class="col-3"><input type="date" required name="date[]" id="date" class="form-control"  placeholder=""></div><div class="col-3"><input type="time" required id="in_time" name="in_time[]" class="form-control"  placeholder=""></div><div class="col-3"><input type="time" required name="out_time[]" id="in_time" class="form-control"  placeholder=""></div><div class="col-3"><button class="btn btn-block btn-danger" name="submit" id="submit" value="&times" onclick=remove_more("'+box_count+'")><i class="fa fa-trash" aria-hidden="true"></i></button></div></div>');
+    jQuery("#wrap").append('<div class="row created_row mt-2" id="box_loop_'+box_count+'"><div class="col-3"><input type="date" required name="date[]" id="date" class="form-control"  placeholder=""></div><div class="col-3"><input type="time" required id="in_time" name="in_time[]" class="form-control"  placeholder=""></div><div class="col-3"><input type="time" required name="out_time[]" id="in_time" class="form-control"  placeholder=""></div><div class="col-3"><button class="btn btn-block btn-danger" name="submit" id="submit" value="&times" onclick=remove_more("'+box_count+'")><i class="fa fa-trash" aria-hidden="true"></i></button></div></div>');
   
   
   }
@@ -273,38 +283,344 @@ function namevalidation1(){
     }
   
 
- $('#test_ajax').submit(function(e){
-   alert('aa'+$(this).data('page'));
-  e.preventDefault();
-console.log('a');
- 
- $.ajax({
-     url: 'attendance_reporting_process',
-     data:$('#test_ajax').serialize(),
-     type:'post',
-     async: false,
-     success:function(result){
-      if(result.status=="success"){
-        console.log(result.data);
-        var counter=0;
-        var tableDataHTML = '';
-      $.each(result.data, function (key,item){
-        // $('tbody').append('<tr role="row" class="odd"><td> '+item.date+' </td><td> P </td><td><div class="btn-group"><a class="btn btn-primary">EDIT</a></div></td></tr>');
+    $('#test_ajax').submit(function(e){
+      e.preventDefault();
+    var table = $('#attendance_reporting').DataTable();
+     
+     $.ajax({
+         url: 'attendance_reporting_process',
+         data:$('#test_ajax').serialize(),
+         type:'post',
+         async: false,
+         success:function(result){
+          if(result.status=="success"){
+            console.log(result.data);
+            var counter=0;
+            var tableDataHTML = '';
+            $('tbody').empty();  
+    
+          $.each(result.data, function (key,item){
+              
+            console.log(item.id)
+           
+            table.row.add([
+              item.date,
+              item.in_time,
+              item.out_time
+            ]).draw();
+    
+          });
+           
+        }
+       
+         }
+      })
+    })
 
-        tableDataHTML += '<tr id="searched-row-'+counter+'" class="js-result-tbl-tbody-tr">'+
-        '<td>'+item.date+'</td>'+
-        '<td> P </td>'+
-        '<td><div class="btn-group"><a class="btn btn-primary">EDIT</a></div></td>'+ 
-        '</tr>';    
-      });
-      $('tbody').empty();  
-      $('tbody').append(tableDataHTML);  
-      $('tbody').html(tableDataHTML);
-      // alert('a');
+    function attendance_filter_before_upload_handler(){
+      // event.preventDefault();
       
+      var data = 'aa'+'|'+$("#emp_search").val()+'|'+$("#__from_date").val();
+      $.ajax({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: "attendance_filter_before_upload_process",
+        type :'post',
+        dataType : 'json',
+        delay : 200,
+        data:data,
+          success:function(result){
+            if(result.status=="success"){
+              console.log(result.data);
+              $("#__in_time").val(result.data[0].in_time);
+              $("#__out_time").val(result.data[0].out_time);
+              $("#__update_id").val(result.data[0].id);
+          }
+          else{
+            $("#__in_time").val('');
+            $("#__out_time").val('');
+            $("#__update_id").val('');
+           }
+          }
+       })
+      }
 
+      
+    $('#create_user').submit(function(e){
+      e.preventDefault();
+      if($("#name").val().length<1){
+        $("#error_name").html("This field required");
+      }
+      if($("#email").val().length<1){
+        $("#error_email").html("This field required");
+      }
+      if($("#official_email").val().length<1){
+        $("#error_official_email").html("This field required");
+      }
+      if($("#password").val().length<1){
+        $("#error_password").html("This field required");
+      }
+
+      if($("#name").val().length>0 && $("#email").val().length>0 && $("#official_email").val().length>0 && $("#password").val().length>0){
+        create_user();
+      } 
+
+    })
+
+    function user_name(){
+      var user_name = /^[a-zA-Z'\s]{1,40}$/;
+      if(user_name.test($('#name').val())){
+           $('#error_name').html('');
+          }else{
+            $('#error_name').html('Please enter full name');
+      }
     }
-   
-     }
-  })
-})
+  
+    function user_personal_email(){
+      var regex_personal_email = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      if(regex_personal_email.test($('#email').val())){
+           $('#error_email').html('');
+          }else{
+            $('#error_email').html('Please enter email');
+      }
+    }  
+    function user_official_email(){
+      var regex_official_email = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      if(regex_official_email.test($('#official_email').val())){
+           $('#error_official_email').html('');
+          }else{
+            $('#error_official_email').html('Please enter email');
+      }
+    }
+  
+
+    function create_user(){
+      var table = $('#emp_list').DataTable();
+      var Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000
+      });
+       $.ajax({
+           url: 'create_user',
+           data:$('#create_user').serialize(),
+           type:'post',
+           async: false,
+           success:function(result){
+             if(result.status=="success"){
+              Toast.fire({
+                icon: 'success',
+                title:'&nbsp;&nbsp;'+result.msg
+              })
+             }else{
+              Toast.fire({
+                icon: 'warning',
+                title:'&nbsp;&nbsp;'+result.msg
+              })
+             }
+              
+          } 
+         
+         })
+    }
+    $('#send_emp_login_form').submit(function(e){
+      e.preventDefault();
+       var Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000
+      });
+     $.ajax({
+         url: 'send_login_details_to_emp',
+         data:$('#send_emp_login_form').serialize(),
+         type:'post',
+         success:function(result){
+           console.log(result);
+           if(result.status=="success"){
+              $("#wrap").find(".created_row").remove();
+              $(".fa-upload").show();
+              $(".fa-spinner").hide();
+            Toast.fire({
+              icon: 'success',
+              title:'&nbsp;&nbsp;'+result.msg
+            })
+          $('#upload_attendance_form')['0'].reset();
+          $("#emp_search").select2("val",result.emp_id);
+          }else if(result.status=="updated"){
+          $("#emp_search").select2("val",result.emp_id);
+          $(".fa-upload").show();
+          $(".fa-spinner").hide();
+            Toast.fire({
+              icon: 'success',
+              title:'&nbsp;&nbsp;'+result.msg
+            })
+            }else{
+              $(".fa-upload").show();
+              $(".fa-spinner").hide();
+              Toast.fire({
+                icon: 'warning',
+                title:'&nbsp;&nbsp;'+result.msg
+              })
+            }
+          }
+      })
+    })
+
+    // $('#send_emp_login_form').submit(function(e){
+    //   alert("jk");
+    //   e.preventDefault();
+    //    var Toast = Swal.mixin({
+    //     toast: true,
+    //     position: 'top-end',
+    //     showConfirmButton: false,
+    //     timer: 2000
+    //   });
+    //    $.ajax({
+    //        url: 'emp/send_login_details_to_emp',
+    //        data:$('#send_emp_login_form').serialize(),
+    //        type:'post',
+    //        async: false,
+    //        success:function(result){
+    //          if(result.status=="success"){
+    //           Toast.fire({
+    //             icon: 'success',
+    //             title:'&nbsp;&nbsp;'+result.msg
+    //           })
+    //          }else{
+    //           Toast.fire({
+    //             icon: 'warning',
+    //             title:'&nbsp;&nbsp;'+result.msg
+    //           })
+    //          }
+              
+    //       } 
+         
+    //      })
+    // }
+    // new here
+    function field_validation1(name1,id, errid){
+      var regex_name = /^[a-zA-Z'\s]{1,40}$/;
+    
+      if($("#"+ id).val().length<2){
+        $('#'+ errid).html('Please enter '+name);
+       }else{
+      $('#'+ errid).html('');
+    }
+    }
+    function field_validation(name,id, errid){
+      var regex_name = /^[a-zA-Z'\s]{1,40}$/;
+    if(regex_name.test($("#"+ id).val())){
+      $('#'+ errid).html('');
+     }else{
+       $('#'+ errid).html('Please enter '+name+' field');
+    }
+    }
+    
+    function pincode_validation(name,id, errid){
+      var regex_name = /^[0-9]{6,6}$/;
+    if(regex_name.test($("#"+ id).val())){
+      $('#'+ errid).html('');
+     }else{
+       $('#'+ errid).html('Please enter '+name+' field');
+    }
+    }
+    
+    $('#submit_personal_info_form').submit(function(e){
+      alert("ioio");
+      e.preventDefault();
+  
+      if($("#p_address").val().length<2){
+        $("#error_p_address").html("Please enter address field");
+       }else{
+        $("#error_p_address").html("");
+      }
+      if($("#p_city").val().length<2){
+        $("#error_p_city").html("Please enter city field");
+       }else{
+        $("#error_p_city").html("");
+      }
+      if($("#p_state").val().length<2){
+        $("#error_p_state").html("Please enter state field");
+       }else{
+        $("#error_p_state").html("");
+      }
+      if($("#p_pincode").val().length === 6){
+        $("#error_p_pincode").html("");
+  
+       }else{
+      $("#error_p_pincode").html("Please enter pincode field");
+  
+      }
+  
+  if($("#p_address").val().length>2 && $("#p_city").val().length>2 && $("#p_state").val().length>2 && $("#p_pincode").val().length === 6){
+    emp_personal_info();
+  }
+  
+      // emp_personal_info();
+    //   var Toast = Swal.mixin({
+    //     toast: true,
+    //     position: 'top-end',
+    //     showConfirmButton: false,
+    //     timer: 2000
+    //   });
+    //   console.log("submit_personal_info_form");
+    //  $.ajax({
+    //      url: 'manage-personal-info',
+    //      data:$('#submit_personal_info_form').serialize(),
+    //      type:'post',
+    //      success:function(result){
+    //        console.log(result);
+    //        if(result.status=="success"){
+    //         Toast.fire({
+    //           icon: 'success',
+    //           title:'&nbsp;&nbsp;'+result.msg
+    //         })
+    //         window.location.href="personal-info"
+    //       }else{
+    //         Toast.fire({
+    //           icon: 'error',
+    //           title:'&nbsp;&nbsp;'+result.msg
+    //         })
+    //       }
+    //      }
+    //   })
+    })
+    $("#is_it_curent_address").click(function(){
+      $('#curent_address').hide();
+      })
+      $("#no_curent_address").click(function(){
+      $('#curent_address').show();
+      })
+
+      function emp_personal_info(){
+         var Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        console.log("submit_personal_info_form");
+       $.ajax({
+           url: 'manage-personal-info',
+           data:$('#submit_personal_info_form').serialize(),
+           type:'post',
+           success:function(result){
+             console.log(result);
+             if(result.status=="success"){
+              Toast.fire({
+                icon: 'success',
+                title:'&nbsp;&nbsp;'+result.msg
+              })
+              window.location.href="personal-info"
+            }else{
+              Toast.fire({
+                icon: 'error',
+                title:'&nbsp;&nbsp;'+result.msg
+              })
+            }
+           }
+        })
+      }

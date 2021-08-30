@@ -20,7 +20,7 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
-
+ 
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -44,23 +44,24 @@
               <div id="wrap" class="card-body">
                 <div class="row" id="TextBoxContainer">
                   <div class="col-4">
-                    <input type="date" name="date[]" class="form-control" required  placeholder="">
+                    <input type="date" id="__from_date" value="" name="date[]" onchange="attendance_filter_before_upload_handler();" class="form-control" required  placeholder="">
                   </div>
                   <div class="col-4">
-                    <input type="time" name="in_time[]" class="form-control" required placeholder="">
+                    <input type="time" id="__in_time" value="" name="in_time[]"  class="form-control" required placeholder="">
                   </div>
                   <div class="col-4">
-                    <input type="time" name="out_time[]" class="form-control" required placeholder="">
+                    <input type="time" id="__out_time" value="" name="out_time[]"  class="form-control" required placeholder="">
                   </div>
                 </div>
 	            <input type="hidden" id="box_count" value="1">
+	            <input type="hidden" name="__update_id" id="__update_id" value="">
  
               </div>
               <div class="row">
 
               <div class="btn-group mr-2 col" role="group" aria-label="First group">
                 <a onclick="add_more()" class="btn btn-primary "><i class="fa fa-plus"></i></a>
-                <button type="submit" class="btn btn-success"><i class="fa fa-upload"></i>&nbsp;&nbsp;UPLOAD</button>
+                <button type="submit" class="btn btn-success upload_update"><i class="fa fa-upload"></i>&nbsp;&nbsp;UPLOAD</button>
               </div>
             </div>
 

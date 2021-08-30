@@ -34,50 +34,50 @@
                 <div class="row">
                     <div class="col-lg-3 col-6">
                       <!-- small box -->
-                      <div class="small-box bg-info">
-                        <div class="inner">
-                          <h3>Personal info</h3>
-                          <p>n/a</p>
+                      <div class="small-box {{session('MY_PERSONAL_INFO') ? 'bg-success':'bg-warning'}}">
+                        <div class="inner text-center">
+                          <h3 class="">Personal info</h3>
+                          <p><i style="font-size: xx-large" class="fa fa-user"></i></p>
                         </div>
                         <div class="icon">
                           <i class="ion ion-bag"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Personal info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{url('user/personal-info')}}" class="small-box-footer"><b>{{session('MY_PERSONAL_INFO') ? 'GO':'Please Complete Personal info'}}</b> &nbsp;<i class="fa fa-arrow-circle-right"></i></a>
                       </div>
                     </div>
                     <!-- ./col -->
                     <div class="col-lg-3 col-6">
                       <!-- small box -->
                       <div class="small-box bg-success">
-                        <div class="inner">
+                        <div class="inner text-center">
                           <h3>Acadmic info</h3>
-                          <p>n/a</p>
+                          <p><i style="font-size: xx-large" class="fa fa-graduation-cap"></i></p>
                         </div>
                         <div class="icon">
                           <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Please complete your acadmic info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="#" class="small-box-footer">Please complete your acadmic info <i class="fa fa-arrow-circle-right"></i></a>
                       </div>
                     </div>
                     <!-- ./col -->
                     <div class="col-lg-3 col-6">
                       <!-- small box -->
                       <div class="small-box bg-warning">
-                        <div class="inner">
+                        <div class="inner text-center">
                           <h3>Professional info</h3>
                           <p>n/a</p>
                         </div>
                         <div class="icon">
                           <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                       </div>
                     </div>
                     <!-- ./col -->
                     <div class="col-lg-3 col-6">
                       <!-- small box -->
                       <div class="small-box bg-danger">
-                        <div class="inner">
+                        <div class="inner text-center">
                           <h3>65</h3>
           
                           <p>Unique Visitors</p>
@@ -85,7 +85,7 @@
                         <div class="icon">
                           <i class="ion ion-pie-graph"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                       </div>
                     </div>
                     <!-- ./col -->
