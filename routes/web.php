@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpDataController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmpController;
+use App\Http\Controllers\EmpReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,7 @@ use App\Http\Controllers\EmpController;
 Route::get('/', function () {
     return redirect('admin');
 });
+Route::get('export-excel', [EmpreportController::class, 'export']);
 
 // Route::get('/updatepassword', [AdminController::class, 'updatepassword']);
 Route::get('/registration', [EmpDataController::class, 'emp_registration_form']);

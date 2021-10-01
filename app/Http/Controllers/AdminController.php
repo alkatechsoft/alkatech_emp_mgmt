@@ -301,13 +301,13 @@ public function send_login_details_to_emp(Request $request, $id){
      $official_email=$emp_detail[0]->official_email;
      $data=['name'=>'sudhir','rand_id'=>$rand_id,"email"=>$personal_email, "official_email"=>$official_email, "password"=>$password];
      $user['to_personal_email'] = $personal_email;
-     $user['to_official_email'] = $official_email;
+     $user1['to_official_email'] = $official_email;
      Mail::send('email.send_login_mail_to_emp', $data, function($messages) use ($user){
         $messages->to($user['to_personal_email']);
         $messages->subject('Login details');
     });  
-    Mail::send('email.verify_mail', $data, function($messages) use ($user){
-        $messages->to($user['to_official_email']);
+    Mail::send('email.verify_mail', $data, function($messages) use ($user1){
+        $messages->to($user1['to_official_email']);
         $messages->subject('Verify Email');
     });
     $msg = "Login details send  successfully";
