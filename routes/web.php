@@ -20,7 +20,8 @@ use App\Http\Controllers\EmpReportController;
 Route::get('/', function () {
     return redirect('admin');
 });
-Route::get('export-excel', [EmpreportController::class, 'export']);
+// Route::get('export-excel', [EmpreportController::class, 'export']);
+Route::get('export-excel', [AdminController::class, 'dataexport']);
 
 // Route::get('/updatepassword', [AdminController::class, 'updatepassword']);
 Route::get('/registration', [EmpDataController::class, 'emp_registration_form']);

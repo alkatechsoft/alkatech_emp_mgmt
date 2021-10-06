@@ -18,7 +18,11 @@ class Empexport implements FromCollection
         // ->get();
         // DB::table('attendances')
 // wrap array in collection because query give result in array and we are telling export script to get your data from Collection
-       return collect (DB::select('select * from attendances where date > current_date - interval 7 day AND id>3', [1]));
+ $value = 11;
+    # code...
+//  return collect (DB::select('select * from attendances where date > current_date - interval 7 day AND id >'.$value, [1]));
+ return collect (DB::select('select * from attendances'));
+ 
     }
    
 }

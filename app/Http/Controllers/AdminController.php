@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Mail;
 use Crypt;
+use Exporter;
+use Cyberduck\LaravelExcel\Contract\SerialiserInterface;
 
 class AdminController extends Controller
 {
@@ -18,6 +20,37 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function dataexport(){
+        // $query=collect(DB::select('select * from attendances', [1]));
+        // $query = DB::select('select * from attendances', [1]);
+        // $query = DB::select('select * `id` from attendances')->get();
+        $query = collect(DB::table('attendances')->select('id', 'date')->get());
+       
+         $variable=[1,2];
+         foreach ($variable as $key => $value) {
+             # code...
+        $excel = Exporter::make('Excel');
+        $yourFileName="abc.xlsx";
+        // $excel->loadQuery($query);
+        // $excel->stream($yourFileName);
+        // return 'public/media/'.$yourFileName;
+
+        $excel->save('public/media/123  .xlsx');
+        // Exporter::make('Excel')->load(collect($query))->stream($yourFileName);
+          
+         }
+
+
+
+
+
+
+        // $excel->loadQuery($query);
+        // $excel->stream($yourFileName);
+        // return $excel->save('public/media/'+$yourFileName);
+        // return $collection = Exporter::make('Excel')->load($query)->setSerialiser(new ApplicantSerializer)->stream($yourFileName);
+
+    }
     public function index(Request $request)
     {
         //
@@ -315,5 +348,11 @@ public function send_login_details_to_emp(Request $request, $id){
 
     return redirect('admin/emp');
 }
+
+
+
+
+
+
 
 }
