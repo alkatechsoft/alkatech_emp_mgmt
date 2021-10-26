@@ -588,6 +588,7 @@ function namevalidation1(){
     //      }
     //   })
     })
+
     $("#is_it_curent_address").click(function(){
       $('#curent_address').hide();
       })
@@ -624,3 +625,84 @@ function namevalidation1(){
            }
         })
       }
+
+      $('#submit_academic_info_form').submit(function(e){
+        // $("#qualification_certificate").val()
+        e.preventDefault();
+       
+        if($("#highest_qualification").val().length<2){
+          $("#error_highest_qualification").html("Please enter this field");
+         }else{
+          $("#error_highest_qualification").html("");
+        }
+        if($("#university_college").val().length<2){
+          $("#error_university_college").html("Please enter this field");
+         }else{
+          $("#error_university_college").html("");
+        }
+        if($("#from_date").val() !=''){
+          $("#error_from_date").html("");
+         }else{
+          $("#error_from_date").html("Please enter this field");
+        }
+        if($("#to_date").val() !=''){
+          $("#error_to_date").html("");
+         }else{
+        $("#error_to_date").html("Please enter this field");
+        }
+        if($("#qualification_certificate").val() !=''){
+          $("#error_qualification_certificate").html("");
+    
+         }else{
+        $("#error_qualification_certificate").html("Please upload certificate/marksheet copy");
+        }
+    if($("#highest_qualification").val().length>2 && $("#university_college").val().length>2 && $("#from_date").val() !='' && $("#to_date").val() !=''){
+      let formData = new FormData(this);
+      formData.append('highest_qualification', $("#highest_qualification").val());
+      formData.append('university_college', $("#university_college").val());
+      formData.append('from_date', $("#from_date").val());
+      formData.append('to_date', $("#to_date").val());
+      var input = document.querySelector('input[type=file]');
+      var file = input.files[0];
+      formData.append("qualification_certificate", file);
+      // formData.append('qualification_certificate', $("#error_qualification_certificate").val(), 'fileName');
+    
+      console.log(formData);
+      alert(formData);
+      emp_academic_info(formData);
+    }
+  })
+
+  function emp_academic_info(formData){
+    
+    var Toast = Swal.mixin({
+     toast: true,
+     position: 'top-end',
+     showConfirmButton: false,
+     timer: 2000
+   });
+   console.log("submit_academic_info_form");
+  $.ajax({
+      type:'post',
+      url: 'manage-academic-info',
+      data:formData,
+      contentType: false,
+      processData: false,
+      success:function(result){
+        console.log(result);
+        if(result.status=="success"){
+         Toast.fire({
+           icon: 'success',
+           title:'&nbsp;&nbsp;'+result.msg
+         })
+         window.location.href="academic-info"
+       }else{
+         Toast.fire({
+           icon: 'error',
+           title:'&nbsp;&nbsp;'+result.msg
+         })
+       }
+      }
+   })
+ }
+ 

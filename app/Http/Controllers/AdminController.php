@@ -35,7 +35,7 @@ class AdminController extends Controller
         // $excel->stream($yourFileName);
         // return 'public/media/'.$yourFileName;
 
-        $excel->save('public/media/123  .xlsx');
+        $excel->save('public/media/','123.xlsx');
         // Exporter::make('Excel')->load(collect($query))->stream($yourFileName);
           
          }
@@ -50,6 +50,33 @@ class AdminController extends Controller
         // return $excel->save('public/media/'+$yourFileName);
         // return $collection = Exporter::make('Excel')->load($query)->setSerialiser(new ApplicantSerializer)->stream($yourFileName);
 
+    }
+
+    public function send_report_alert_mail_to_emp(){
+    //   return public_path();
+    $filename='abc';
+    $count1=1;
+    $count2=2;
+    // return storage_path('app/public/media/abc.xlsx');
+        $emp_email='sudhirsinghkumar11@gmail.com';
+        $data=['name'=>'sudhir', "email"=>'sudhirsinghkumar11@gmail.com'];
+        $user['to_emp_email'] = 'sudhirsinghkumar11@gmail.com';
+        // $files = [
+        //     public_path('public/media/abc.xlsx'),
+        //     public_path('public/media/abc1.xlsx'),
+        // ];
+        $files = [
+            storage_path('app/public/media/'.$filename.$count1.'.xlsx'),
+            storage_path('app/public/media/'.$filename.$count2.'.xlsx'),
+        ];
+        Mail::send('email.send_report_alert_mail_to_emp', $data, function($messages) use ($user,$files){
+           $messages->to($user['to_emp_email']);
+           $messages->subject('Report details');
+           foreach ($files as $file){
+            $messages->attach($file);
+        }
+       }); 
+       return 'Report send successfully';
     }
     public function index(Request $request)
     {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Emp;
 use Illuminate\Http\Request;
 use App\Models\Emp_personal_info;
+use App\Models\Emp_academic_info;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -200,10 +201,59 @@ function personal_info(){
      } else{
         return response()->json(["status"=>"error", "msg"=>"something went wrong"]);
      }
-
-
- 
  }
 
+ function academic_info(){
+    $academic_info=Emp_academic_info::where(['emp_id'=>session('USER_ID')])->get();
 
+    if(isset($academic_info[0]->id)){
+    return view('emp.academic_info')->with('academic_info',$academic_info);
+    }
+    return view('emp.manage_academic_info_process');
+
+ }
+ function manage_academic_info_process(Request $request){
+   
+ 
+    $academic_info = new Emp_academic_info();
+    $academic_info->emp_id=session('USER_ID');
+    $academic_info->highest_qualification=$request->post('highest_qualification');
+    $academic_info->university_college=$request->post('university_college');
+    $academic_info->from_date=$request->post('from_date');
+    $academic_info->to_date=$request->post('to_date');
+    // $personal_info->qualification_certificate=$request->post('qualification_certificate');
+    // $job_in_attendance->sign_in_image=$file;
+    // $job_in_attendance->user_id=session('GUARD_ID');
+    // $job_in_attendance->save();
+    // $sign_in_image->storeAS('/public/media',$file);
+
+// 
+$file = $request->file('qualification_certificate');
+$filename = time().'_'.$file->getClientOriginalName();
+
+// File extension
+$extension = $file->getClientOriginalExtension();
+
+// File upload location
+$location = 'public/media';
+
+// Upload file
+// $file->move($location,$filename);
+$academic_info->qualification_certificate=$filename;
+
+$file->storeAS('/public/media',$filename);
+
+// File path
+// $filepath = url('files/'.$filename);
+// 
+$academic_info_status = $academic_info->save();
+    
+     if($academic_info_status){
+        $request->session()->put('MY_ACADEMIC_INFO',true);
+        return response()->json(["status"=>"success", "msg"=>"Academic info saved successfully"]);
+     } else{
+        return response()->json(["status"=>"error", "msg"=>"something went wrong"]);
+     }
+ }
+ 
 }

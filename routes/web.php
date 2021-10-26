@@ -22,6 +22,7 @@ Route::get('/', function () {
 });
 // Route::get('export-excel', [EmpreportController::class, 'export']);
 Route::get('export-excel', [AdminController::class, 'dataexport']);
+Route::get('email-report', [AdminController::class, 'send_report_alert_mail_to_emp']);
 
 // Route::get('/updatepassword', [AdminController::class, 'updatepassword']);
 Route::get('/registration', [EmpDataController::class, 'emp_registration_form']);
@@ -72,6 +73,10 @@ Route::group(['middleware'=>'emp_auth'], function(){
     Route::get('user/manage-personal-info/{id}', [EmpController::class, 'manage_personal_info']);
     Route::post('user/manage-personal-info', [EmpController::class, 'manage_personal_info_process'])->name('emp.manage_personal_info_process');
     
+    Route::get('user/academic-info', [EmpController::class, 'academic_info']);
+    Route::get('user/manage-academic-info/{id}', [EmpController::class, 'manage_academic_info']);
+    Route::post('user/manage-academic-info', [EmpController::class, 'manage_academic_info_process'])->name('emp.manage_academic_info_process');
+ 
     Route::get('user/logout', function(){
         session()->forget('USER_LOGIN');
         session()->forget('USER_ID');

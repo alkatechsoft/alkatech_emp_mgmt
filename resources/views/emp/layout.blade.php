@@ -138,7 +138,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{url('user/personal-info')}}"  class="@yield('all_employee_selected') nav-link">
+                <a href="{{url('user/personal-info')}}"  class="@yield('personal_info_selected') nav-link">
                   <i class="nav-icon fa fa-th"></i>
                   <p>
                     Personal Info
@@ -147,10 +147,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{url('user/acadmic-info')}}"  class="@yield('attendance_selected') nav-link">
+                <a href="{{url('user/academic-info')}}"  class="@yield('academic_info_selected') nav-link">
                   <i class="nav-icon fa fa-th"></i>
                   <p>
-                    Acadmic Info
+                    Academic Info
                   </p>
                 </a>
               </li>
@@ -160,7 +160,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <a href="#" class="nav-link active">
               <i class="fa fa-tasks" aria-hidden="true"></i>
               <p>
-                Acadmic info
+                Academic info
                 <i class="right fa fa-angle-left"></i>
               </p>
             </a>
