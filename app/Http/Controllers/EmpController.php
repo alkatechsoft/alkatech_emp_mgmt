@@ -6,6 +6,7 @@ use App\Models\Emp;
 use Illuminate\Http\Request;
 use App\Models\Emp_personal_info;
 use App\Models\Emp_academic_info;
+use App\Models\Emp_professional_info;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -255,5 +256,49 @@ $academic_info_status = $academic_info->save();
         return response()->json(["status"=>"error", "msg"=>"something went wrong"]);
      }
  }
+
+//  ..........
+ function professional_info(){
+    $professional_info=Emp_professional_info::where(['emp_id'=>session('USER_ID')])->get();
+
+    if(isset($professional_info[0]->id)){
+    return view('emp.professional_info')->with('professional_info',$professional_info);
+    }
+    return view('emp.manage_professional_info_process');
+
+ }
+ function manage_professional_info_process(Request $request){
+   
  
+    $professional_info = new Emp_professional_info();
+    $professional_info->emp_id=session('USER_ID');
+    $professional_info->company_name=$request->post('company_name');
+    $professional_info->from_date=$request->post('from_date');
+    $professional_info->to_date=$request->post('to_date');
+  
+$experience_letter = $request->file('experience_letter');
+$experience_letter_name = time().'_'.$experience_letter->getClientOriginalName();
+// File extension
+$extension = $experience_letter->getClientOriginalExtension();
+// File upload location 
+$professional_info->experience_letter=$experience_letter_name;
+$experience_letter->storeAS('/public/media',$experience_letter_name);
+    
+$sallary_slip = $request->file('sallary_slip');
+$sallary_slip_name = time().'_'.$sallary_slip->getClientOriginalName();
+// File extension
+$sallary_slip_extension = $sallary_slip->getClientOriginalExtension();
+// File upload location 
+$professional_info->sallary_slip=$sallary_slip_name;
+$sallary_slip->storeAS('/public/media',$sallary_slip_name);
+$professional_info_status = $professional_info->save();
+
+     if($professional_info_status){
+        $request->session()->put('MY_PROFESSIONAL_INFO',true);
+        return response()->json(["status"=>"success", "msg"=>"Professional info saved successfully"]);
+     } else{
+        return response()->json(["status"=>"error", "msg"=>"something went wrong"]);
+     }
+ }
+
 }

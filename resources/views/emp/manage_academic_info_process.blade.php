@@ -72,9 +72,13 @@
                     <div class="col-xl-6">
                       <div class="form-group">
                         <label for="qualification_certificate">Upload certificate/marksheet copy*</label>
-                        <input type="file" name="qualification_certificate" class="pb-4 form-control" style="padding:0.2rem 0rem 0rem 0.2rem" id="qualification_certificate" oninput="pincode_validation('pincode','p_pincode','error_p_pincode')" placeholder="Pincode">
+
+                        <input type="file" name="qualification_certificate" class="pb-4 form-control" style="padding:0.2rem 0rem 0rem 0.2rem" id="qualification_certificate" oninput="pincode_validation('pincode','p_pincode','error_p_pincode')" 
+                        onchange="document.getElementById('upload_ctft').src = window.URL.createObjectURL(this.files[0])"
+                        placeholder="upload certificate">
                         <span id="error_qualification_certificate" class="text-danger" role="alert">
                         </span>
+                        <img  id="upload_ctft" src="" style="margin:auto; border: 0px solid #f3dcdc;padding: 3px;margin-top: 4px;" height="auto" width="200px" height="auto" />
                       </div>
                     </div>
                    

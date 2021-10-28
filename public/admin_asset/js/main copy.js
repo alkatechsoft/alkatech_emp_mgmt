@@ -629,7 +629,7 @@ function namevalidation1(){
       $('#submit_academic_info_form').submit(function(e){
         // $("#qualification_certificate").val()
         e.preventDefault();
-       
+    
         if($("#highest_qualification").val().length<2){
           $("#error_highest_qualification").html("Please enter this field");
          }else{
@@ -657,24 +657,11 @@ function namevalidation1(){
         $("#error_qualification_certificate").html("Please upload certificate/marksheet copy");
         }
     if($("#highest_qualification").val().length>2 && $("#university_college").val().length>2 && $("#from_date").val() !='' && $("#to_date").val() !=''){
-      let formData = new FormData(this);
-      formData.append('highest_qualification', $("#highest_qualification").val());
-      formData.append('university_college', $("#university_college").val());
-      formData.append('from_date', $("#from_date").val());
-      formData.append('to_date', $("#to_date").val());
-      var input = document.querySelector('input[type=file]');
-      var file = input.files[0];
-      formData.append("qualification_certificate", file);
-      // formData.append('qualification_certificate', $("#error_qualification_certificate").val(), 'fileName');
-    
-      console.log(formData);
-      alert(formData);
-      emp_academic_info(formData);
+      emp_academic_info();
     }
   })
 
-  function emp_academic_info(formData){
-    
+  function emp_academic_info(){
     var Toast = Swal.mixin({
      toast: true,
      position: 'top-end',
@@ -683,11 +670,9 @@ function namevalidation1(){
    });
    console.log("submit_academic_info_form");
   $.ajax({
-      type:'post',
       url: 'manage-academic-info',
-      data:formData,
-      contentType: false,
-      processData: false,
+      data:$('#submit_academic_info_form').serialize(),
+      type:'post',
       success:function(result){
         console.log(result);
         if(result.status=="success"){
@@ -706,85 +691,3 @@ function namevalidation1(){
    })
  }
  
- $('#submit_professional_info_form').submit(function(e){
-  // $("#qualification_certificate").val()
-  e.preventDefault();
- 
-  if($("#company_name").val().length<2){
-    $("#error_company_name").html("Please enter this field");
-   }else{
-    $("#error_company_name").html("");
-  }
-  
-  if($("#from_date").val() !=''){
-    $("#error_from_date").html("");
-   }else{
-    $("#error_from_date").html("Please enter this field");
-  }
-  if($("#to_date").val() !=''){
-    $("#error_to_date").html("");
-   }else{
-  $("#error_to_date").html("Please enter this field");
-  }
-  if($("#experience_letter").val() !=''){
-    $("#error_experience_letter").html("");
-
-   }else{
-  $("#error_experience_letter").html("Please upload experience letter");
-  }
-   if($("#sallary_slip").val() !=''){
-    $("#error_sallary_slip").html("");
-
-   }else{
-  $("#error_sallary_slip").html("Please upload sallary slip");
-  }
-if($("#company_name").val().length>2 && $("#from_date").val() !='' && $("#to_date").val() !=''){
-let formData = new FormData(this);
-formData.append('company_name', $("#company_name").val());
-formData.append('from_date', $("#from_date").val());
-formData.append('to_date', $("#to_date").val());
-formData.append('experience_letter', $("#experience_letter").val());
-
-var input = document.querySelector('input[type=file]');
-var file = input.files[0];
-formData.append("qualification_certificate", file);
-// formData.append('qualification_certificate', $("#error_qualification_certificate").val(), 'fileName');
-
-console.log(formData);
-alert(formData);
-emp_professional_info(formData);
-}
-})
-
-function emp_professional_info(formData){
-
-var Toast = Swal.mixin({
-toast: true,
-position: 'top-end',
-showConfirmButton: false,
-timer: 2000
-});
-console.log("submit_emp_professional_info");
-$.ajax({
-type:'post',
-url: 'manage-professional-info',
-data:formData,
-contentType: false,
-processData: false,
-success:function(result){
-  console.log(result);
-  if(result.status=="success"){
-   Toast.fire({
-     icon: 'success',
-     title:'&nbsp;&nbsp;'+result.msg
-   })
-   window.location.href="professional-info"
- }else{
-   Toast.fire({
-     icon: 'error',
-     title:'&nbsp;&nbsp;'+result.msg
-   })
- }
-}
-})
-}

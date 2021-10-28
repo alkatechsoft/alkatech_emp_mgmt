@@ -139,7 +139,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{url('user/personal-info')}}"  class="@yield('personal_info_selected') nav-link">
-                  <i class="nav-icon fa fa-th"></i>
+                  <i class="fa fa-user-secret"></i>
                   <p>
                     Personal Info
                     <span class="right badge badge-danger">New</span>
@@ -148,9 +148,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
               <li class="nav-item">
                 <a href="{{url('user/academic-info')}}"  class="@yield('academic_info_selected') nav-link">
-                  <i class="nav-icon fa fa-th"></i>
+                  <i class="fa fa-graduation-cap"></i>
                   <p>
                     Academic Info
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{url('user/professional-info')}}"  class="@yield('professional_info_selected') nav-link">
+                  <i class="fa fa-laptop"></i>
+
+                  <p>
+                    Professional Info
                   </p>
                 </a>
               </li>
