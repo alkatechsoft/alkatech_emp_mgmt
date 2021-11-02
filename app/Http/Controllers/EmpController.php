@@ -172,15 +172,31 @@ function personal_info(){
     return view('emp.manage_personal_info_process');
 
  }
+ function manage_personal_info($id){
+     if(session('USER_ID') == $id){
+        $update_personal_info=Emp_personal_info::where(['emp_id'=>session('USER_ID')])->get();
+        if(isset($update_personal_info[0]->id)){
+            return view('emp.manage_personal_info')->with('update_personal_info',$update_personal_info);
+            } else{
+                return redirect('user/personal-info');
+            }
+          }else{
+            return redirect('user/personal-info');
+          }
+  
+    }
  function manage_personal_info_process(Request $request){
+      
+
+
     $personal_info = new Emp_personal_info();
     $personal_info->emp_id=session('USER_ID');
     $personal_info->p_address=$request->post('p_address');
     $personal_info->p_state=$request->post('p_state');
     $personal_info->p_city=$request->post('p_city');
     $personal_info->p_pincode=$request->post('p_pincode');
-    $personal_info->contact='2323';
-    $personal_info->guardian_contact='1212';
+    $personal_info->contact=$request->post('personal_contact');
+    $personal_info->guardian_contact=$request->post('guardian_contact');
 
     if($request->is_it_curent_address){
         $personal_info->c_address=$request->post('p_address');
@@ -202,6 +218,37 @@ function personal_info(){
      } else{
         return response()->json(["status"=>"error", "msg"=>"something went wrong"]);
      }
+ }
+ function update_personal_info_process(Request $request){
+
+    if($request->update_user_id > 0){
+  
+    $update_personal_info=Emp_personal_info::where(['emp_id'=>$request->update_user_id])->get();
+    if(count($update_personal_info)){
+        if($request->is_it_curent_address){
+        $update_personal_info_status = DB::table('Emp_personal_infos')
+        ->where('emp_id',$request->update_user_id)
+        ->update(['p_address'=>$request->p_address,'p_city'=>$request->p_city, 'p_state'=>$request->p_state,'p_pincode'=>$request->p_pincode,'contact'=>$request->personal_contact,'guardian_contact'=>$request->guardian_contact,'c_address'=>$request->p_address,'c_city'=>$request->p_city, 'c_state'=>$request->p_state,'c_pincode'=>$request->p_pincode]);
+        }else{
+            $update_personal_info_status = DB::table('Emp_personal_infos')
+            ->where('emp_id',$request->update_user_id)
+            ->update(['p_address'=>$request->p_address,'p_city'=>$request->p_city, 'p_state'=>$request->p_state,'p_pincode'=>$request->p_pincode,'contact'=>$request->personal_contact,'guardian_contact'=>$request->guardian_contact,'c_address'=>$request->c_address,'c_city'=>$request->c_city, 'c_state'=>$request->c_state,'c_pincode'=>$request->c_pincode]);
+        }
+    if($update_personal_info_status == 1){
+         return response()->json(["status"=>"success", "msg"=>"personal info updated successfully"]);
+    }else if($update_personal_info_status == 0){
+         return response()->json(["status"=>"warning", "msg"=>"No change found"]);
+    }
+    } else{
+        return response()->json(["status"=>"error", "msg"=>"Invalid id passed"]);
+
+   }
+}
+   else{
+    return response()->json(["status"=>"error", "msg"=>"Invalid id passed"]);
+
+}
+
  }
 
  function academic_info(){

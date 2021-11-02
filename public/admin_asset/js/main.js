@@ -469,38 +469,8 @@ function namevalidation1(){
       })
     })
 
-    // $('#send_emp_login_form').submit(function(e){
-    //   alert("jk");
-    //   e.preventDefault();
-    //    var Toast = Swal.mixin({
-    //     toast: true,
-    //     position: 'top-end',
-    //     showConfirmButton: false,
-    //     timer: 2000
-    //   });
-    //    $.ajax({
-    //        url: 'emp/send_login_details_to_emp',
-    //        data:$('#send_emp_login_form').serialize(),
-    //        type:'post',
-    //        async: false,
-    //        success:function(result){
-    //          if(result.status=="success"){
-    //           Toast.fire({
-    //             icon: 'success',
-    //             title:'&nbsp;&nbsp;'+result.msg
-    //           })
-    //          }else{
-    //           Toast.fire({
-    //             icon: 'warning',
-    //             title:'&nbsp;&nbsp;'+result.msg
-    //           })
-    //          }
-              
-    //       } 
-         
-    //      })
-    // }
-    // new here
+
+    // Field validation rules
     function field_validation1(name1,id, errid){
       var regex_name = /^[a-zA-Z'\s]{1,40}$/;
     
@@ -518,7 +488,24 @@ function namevalidation1(){
        $('#'+ errid).html('Please enter '+name+' field');
     }
     }
-    
+    function date_validation(name,id, errid){
+      var date_name = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+    if(date_name.test($("#"+ id).val())){
+      $('#'+ errid).html('');
+     }else{
+       $('#'+ errid).html('Please enter '+name+' date');
+    }
+    }
+
+    function contact_validation(name,id, errid){
+      var contact_name = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
+    if(contact_name.test($("#"+ id).val())){
+      $('#'+ errid).html('');
+     }else{
+       $('#'+ errid).html('Please enter '+name+' contact');
+    }
+    }
+
     function pincode_validation(name,id, errid){
       var regex_name = /^[0-9]{6,6}$/;
     if(regex_name.test($("#"+ id).val())){
@@ -527,6 +514,7 @@ function namevalidation1(){
        $('#'+ errid).html('Please enter '+name+' field');
     }
     }
+// Personal info management
     
     $('#submit_personal_info_form').submit(function(e){
       alert("ioio");
@@ -549,51 +537,54 @@ function namevalidation1(){
       }
       if($("#p_pincode").val().length === 6){
         $("#error_p_pincode").html("");
-  
        }else{
       $("#error_p_pincode").html("Please enter pincode field");
-  
       }
-  
-  if($("#p_address").val().length>2 && $("#p_city").val().length>2 && $("#p_state").val().length>2 && $("#p_pincode").val().length === 6){
+      if($("#personal_contact").val().length === 10){
+        $("#error_personal_contact").html("");
+       }else{
+      $("#error_personal_contact").html("Please enter this field");
+      }
+      if($("#guardian_contact").val().length === 10){
+        $("#error_guardian_contact").html("");
+       }else{
+      $("#error_guardian_contact").html("Please enter this field");
+      }
+  if($("#p_address").val().length>2 && $("#p_city").val().length>2 && $("#p_state").val().length>2 && $("#p_pincode").val().length === 6 && $("#personal_contact").val().length === 10 && $("#guardian_contact").val().length === 10){
     emp_personal_info();
   }
   
-      // emp_personal_info();
-    //   var Toast = Swal.mixin({
-    //     toast: true,
-    //     position: 'top-end',
-    //     showConfirmButton: false,
-    //     timer: 2000
-    //   });
-    //   console.log("submit_personal_info_form");
-    //  $.ajax({
-    //      url: 'manage-personal-info',
-    //      data:$('#submit_personal_info_form').serialize(),
-    //      type:'post',
-    //      success:function(result){
-    //        console.log(result);
-    //        if(result.status=="success"){
-    //         Toast.fire({
-    //           icon: 'success',
-    //           title:'&nbsp;&nbsp;'+result.msg
-    //         })
-    //         window.location.href="personal-info"
-    //       }else{
-    //         Toast.fire({
-    //           icon: 'error',
-    //           title:'&nbsp;&nbsp;'+result.msg
-    //         })
-    //       }
-    //      }
-    //   })
     })
 
     $("#is_it_curent_address").click(function(){
       $('#curent_address').hide();
+      $("#error_c_address,#error_c_city,#error_c_state,#error_c_pincode").html("");
+
       })
       $("#no_curent_address").click(function(){
       $('#curent_address').show();
+      if($("#c_address").val().length<2){
+        $("#error_c_address").html("Please enter current addresss field");
+       }else{
+        $("#error_c_address").html("");
+      }
+      if($("#c_city").val().length<2){
+        $("#error_c_city").html("Please enter current addresss field");
+       }else{
+        $("#error_c_address").html("");
+      }
+      if($("#c_state").val().length<2){
+        $("#error_c_state").html("Please enter state field");
+       }else{
+        $("#error_c_state").html("");
+      } 
+      if($("#c_pincode").val().length === 6){
+        $("#error_c_pincode").html("");
+
+       }else{
+        $("#error_c_pincode").html("Please enter pincode field");
+
+      }
       })
 
       function emp_personal_info(){
@@ -625,7 +616,52 @@ function namevalidation1(){
            }
         })
       }
+      $('#submit_update_personal_info_form').submit(function(e){
+        alert("submit_update_personal_info_form");
+        e.preventDefault();
+        emp_update_personal_info();
+      })
+      
+      function emp_update_personal_info(){
 
+        var Toast = Swal.mixin({
+         toast: true,
+         position: 'top-end',
+         showConfirmButton: false,
+         timer: 1000
+       });
+       console.log("submit_update_personal_info_form");
+      // $.ajax({
+        $.ajax({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+          url: '/update-personal-info',
+          data:$('#submit_update_personal_info_form').serialize(),
+          type:'post',
+          success:function(result){
+            console.log(result);
+            if(result.status=="success"){
+             Toast.fire({
+               icon: 'success',
+               title:'&nbsp;&nbsp;'+result.msg
+             })
+             window.location.href="personal-info"
+           }else if(result.status="error"){
+             Toast.fire({
+               icon: 'warning',
+               title:'&nbsp;&nbsp;'+result.msg
+             })
+           }else{
+            Toast.fire({
+              icon: 'warning',
+              title:'&nbsp;&nbsp;'+result.msg
+            })
+          }
+          }
+       })
+     }
+// Academic info management
       $('#submit_academic_info_form').submit(function(e){
         // $("#qualification_certificate").val()
         e.preventDefault();
@@ -705,7 +741,7 @@ function namevalidation1(){
       }
    })
  }
- 
+// professional info management
  $('#submit_professional_info_form').submit(function(e){
   // $("#qualification_certificate").val()
   e.preventDefault();

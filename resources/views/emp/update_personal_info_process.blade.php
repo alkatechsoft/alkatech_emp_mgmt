@@ -27,7 +27,7 @@
           <div class="col-12">
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title"><b>MANAGE PERSONAL INFORMATION0</b></h3>
+                <h3 class="card-title"><b>MANAGE PERSONAL INFORMATION</b></h3>
               </div>
               <!-- /.card-header -->
               <form id="submit_personal_info_form">
@@ -37,7 +37,7 @@
                     <div class="col-xl-12">
                         <div class="form-group">
                           <label for="p_address">Permanent Address*</label>
-                          <input type="text" name="p_address" class="form-control" name="p_address" id="p_address" oninput="field_validation('this','p_address','error_p_address')" placeholder="Permanent address" />
+                          <input type="text" name="p_address" class="form-control" name="p_address" id="p_address" value="{{$update_personal_info_process[0]->p_address}}" oninput="field_validation('Address','p_address','error_p_address')" placeholder="Permanent address" />
                           <span id="error_p_address" class="text-danger" role="alert">
                             
                          </span>
@@ -72,7 +72,7 @@
                     <div class="col-xl-4">
                       <div class="form-group">
                         <label for="personal_contact">Personal contact*</label>
-                        <input type="tel" name="personal_contact" class="form-control" id="personal_contact" oninput="contact_validation('correct','personal_contact','error_personal_contact')" placeholder="Personal contact">
+                        <input type="tel" name="personal_contact" class="form-control" id="personal_contact" oninput="pincode_validation('pincode','p_pincode','error_p_pincode')" placeholder="Personal contact">
                         <span id="error_personal_contact" class="text-danger" role="alert">
                         </span>
                       </div>
@@ -80,7 +80,7 @@
                     <div class="col-xl-4">
                       <div class="form-group">
                         <label for="guardian_contact">Guardian contact*</label>
-                        <input type="tel" name="guardian_contact" class="form-control" id="guardian_contact" oninput="contact_validation('correct','guardian_contact','error_guardian_contact')" placeholder="Guardian contact">
+                        <input type="tel" name="guardian_contact" class="form-control" id="guardian_contact" oninput="pincode_validation('pincode','p_pincode','error_p_pincode')" placeholder="Guardian contact">
                         <span id="error_guardian_contact" class="text-danger" role="alert">
                         </span>
                       </div>

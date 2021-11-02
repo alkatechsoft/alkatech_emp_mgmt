@@ -37,7 +37,7 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                           <label for="highest_qualification">Highest qualification*</label>
-                          <input type="text" name="highest_qualification" class="form-control" name="highest_qualification" id="highest_qualification" oninput="field_validation('Address','highest_qualification','error_p_address')" placeholder="Highest qualification" />
+                          <input type="text" name="highest_qualification" class="form-control" name="highest_qualification" id="highest_qualification" oninput="field_validation('this','highest_qualification','error_highest_qualification')" placeholder="Highest qualification" />
                           <span id="error_highest_qualification" class="text-danger" role="alert">
                             
                          </span>
@@ -46,7 +46,7 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                         <label for="university_college">University/College*</label>
-                        <input type="text" name="university_college" class="form-control" id="university_college" oninput="field_validation('city','p_city','error_p_city')" placeholder="City">
+                        <input type="text" name="university_college" class="form-control" id="university_college" oninput="field_validation('this','university_college','error_university_college')" placeholder="City">
                         <span id="error_university_college" class="text-danger" role="alert">
                                 
                         </span>
@@ -55,7 +55,7 @@
                     <div class="col-xl-6">
                       <div class="form-group">
                         <label for="from_date">From*</label>
-                        <input type="date" name="from_date" class="form-control" id="from_date" oninput="field_validation('state','p_state','error_p_state')" placeholder="State">
+                        <input type="date" name="from_date" class="form-control" id="from_date" oninput="date_validation('correct','from_date','error_from_date')" placeholder="State">
                         <span id="error_from_date" class="text-danger" role="alert">
                             
                         </span>
@@ -64,7 +64,7 @@
                     <div class="col-xl-6">
                       <div class="form-group">
                         <label for="to_date">To*</label>
-                        <input type="date" name="to_date" class="form-control" id="to_date" oninput="pincode_validation('pincode','p_pincode','error_p_pincode')" placeholder="Pincode">
+                        <input type="date" name="to_date" class="form-control" id="to_date" oninput="date_validation('correct','to_date','error_to_date')" placeholder="Pincode">
                         <span id="error_to_date" class="text-danger" role="alert">
                         </span>
                       </div>
@@ -73,7 +73,7 @@
                       <div class="form-group">
                         <label for="qualification_certificate">Upload certificate/marksheet copy*</label>
 
-                        <input type="file" name="qualification_certificate" class="pb-4 form-control" style="padding:0.2rem 0rem 0rem 0.2rem" id="qualification_certificate" oninput="pincode_validation('pincode','p_pincode','error_p_pincode')" 
+                        <input type="file" name="qualification_certificate" class="pb-4 form-control" style="padding:0.2rem 0rem 0rem 0.2rem" id="qualification_certificate" oninput="pincode_validation('this','qualification_certificate','error_qualification_certificate')" 
                         onchange="document.getElementById('upload_ctft').src = window.URL.createObjectURL(this.files[0])"
                         placeholder="upload certificate">
                         <span id="error_qualification_certificate" class="text-danger" role="alert">

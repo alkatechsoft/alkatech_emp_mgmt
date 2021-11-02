@@ -26,12 +26,12 @@
             <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title"><b>PERSONAL INFORMATION</b>
-                  <button class="btn-sm btn btn-secondary" style="
+                  <a href="{{url('user/manage-personal-info')}}/{{session('USER_ID')}}"  class="btn-sm btn btn-secondary" style="
                   position: absolute;
                   right: 14px;
                   margin: 0 auto;
                   top: 8px;
-              ">UPDATE</button>
+              ">UPDATE</a>
                 </h3>
               </div>
             
@@ -98,13 +98,7 @@
               <div class="row">
                 <div class="col-12">
                   <div class="mt-3 ml-3 mr-3 card-primary card-outline card card-body">
-                    <strong><i class="fa fa-mobile" aria-hidden="true"></i>
-                      CONTACT</strong>
-    
-                    <p class="text-muted">
-                      {{$personal_info[0]->p_address}}
-                    </p>
-                    <hr>
+                   
                     <strong>PERSONAL CONTACT</strong>
     
                     <p class="text-muted">{{$personal_info[0]->contact}}</p>
