@@ -65,7 +65,8 @@
                       <div class="small-box bg-warning">
                         <div class="inner text-center">
                           <h3>Professional info</h3>
-                          <p>n/a</p>
+                          <p><i style="font-size: xx-large" class="fa fa-graduation-cap"></i></p>
+
                         </div>
                         <div class="icon">
                           <i class="ion ion-person-add"></i>
