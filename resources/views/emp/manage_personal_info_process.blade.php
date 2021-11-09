@@ -1,5 +1,5 @@
 @extends('emp/layout')
-@section('page_title','emp | Dashboard')
+@section('page_title','Emp | Mangage')
 @section('container')
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">

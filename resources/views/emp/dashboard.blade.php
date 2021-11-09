@@ -1,5 +1,7 @@
 @extends('emp/layout')
 @section('page_title','emp | Dashboard')
+@section('dashboard_selected','active')
+
 @section('container')
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">

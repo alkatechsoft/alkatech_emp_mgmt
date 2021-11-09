@@ -24,6 +24,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link href="{{ asset('admin_asset/css/responsive.bootstrap4.min.css') }}" rel="stylesheet">
   <link href="{{ asset('admin_asset/css/buttons.bootstrap4.min.css') }}" rel="stylesheet">
   <link rel="stylesheet" href="{{asset('front_assets/css/adminlte.min.css')}}">
+  <link rel="stylesheet" href="{{asset('admin_asset/css/custom.css')}}">
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -119,8 +120,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open mb-2">
-            <a href="{{url('user/dashboard')}}" class="nav-link">
+          <li class="nav-item menu-open__ mb-2">
+            <a href="{{url('user/dashboard')}}" class="@yield('dashboard_selected') nav-link">
               <i class="fa fa-dashboard"></i> &nbsp;&nbsp;
               <p>
                 Dashboard
@@ -129,7 +130,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             
           </li>
           <li class="nav-item menu-open mb-2">
-            <a  href="" class="nav-link active">
+            <a  href="" class="nav-link ">
               <i class="fa fa-users"></i>
               <p>
                 My Info
@@ -138,7 +139,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{url('user/personal-info')}}"  class="@yield('personal_info_selected') nav-link">
+                <a href="{{url('user/personal-info')}}"  class="@yield('personal_info_selected') @yield('update_personal_info_selected') nav-link">
                   <i class="fa fa-user-secret"></i>
                   <p>
                     Personal Info
@@ -165,43 +166,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
-          <li class="nav-item menu-open mb-2">
-            <a href="#" class="nav-link active">
-              <i class="fa fa-tasks" aria-hidden="true"></i>
-              <p>
-                Academic info
-                <i class="right fa fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fa fa-th"></i>
-                  <p>
-                    Attendance Filter 
-                    <span class="right badge badge-danger">New</span>
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fa fa-th"></i>
-                  <p>
-                    All employee
-                  </p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fa fa-th"></i>
-              <p>
-                other
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
+        
+         
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

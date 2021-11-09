@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\Attendance;
 use App\Models\Emp;
+use App\Imports\AttendanceImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Mail;
 use Crypt;
 use Exporter;
+use Excel;
 use Cyberduck\LaravelExcel\Contract\SerialiserInterface;
 
 class AdminController extends Controller
@@ -377,9 +379,16 @@ public function send_login_details_to_emp(Request $request, $id){
 }
 
 
+public function import_attendance_form(){
 
+return view('admin.import_attendance_form');
+}
 
+public function import_attendance_form_process(Request $request){
+    Excel::import(new AttendanceImport, $request->file);
+    $msg = "Record Imported successfully";
+    $request->session()->flash('message',$msg);
 
-
-
+    return redirect('admin/import-attendance');
+    }
 }

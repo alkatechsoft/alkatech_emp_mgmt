@@ -167,6 +167,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{url('admin/import-attendance')}}"  class="@yield('import_form_selected') nav-link">
+                  <i class="fa fa-upload"></i>&nbsp;
+                  <p>
+                    Import Attendance
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{url('admin/attendance-reporting')}}" class="@yield('attendance_filter_selected') nav-link">
                   <i class="nav-icon fa fa-filter"></i>
                   <p>
