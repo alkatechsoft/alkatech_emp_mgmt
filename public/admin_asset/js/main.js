@@ -514,7 +514,7 @@ function namevalidation1(){
        $('#'+ errid).html('Please enter '+name+' field');
     }
     }
-// Personal info management
+// Personal info management start
     
     $('#submit_personal_info_form').submit(function(e){
       alert("ioio");
@@ -661,7 +661,9 @@ function namevalidation1(){
           }
        })
      }
-// Academic info management
+// Personal info management end
+
+// Academic info management start
       $('#submit_academic_info_form').submit(function(e){
         // $("#qualification_certificate").val()
         e.preventDefault();
@@ -741,6 +743,67 @@ function namevalidation1(){
       }
    })
  }
+ $('#submit_update_academic_info_form').submit(function(e){
+  e.preventDefault();
+
+  if($("#highest_qualification").val().length>2 && $("#university_college").val().length>2 && $("#from_date").val() != '' && $("#to_date").val() != ''){
+  alert("submit_update_academic_info_form");
+  let formData = new FormData(this);
+  formData.append('highest_qualification', $("#highest_qualification").val());
+  formData.append('university_college', $("#university_college").val());
+  formData.append('from_date', $("#from_date").val());
+  formData.append('to_date', $("#to_date").val());
+  var input = document.querySelector('input[type=file]');
+  var file = input.files[0];
+  formData.append("qualification_certificate", file);
+  // formData.append('qualification_certificate', $("#error_qualification_certificate").val(), 'fileName');
+
+  console.log(formData);
+  alert(formData);
+  emp_update_academic_info(formData);
+  }
+})
+
+function emp_update_academic_info(formData){
+
+  var Toast = Swal.mixin({
+   toast: true,
+   position: 'top-end',
+   showConfirmButton: false,
+   timer: 1000
+ });
+ console.log("submit_update_personal_info_form");
+// $.ajax({
+  $.ajax({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  },
+    url: '/update-academic-info',
+    data:$('#submit_update_academic_info_form').serialize(),
+    type:'post',
+    success:function(result){
+      console.log(result);
+      if(result.status=="success"){
+       Toast.fire({
+         icon: 'success',
+         title:'&nbsp;&nbsp;'+result.msg
+       })
+       window.location.href="personal-info"
+     }else if(result.status="error"){
+       Toast.fire({
+         icon: 'warning',
+         title:'&nbsp;&nbsp;'+result.msg
+       })
+     }else{
+      Toast.fire({
+        icon: 'warning',
+        title:'&nbsp;&nbsp;'+result.msg
+      })
+    }
+    }
+ })
+}
+// academic info management end
 // professional info management
  $('#submit_professional_info_form').submit(function(e){
   // $("#qualification_certificate").val()

@@ -82,6 +82,12 @@ Route::group(['middleware'=>'emp_auth'], function(){
     Route::get('user/academic-info', [EmpController::class, 'academic_info']);
     Route::get('user/manage-academic-info/{id}', [EmpController::class, 'manage_academic_info']);
     Route::post('user/manage-academic-info', [EmpController::class, 'manage_academic_info_process'])->name('emp.manage_academic_info_process');
+    Route::post('update-academic-info', [EmpController::class, 'update_academic_info_process'])->name('emp.update_personal_info_process');
+
+
+    // Route::get('user/academic-info', [EmpController::class, 'academic_info']);
+    // Route::get('user/manage-academic-info/{id}', [EmpController::class, 'manage_academic_info']);
+    // Route::post('user/manage-academic-info', [EmpController::class, 'manage_academic_info_process'])->name('emp.manage_academic_info_process');
    
     Route::get('user/professional-info', [EmpController::class, 'professional_info']);
     Route::get('user/manage-professional-info/{id}', [EmpController::class, 'manage_professional_info']);

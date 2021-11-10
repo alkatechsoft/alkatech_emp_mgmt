@@ -26,12 +26,12 @@
             <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title"><b>ACADEMIC INFORMATION</b>
-                  <button class="btn-sm btn btn-secondary" style="
+                  <a href="{{url('user/manage-academic-info')}}/{{session('USER_ID')}}"  class="btn-sm btn btn-secondary" style="
                   position: absolute;
                   right: 14px;
                   margin: 0 auto;
                   top: 8px;
-              ">UPDATE</button>
+              ">UPDATE</a>
                 </h3>
               </div>
             

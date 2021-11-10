@@ -163,6 +163,7 @@ class EmpController extends Controller
         );
         return response()->json(["status"=>"success", "msg"=>"Password Changed"]);
 }
+// personal info management start
 function personal_info(){
     $personal_info=Emp_personal_info::where(['emp_id'=>session('USER_ID')])->get();
 
@@ -250,6 +251,8 @@ function personal_info(){
 }
 
  }
+// personal info management end
+// academic info management start
 
  function academic_info(){
     $academic_info=Emp_academic_info::where(['emp_id'=>session('USER_ID')])->get();
@@ -260,6 +263,44 @@ function personal_info(){
     return view('emp.manage_academic_info_process');
 
  }
+ function manage_academic_info($id){
+    if(session('USER_ID') == $id){
+       $update_academic_info=Emp_academic_info::where(['emp_id'=>session('USER_ID')])->get();
+       if(isset($update_academic_info[0]->id)){
+           return view('emp.manage_academic_info')->with('update_academic_info',$update_academic_info);
+           } else{
+               return redirect('user/academic-info');
+           }
+         }else{
+           return redirect('user/academic-info');
+         }
+ 
+   }
+
+   function update_academic_info_process(Request $request){
+    if($request->update_user_id > 0){
+  
+    $update_academic_info=Emp_academic_info::where(['emp_id'=>$request->update_user_id])->get();
+    if(count($update_academic_info)){      
+            $update_academic_info_status = DB::table('Emp_academic_infos')
+            ->where('emp_id',$request->update_user_id)
+            ->update(['highest_qualification'=>$request->highest_qualification,'university_college'=>$request->university_college,
+             'from_date'=>$request->from_date,'to_date'=>$request->to_date]);
+
+    if($update_academic_info_status == 1){
+         return response()->json(["status"=>"success", "msg"=>"Academic info updated successfully"]);
+    }else if($update_academic_info_status == 0){
+         return response()->json(["status"=>"warning", "msg"=>"No change found"]);
+    }
+    } else{
+        return response()->json(["status"=>"error", "msg"=>"Invalid id passed"]);
+    }
+    }
+   else{
+    return response()->json(["status"=>"error", "msg"=>"Invalid id passed"]);
+    }
+ }
+
  function manage_academic_info_process(Request $request){
    
  
@@ -303,6 +344,7 @@ $academic_info_status = $academic_info->save();
         return response()->json(["status"=>"error", "msg"=>"something went wrong"]);
      }
  }
+// personal info management end
 
 //  ..........
  function professional_info(){
