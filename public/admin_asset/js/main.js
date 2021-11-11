@@ -758,8 +758,7 @@ function namevalidation1(){
   formData.append("qualification_certificate", file);
   // formData.append('qualification_certificate', $("#error_qualification_certificate").val(), 'fileName');
 
-  console.log(formData);
-  alert(formData);
+   alert(formData);
   emp_update_academic_info(formData);
   }
 })
@@ -779,8 +778,10 @@ function emp_update_academic_info(formData){
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
   },
     url: '/update-academic-info',
-    data:$('#submit_update_academic_info_form').serialize(),
+    data:formData,
     type:'post',
+    contentType: false,
+    processData: false,
     success:function(result){
       console.log(result);
       if(result.status=="success"){

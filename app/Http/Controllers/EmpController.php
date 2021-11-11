@@ -278,14 +278,30 @@ function personal_info(){
    }
 
    function update_academic_info_process(Request $request){
-    if($request->update_user_id > 0){
+     if($request->update_user_id > 0){
   
     $update_academic_info=Emp_academic_info::where(['emp_id'=>$request->update_user_id])->get();
-    if(count($update_academic_info)){      
-            $update_academic_info_status = DB::table('Emp_academic_infos')
-            ->where('emp_id',$request->update_user_id)
-            ->update(['highest_qualification'=>$request->highest_qualification,'university_college'=>$request->university_college,
-             'from_date'=>$request->from_date,'to_date'=>$request->to_date]);
+    if(count($update_academic_info)){   
+                    if($request->file('qualification_certificate') !=''){
+
+                        $file = $request->file('qualification_certificate');
+                        $filename = time().'_'.$file->getClientOriginalName();
+                        $update_academic_info_status = DB::table('Emp_academic_infos')
+                        ->where('emp_id',$request->update_user_id)
+                        ->update(['highest_qualification'=>$request->highest_qualification,'university_college'=>$request->university_college,
+                        'from_date'=>$request->from_date,'to_date'=>$request->to_date, 'qualification_certificate'=>$filename]);
+                        $extension = $file->getClientOriginalExtension();
+                        // File upload location
+                        $location = 'public/media';
+                        $file->storeAS('/public/media',$filename);
+            }else{
+                $update_academic_info_status = DB::table('Emp_academic_infos')
+                ->where('emp_id',$request->update_user_id)
+                ->update(['highest_qualification'=>$request->highest_qualification,'university_college'=>$request->university_college,
+                'from_date'=>$request->from_date,'to_date'=>$request->to_date]);
+                
+            }
+
 
     if($update_academic_info_status == 1){
          return response()->json(["status"=>"success", "msg"=>"Academic info updated successfully"]);
@@ -303,7 +319,7 @@ function personal_info(){
 
  function manage_academic_info_process(Request $request){
    
- 
+//  return $request;
     $academic_info = new Emp_academic_info();
     $academic_info->emp_id=session('USER_ID');
     $academic_info->highest_qualification=$request->post('highest_qualification');

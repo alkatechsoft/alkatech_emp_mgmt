@@ -30,7 +30,7 @@
           <div class="col-12">
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title"><b>MANAGE PERSONAL INFORMATION.</b></h3>
+                <h3 class="card-title"><b>MANAGE PERSONAL INFORMATION</b></h3>
               </div>
               <!-- /.card-header -->
               <form id="submit_update_academic_info_form">
@@ -40,7 +40,10 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                           <label for="highest_qualification">HIGHEST QUALIFICATION*</label>
-                          <input type="text" name="highest_qualification" class="form-control" id="highest_qualification" value="{{$update_academic_info[0]->highest_qualification}}" oninput="field_validation('this','highest_qualification','error_highest_qualification')" placeholder="Permanent address" />
+                          <input type="text" name="highest_qualification" class="form-control" id="highest_qualification" 
+                          value="{{$update_academic_info[0]->highest_qualification}}" 
+                          oninput="field_validation('this','highest_qualification','error_highest_qualification')" 
+                          placeholder="Permanent address" />
                           <span id="error_highest_qualification" class="text-danger" role="alert">
                             
                          </span>
