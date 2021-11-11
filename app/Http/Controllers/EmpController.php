@@ -102,7 +102,20 @@ class EmpController extends Controller
         }
            
     }
-    function dashboard(){
+    function dashboard(Request $request){
+        $is_personal_info=Emp_personal_info::where(['emp_id'=>session('USER_ID')])->get();
+        $is_academic_info=Emp_academic_info::where(['emp_id'=>session('USER_ID')])->get();
+        $is_professional_info=Emp_professional_info::where(['emp_id'=>session('USER_ID')])->get();
+        if(isset($is_personal_info[0]->id)){
+            $request->session()->put('MY_PERSONAL_INFO',true);
+        }
+        if(isset($is_academic_info[0]->id)){
+            $request->session()->put('MY_ACADEMIC_INFO',true);
+        }
+        if(isset($is_professional_info[0]->id)){
+            $request->session()->put('MY_PROFESSIONAL_INFO',true);
+        }
+
        return view('emp.dashboard');
     }
     function email_verification(Request $request,$id){
@@ -164,10 +177,11 @@ class EmpController extends Controller
         return response()->json(["status"=>"success", "msg"=>"Password Changed"]);
 }
 // personal info management start
-function personal_info(){
+function personal_info(Request $request){
     $personal_info=Emp_personal_info::where(['emp_id'=>session('USER_ID')])->get();
 
     if(isset($personal_info[0]->id)){
+        $request->session()->put('MY_PERSONAL_INFO',true);
     return view('emp.personal_info')->with('personal_info',$personal_info);
     }
     return view('emp.manage_personal_info_process');
@@ -254,10 +268,12 @@ function personal_info(){
 // personal info management end
 // academic info management start
 
- function academic_info(){
+ function academic_info(Request $request){
     $academic_info=Emp_academic_info::where(['emp_id'=>session('USER_ID')])->get();
 
     if(isset($academic_info[0]->id)){
+        $request->session()->put('MY_ACADEMIC_INFO',true);
+
     return view('emp.academic_info')->with('academic_info',$academic_info);
     }
     return view('emp.manage_academic_info_process');
@@ -360,18 +376,35 @@ $academic_info_status = $academic_info->save();
         return response()->json(["status"=>"error", "msg"=>"something went wrong"]);
      }
  }
-// personal info management end
+// academic info management end
+
+// professional info management start
 
 //  ..........
- function professional_info(){
+ function professional_info(Request $request){
     $professional_info=Emp_professional_info::where(['emp_id'=>session('USER_ID')])->get();
 
     if(isset($professional_info[0]->id)){
+        $request->session()->put('MY_PROFESSIONAL_INFO',true);
+
     return view('emp.professional_info')->with('professional_info',$professional_info);
     }
     return view('emp.manage_professional_info_process');
 
  }
+ function manage_professional_info($id){
+    if(session('USER_ID') == $id){
+       $update_professional_info=Emp_professional_info::where(['emp_id'=>session('USER_ID')])->get();
+       if(isset($update_professional_info[0]->id)){
+           return view('emp.manage_professional_info')->with('update_professional_info',$update_professional_info);
+           } else{
+               return redirect('user/professional-info');
+           }
+         }else{
+           return redirect('user/professional-info');
+         }
+ 
+   }
  function manage_professional_info_process(Request $request){
    
  
@@ -405,5 +438,45 @@ $professional_info_status = $professional_info->save();
         return response()->json(["status"=>"error", "msg"=>"something went wrong"]);
      }
  }
+
+ function update_professional_info_process(Request $request){
+    //  return $request;
+    if($request->update_user_id > 0){
+   $update_professional_info=Emp_professional_info::where(['emp_id'=>$request->update_user_id])->get();
+   if(count($update_professional_info)){   
+                   if($request->file('experience_letter') !=''){
+                    $experience_letter_file = $request->file('experience_letter');
+                    $experience_letter_filename = time().'_'.$experience_letter_file->getClientOriginalName(); 
+                    $experience_letter_file->storeAS('/public/media',$experience_letter_filename);
+
+                    $sallary_slip_file = $request->file('sallary_slip');
+                    $sallary_slip_filename = time().'_'.$sallary_slip_file->getClientOriginalName();
+                    $sallary_slip_file->storeAS('/public/media',$sallary_slip_filename);
+
+                       $update_professional_info_status = DB::table('Emp_professional_infos')
+                       ->where('emp_id',$request->update_user_id)
+                       ->update(['company_name'=>$request->company_name,'from_date'=>$request->from_date,
+                       'to_date'=>$request->to_date,'experience_letter'=>$experience_letter_filename,'sallary_slip'=>$sallary_slip_filename]);
+                       // File upload location
+                     
+           }else{
+            $update_professional_info_status = DB::table('Emp_professional_infos')
+            ->where('emp_id',$request->update_user_id)
+            ->update(['company_name'=>$request->company_name,'from_date'=>$request->from_date,
+            'to_date'=>$request->to_date]);
+           }
+   if($update_professional_info_status == 1){
+        return response()->json(["status"=>"success", "msg"=>"Professional info updated successfully"]);
+   }else if($update_professional_info_status == 0){
+        return response()->json(["status"=>"warning", "msg"=>"No change found"]);
+   }
+   } else{
+       return response()->json(["status"=>"error", "msg"=>"Invalid id passed"]);
+   }
+   }
+  else{
+   return response()->json(["status"=>"error", "msg"=>"Invalid id passed"]);
+   }
+}
 
 }

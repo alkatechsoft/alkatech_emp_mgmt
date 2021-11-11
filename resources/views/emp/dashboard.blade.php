@@ -50,7 +50,7 @@
                     <!-- ./col -->
                     <div class="col-lg-4 col-6">
                       <!-- small box -->
-                      <div class="small-box bg-success">
+                      <div class="small-box {{session('MY_ACADEMIC_INFO') ? 'bg-success':'bg-warning'}}">
                         <div class="inner text-center">
                           <h3>Acadmic info</h3>
                           <p><i style="font-size: xx-large" class="fa fa-graduation-cap"></i></p>
@@ -58,13 +58,13 @@
                         <div class="icon">
                           <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="{{url('user/academic-info')}}" class="small-box-footer">Please complete your acadmic info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{{url('user/academic-info')}}" class="small-box-footer"><b>{{session('MY_ACADEMIC_INFO') ? 'GO':'Please Complete Academic info'}}</b> &nbsp;<i class="fa fa-arrow-circle-right"></i></a>
                       </div>
                     </div>
                     <!-- ./col -->
                     <div class="col-lg-4 col-6">
                       <!-- small box -->
-                      <div class="small-box bg-warning">
+                      <div class="small-box {{session('MY_PROFESSIONAL_INFO') ? 'bg-success':'bg-warning'}}">
                         <div class="inner text-center">
                           <h3>Professional info</h3>
                           <p><i style="font-size: xx-large" class="fa fa-graduation-cap"></i></p>
@@ -73,7 +73,7 @@
                         <div class="icon">
                           <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="{{url('user/professional-info')}}"  class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{{url('user/professional-info')}}"  class="small-box-footer"><b>{{session('MY_PROFESSIONAL_INFO') ? 'GO':'Please Complete Professional info'}}</b> &nbsp;<i class="fa fa-arrow-circle-right"></i></a>
                       </div>
                     </div>
                     <!-- ./col -->

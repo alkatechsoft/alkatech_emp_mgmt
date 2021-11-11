@@ -26,12 +26,12 @@
             <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title"><b>PERSONAL INFORMATION</b>
-                  <a href="{{url('user/manage-personal-info')}}/{{session('USER_ID')}}"  class="btn-sm btn btn-secondary" style="
+                  <a href="{{url('user/manage-personal-info')}}/{{session('USER_ID')}}"  class="btn-sm btn btn-primary" style="
                   position: absolute;
                   right: 14px;
                   margin: 0 auto;
                   top: 8px;
-              ">UPDATE</a>
+              "><i class="fa fa-edit"></i></a>
                 </h3>
               </div>
             

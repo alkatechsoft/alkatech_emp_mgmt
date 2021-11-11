@@ -805,7 +805,7 @@ function emp_update_academic_info(formData){
  })
 }
 // academic info management end
-// professional info management
+// professional info management start
  $('#submit_professional_info_form').submit(function(e){
   // $("#qualification_certificate").val()
   e.preventDefault();
@@ -887,4 +887,74 @@ success:function(result){
  }
 }
 })
+
 }
+
+
+
+$('#submit_update_professional_info_form').submit(function(e){
+  e.preventDefault();
+
+  if($("#company_name").val().length>2 && $("#from_date").val() != '' && $("#to_date").val() != ''){
+  alert("submit_update_academic_info_form");
+  let formData = new FormData(this);
+  formData.append('company_name', $("#company_name").val());
+  formData.append('from_date', $("#from_date").val());
+  formData.append('to_date', $("#to_date").val());
+  var input = document.querySelector('input[type=file]');
+  var file1 = input.files[0];
+  var file2 = input.files[1];
+  // formData.append("experience_letter", file1);
+  // formData.append("sallary_slip", file2);
+  // formData.append('qualification_certificate', $("#error_qualification_certificate").val(), 'fileName');
+
+   alert(formData);
+ 
+  emp_update_professional_info(formData);
+  }
+})
+
+function emp_update_professional_info(formData){
+$("#update_save_text_btn").html('processing...');
+  var Toast = Swal.mixin({
+   toast: true,
+   position: 'top-end',
+   showConfirmButton: false,
+   timer: 1500
+ });
+ console.log("submit_update_personal_info_form");
+   $.ajax({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  },
+    url: '/update-professional-info',
+    data:formData,
+    type:'post',
+    contentType: false,
+    processData: false,
+    success:function(result){
+      setTimeout(function() {
+        $("#update_save_text_btn").html('Save');
+      }, 200);
+      console.log(result);
+      if(result.status=="success"){
+       Toast.fire({
+         icon: 'success',
+         title:'&nbsp;&nbsp;'+result.msg
+       })
+       window.location.href="personal-info"
+     }else if(result.status="error"){
+       Toast.fire({
+         icon: 'warning',
+         title:'&nbsp;&nbsp;'+result.msg
+       })
+     }else{
+      Toast.fire({
+        icon: 'warning',
+        title:'&nbsp;&nbsp;'+result.msg
+      })
+    }
+    }
+ })
+}
+// professional info management

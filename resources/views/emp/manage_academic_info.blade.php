@@ -31,6 +31,8 @@
             <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title"><b>MANAGE PERSONAL INFORMATION</b></h3>
+                <a href="{{url('user/academic-info')}}" class="btn-sm btn-primary" style="float: right; position: absolute;right: 14px;margin: 0 auto;top: 8px;">  <i class="fa fa-arrow-left"  aria-hidden="true"></i></a>
+
               </div>
               <!-- /.card-header -->
               <form id="submit_update_academic_info_form">
