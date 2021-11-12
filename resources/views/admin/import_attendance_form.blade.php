@@ -32,7 +32,17 @@
               <div class="card-header">
                 <a class="card-title"><b>IMPORT ATTENDENCE </b></a>
                
+                <a data-toggle="tooltip" data-placement="left" 
+                title="Please download demo file and upload with same field and type*"
+                 href="{{url('storage/demo_files/attendance.xlsx')}}" 
+                 class="btn btn-primary" 
+                 style="padding: 0px 10px; float: right;" download><b><i class="fa fa-download"></i>&nbsp;&nbsp;demo file</b></a>
+               
               </div>
+              {{-- <div class="mb-3 card-header" style="">
+                <a class="card-title"><b>Import Jobs</b></a>
+                <a  href="{{url('storage/media/sitelist.xlsx')}}" class="btn btn-primary" style="float: right;" download><b><i class="fa fa-download"></i>&nbsp;&nbsp;demo file</b></a>
+                </div> --}}
               @if(session('message')!==null)
                             <div class="alert alert-success m-3" role="alert">
                                 {{ session('message') }}
@@ -43,8 +53,10 @@
               <div class="card-body">
                 <form method="POST"  action="{{ route('admin.import_attendance_form_process') }}" enctype="multipart/form-data" class="">
                   @csrf
-                  <input type="file" name="file" clas s="form-control">
-                  <button type="submit" class="btn btn-md btn-primary">UPLOAD</button>
+                  <input type="file" name="file" required accept=".xlsx" clas s="form-control">
+                  <br>
+                  <br>
+                  <button type="submit" class="btn-md btn btn-md btn-primary"><b>UPLOAD</b></button>
                 </form>
               </div>
               <!-- /.card-body -->

@@ -76,6 +76,7 @@
                         <th>DATE</th>
                         <th>IN TIME</th>
                         <th>OUT TIME</th> 
+                        <th>WORKING HOURS</th> 
                       </tr>
                       </thead>
                       <tbody>

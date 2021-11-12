@@ -294,11 +294,13 @@ function namevalidation1(){
          async: false,
          success:function(result){
           if(result.status=="success"){
+            $('#attendance_reporting').dataTable().fnClearTable();
+            // $('#attendance_reporting').dataTable().fnDestroy()
             console.log(result.data);
             var counter=0;
             var tableDataHTML = '';
-            $('tbody').empty();  
-    
+            // $('tbody').empty();  
+           
           $.each(result.data, function (key,item){
               
             console.log(item.id)
@@ -306,7 +308,8 @@ function namevalidation1(){
             table.row.add([
               item.date,
               item.in_time,
-              item.out_time
+              item.out_time,
+              item.working_hour
             ]).draw();
     
           });
