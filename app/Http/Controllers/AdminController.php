@@ -291,7 +291,9 @@ class AdminController extends Controller
         //                                                ->where('date', '<=', $request->to)
         //                                                ->where('emp_id', $request->emp_id)
         //                                                ->get();
-           return response()->json(["status"=>"success", "data"=>$filterd_data]);
+            $emp_name =   DB::select(DB::raw("SELECT `name` FROM `emps` where `emps`.`id` = '$request->emp_id'"));
+
+           return response()->json(["status"=>"success", "data"=>$filterd_data,"emp_name"=>$emp_name]);
           }
 
     public function updatepassword()

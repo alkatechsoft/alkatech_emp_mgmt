@@ -300,7 +300,8 @@ function namevalidation1(){
             var counter=0;
             var tableDataHTML = '';
             // $('tbody').empty();  
-           
+            $('#report_emp_name').html('Name:'+result.emp_name[0]['name']);
+          console.log('name::',result.emp_name[0]['name'])
           $.each(result.data, function (key,item){
               
             console.log(item.id)
