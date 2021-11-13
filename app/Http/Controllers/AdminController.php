@@ -346,15 +346,19 @@ public function create_user(Request $request){
         $emp_create->password = Crypt::encrypt($request->post('password'));
         $rand_id=rand(111111111,999999999);
         $emp_create->rand_id = $rand_id;
-        $emp_create->save();
-        
+        $emp_create_status = $emp_create->save();
+        $this->send_login_details_to_emp($request, $emp_create->id);
+       if($emp_create_status){
         return response()->json(["status"=>"success", "msg"=>"User created successfully"]);
+       }else {
+        return response()->json(["status"=>"error", "msg"=>"Something went wrong"]);
+       }
 
     }
 }
   
 }
-public function send_login_details_to_emp(Request $request, $id){
+public function send_login_details_to_emp($request, $id){
      $emp_detail=Emp::where(['id'=>$id])->get();
      $rand_id= $emp_detail[0]->rand_id;
      $password=Crypt::decrypt($emp_detail[0]->password);

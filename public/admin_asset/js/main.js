@@ -414,7 +414,8 @@ function namevalidation1(){
            async: false,
            success:function(result){
              if(result.status=="success"){
-              Toast.fire({
+              $('#create_user')[0].reset();
+                Toast.fire({
                 icon: 'success',
                 title:'&nbsp;&nbsp;'+result.msg
               })
