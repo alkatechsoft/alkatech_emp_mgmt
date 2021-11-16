@@ -66,12 +66,21 @@
                           <div class="form-group">
                             <label for="exampleInputEmail1">USER EMAIL</label>
                             <input type="email" name="email" class="form-control" id="email" oninput="user_personal_email();" placeholder="Enter email">
+                            <span id="error_email" class="text-danger" role="alert">
                             
+                            </span>
                           </div>
                           <div class="form-group">
                             <label for="exampleInputEmail1">OFFICIAL EMAIL</label>
                             <input type="email" name="official_email" class="form-control" id="official_email" oninput="user_official_email();" placeholder="Enter email">
                             <span id="error_official_email" class="text-danger" role="alert">
+                            
+                            </span>
+                          </div>
+                          <div class="form-group">
+                            <label for="salary">CURRENT SALARY*(Monthly)</label>
+                            <input type="text" name="salary" class="form-control" id="salary" oninput="user_salary();" placeholder="Enter salary">
+                            <span id="error_salary" class="text-danger" role="alert">
                             
                             </span>
                           </div>
@@ -104,19 +113,63 @@
                   <tr>
                     <th>NAME</th>
                     <th>EMAIL</th>
+                    <th>OFFICIAL EMAIL</th>
+                    <th>CONTACT</th>
+                    <th>SALARY</th>
+                    <th>EXPERIENCE LETTER</th>
+                    <th>SALARY SLIP</th>
+                    <th>HIGHEST QUALIFICATION CERTIFICATE</th>
+                    <th>HIGHEST PROFESSIONAL CERTIFICATE</th>
+                    <th>CURRENT ADDRESS</th>
+                    <th>PERMANENT ADDRESS</th>
+                    <th>GUARDIAN CONTACT</th>
                     <th>ACTION</th>
                   </tr>
                   </thead>
                   <tbody>
                   @foreach ($employees as $employee)
                   <tr>
-                    <td>{{$employee->name}}</td>
-                    <td>{{$employee->email}} 
+                    <td>{{$employee->name ? $employee->name:'n/a'}}</td>
+                    <td>{{$employee->email ? $employee->email:'n/a'}} 
                       @if ($employee->is_verify == 1)
                       <span class="badge badge-primary">verified</span> </td>
                     @else
                     <span class="badge badge-warning">not verified</span> </td>
                     @endif 
+                    <td>{{$employee->official_email ? $employee->official_email:'n/a'}}</td>
+                    <td>{{$employee->contact ? $employee->contact:'n/a'}}</td>
+                    <td>{{$employee->salary ? $employee->salary:'n/a'}}</td>
+                    <td>
+                      @if ($employee->experience_letter)
+                      <a class="btn-sm btn-primary" href="{{url('storage/media').'/'.$employee->experience_letter}}" download >download</a>
+                          
+                      @else
+                          n/a
+                      @endif
+                    </td>
+                    <td>
+                      @if ($employee->sallary_slip)
+                      <a class="btn-sm btn-primary" href="{{url('storage/media').'/'.$employee->sallary_slip}}" download >download</a>
+                      @else
+                          n/a
+                      @endif
+                    </td>
+                    <td> @if ($employee->qualification_certificate)
+                      <a class="btn-sm btn-primary" href="{{url('storage/media').'/'.$employee->qualification_certificate}}" download>download</a></td>
+                    @else
+                        n/a
+                    @endif
+                    <td>
+                      @if ($employee->professional_certificate)
+                      <a class="btn-sm btn-primary" href="{{url('storage/media').'/'.$employee->professional_certificate}}" download>download</a>
+                      @else
+                          n/a
+                      @endif
+                    </td>
+                    <td>{{$employee->c_address ? $employee->c_address:'n/a'}}</td>
+                    <td>{{$employee->p_address ? $employee->p_address:'n/a'}}</td>
+                    <td>{{$employee->guardian_contact ? $employee->guardian_contact:'n/a' }}</td>
+
                     <td>
                       <div class="btn-group mr-2" role="group" aria-label="First group">
                         @if($employee->status == 1)

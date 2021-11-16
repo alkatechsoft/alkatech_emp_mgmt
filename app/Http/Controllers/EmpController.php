@@ -32,7 +32,7 @@ class EmpController extends Controller
     public function user_login_process(Request $request)
     {
     
-        $result=Emp::where(['email'=>$request->post('l_email')])->get();
+        $result=Emp::where(['official_email'=>$request->post('l_email')])->get();
         if(isset($result[0])){
             $db_password=Crypt::decrypt($result[0]->password);
             $status=$result[0]->status;
@@ -236,6 +236,7 @@ function personal_info(Request $request){
  }
  function update_personal_info_process(Request $request){
 
+
     if($request->update_user_id > 0){
   
     $update_personal_info=Emp_personal_info::where(['emp_id'=>$request->update_user_id])->get();
@@ -245,10 +246,14 @@ function personal_info(Request $request){
         ->where('emp_id',$request->update_user_id)
         ->update(['p_address'=>$request->p_address,'p_city'=>$request->p_city, 'p_state'=>$request->p_state,'p_pincode'=>$request->p_pincode,'contact'=>$request->personal_contact,'guardian_contact'=>$request->guardian_contact,'c_address'=>$request->p_address,'c_city'=>$request->p_city, 'c_state'=>$request->p_state,'c_pincode'=>$request->p_pincode]);
         }else{
-            $update_personal_info_status = DB::table('Emp_personal_infos')
-            ->where('emp_id',$request->update_user_id)
-            ->update(['p_address'=>$request->p_address,'p_city'=>$request->p_city, 'p_state'=>$request->p_state,'p_pincode'=>$request->p_pincode,'contact'=>$request->personal_contact,'guardian_contact'=>$request->guardian_contact,'c_address'=>$request->c_address,'c_city'=>$request->c_city, 'c_state'=>$request->c_state,'c_pincode'=>$request->c_pincode]);
-        }
+            if (strlen((string)$request->c_pincode) == 6) {
+                $update_personal_info_status = DB::table('Emp_personal_infos')
+                ->where('emp_id',$request->update_user_id)
+                ->update(['p_address'=>$request->p_address,'p_city'=>$request->p_city, 'p_state'=>$request->p_state,'p_pincode'=>$request->p_pincode,'contact'=>$request->personal_contact,'guardian_contact'=>$request->guardian_contact,'c_address'=>$request->c_address,'c_city'=>$request->c_city, 'c_state'=>$request->c_state,'c_pincode'=>$request->c_pincode]);
+            }else{
+                  return response()->json(["status"=>"error", "msg"=>"envalid pincode"]);
+            }
+                  }
     if($update_personal_info_status == 1){
          return response()->json(["status"=>"success", "msg"=>"personal info updated successfully"]);
     }else if($update_personal_info_status == 0){
@@ -352,6 +357,9 @@ function personal_info(Request $request){
 $file = $request->file('qualification_certificate');
 $filename = time().'_'.$file->getClientOriginalName();
 
+$professional_certificate_file = $request->file('professional_certificate');
+$professional_certificate_filename = time().'_'.$professional_certificate_file->getClientOriginalName();
+
 // File extension
 $extension = $file->getClientOriginalExtension();
 
@@ -361,8 +369,10 @@ $location = 'public/media';
 // Upload file
 // $file->move($location,$filename);
 $academic_info->qualification_certificate=$filename;
+$academic_info->professional_certificate=$professional_certificate_filename;
 
 $file->storeAS('/public/media',$filename);
+$professional_certificate_file->storeAS('/public/media',$professional_certificate_filename);
 
 // File path
 // $filepath = url('files/'.$filename);
@@ -444,7 +454,7 @@ $professional_info_status = $professional_info->save();
     if($request->update_user_id > 0){
    $update_professional_info=Emp_professional_info::where(['emp_id'=>$request->update_user_id])->get();
    if(count($update_professional_info)){   
-                   if($request->file('experience_letter') !=''){
+                   if(($request->file('experience_letter') !='') && ($request->file('sallary_slip') !='')){
                     $experience_letter_file = $request->file('experience_letter');
                     $experience_letter_filename = time().'_'.$experience_letter_file->getClientOriginalName(); 
                     $experience_letter_file->storeAS('/public/media',$experience_letter_filename);
@@ -459,7 +469,25 @@ $professional_info_status = $professional_info->save();
                        'to_date'=>$request->to_date,'experience_letter'=>$experience_letter_filename,'sallary_slip'=>$sallary_slip_filename]);
                        // File upload location
                      
-           }else{
+                    }elseif($request->file('experience_letter') !='') {
+                        $experience_letter_file = $request->file('experience_letter');
+                        $experience_letter_filename = time().'_'.$experience_letter_file->getClientOriginalName(); 
+                        $experience_letter_file->storeAS('/public/media',$experience_letter_filename);
+    
+                        $update_professional_info_status = DB::table('Emp_professional_infos')
+                        ->where('emp_id',$request->update_user_id)
+                        ->update(['company_name'=>$request->company_name,'from_date'=>$request->from_date,
+                        'to_date'=>$request->to_date,'experience_letter'=>$experience_letter_filename]);
+                    }elseif($request->file('sallary_slip') !='') {
+                        $sallary_slip_file = $request->file('sallary_slip');
+                        $sallary_slip_filename = time().'_'.$sallary_slip_file->getClientOriginalName();
+                        $sallary_slip_file->storeAS('/public/media',$sallary_slip_filename);    
+    
+                        $update_professional_info_status = DB::table('Emp_professional_infos')
+                        ->where('emp_id',$request->update_user_id)
+                        ->update(['company_name'=>$request->company_name,'from_date'=>$request->from_date,
+                        'to_date'=>$request->to_date,'sallary_slip'=>$sallary_slip_filename]);
+                    }else{
             $update_professional_info_status = DB::table('Emp_professional_infos')
             ->where('emp_id',$request->update_user_id)
             ->update(['company_name'=>$request->company_name,'from_date'=>$request->from_date,

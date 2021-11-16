@@ -30,7 +30,7 @@
           <div class="col-12">
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title"><b>MANAGE PERSONAL INFORMATION</b></h3>
+                <h3 class="card-title"><b>MANAGE ACADEMIC INFORMATION</b></h3>
                 <a href="{{url('user/academic-info')}}" class="btn-sm btn-primary" style="float: right; position: absolute;right: 14px;margin: 0 auto;top: 8px;">  <i class="fa fa-arrow-left"  aria-hidden="true"></i></a>
 
               </div>
@@ -81,15 +81,25 @@
                       <div class="form-group">
                         <label for="qualification_certificate">Upload certificate/marksheet copy*</label>
 
-                        <input type="file" name="qualification_certificate" class="pb-4 form-control" style="padding:0.2rem 0rem 0rem 0.2rem" id="qualification_certificate" oninput="pincode_validation('this','qualification_certificate','error_qualification_certificate')" 
+                        <input type="file" name="qualification_certificate" class="pb-4 form-control" style="padding:0.2rem 0rem 0rem 0.2rem" id="qualification_certificate" oninput="file_validation('this','qualification_certificate','error_qualification_certificate')" 
                         onchange="document.getElementById('upload_ctft').src = window.URL.createObjectURL(this.files[0])"
                         placeholder="upload certificate">
                          {{-- <img style="height:auto; width:200px;"src="{{url('storage/media').'/'.$update_academic_info[0]->qualification_certificate}}" class="mt-2 text-muted"> --}}
 
                         {{-- <span id="error_qualification_certificate" class="text-danger" role="alert">
                         </span> --}}
-                        <img  id="upload_ctft" src="{{url('storage/media').'/'.$update_academic_info[0]->qualification_certificate}}" style="margin:auto; border: 0px solid #f3dcdc;padding: 3px;margin-top: 4px;" height="auto" width="200px" height="auto" />
+                        {{-- <img  id="upload_ctft" src="{{url('storage/media').'/'.$update_academic_info[0]->qualification_certificate}}" style="margin:auto; border: 0px solid #f3dcdc;padding: 3px;margin-top: 4px;" height="auto" width="200px" height="auto" /> --}}
                       </div>
+                      <embed
+                      id="upload_ctft" 
+                      src="{{url('storage/media').'/'.$update_academic_info[0]->qualification_certificate}}"
+                      type="application/pdf"
+                      frameBorder="1"
+                      scrolling="auto"
+                      height="auto"
+                      width="100%"
+                  ></embed>
+                       
                     </div>
                 </div>
           

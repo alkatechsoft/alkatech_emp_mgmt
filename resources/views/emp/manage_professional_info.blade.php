@@ -30,7 +30,7 @@
             <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title"><b>MANAGE PROFESSIONAL INFORMATION.</b></h3>
-               <a href="{{url('user/personal-info')}}" class="btn-sm btn-primary" style="float: right; position: absolute;right: 14px;margin: 0 auto;top: 8px;">  <i class="fa fa-arrow-left"  aria-hidden="true"></i></a>
+               <a href="{{url('user/professional-info')}}" class="btn-sm btn-primary" style="float: right; position: absolute;right: 14px;margin: 0 auto;top: 8px;">  <i class="fa fa-arrow-left"  aria-hidden="true"></i></a>
 
               </div>
               <!-- /.card-header -->
@@ -72,7 +72,20 @@
                         <input type="file" name="experience_letter" class="pb-4 form-control" style="padding:0.2rem 0rem 0rem 0.2rem" id="experience_letter" oninput="pincode_validation('this','qualification_certificate','error_qualification_certificate')" 
                         onchange="document.getElementById('upload_exp_letter').src = window.URL.createObjectURL(this.files[0])"
                         placeholder="upload Experience letter">
-                        <img  id="upload_exp_letter" src="{{url('storage/media').'/'.$update_professional_info[0]->experience_letter}}" style="margin:auto; border: 0px solid #f3dcdc;padding: 3px;margin-top: 4px;" height="auto" width="200px" height="auto" />
+                        {{-- <img  id="upload_exp_letter" src="{{url('storage/media').'/'.$update_professional_info[0]->experience_letter}}" style="margin:auto; border: 0px solid #f3dcdc;padding: 3px;margin-top: 4px;" height="auto" width="200px" height="auto" /> --}}
+                     <br>
+                        <embed
+                        id="upload_exp_letter" 
+                        src="{{url('storage/media').'/'.$update_professional_info[0]->experience_letter}}" 
+                        type="application/pdf"
+                        frameBorder="0"
+                        scrolling="auto"
+                        height="400px"
+                        width="100%"
+                    ></embed>
+                     
+                     
+                     
                       </div>
                     </div>
                     <div class="col-xl-6">
@@ -82,7 +95,17 @@
                         <input type="file" name="sallary_slip" class="pb-4 form-control" style="padding:0.2rem 0rem 0rem 0.2rem" id="experience_letter" oninput="pincode_validation('this','qualification_certificate','error_qualification_certificate')" 
                         onchange="document.getElementById('upload_sallary_slip').src = window.URL.createObjectURL(this.files[0])"
                         placeholder="upload Sallary Slip">
-                        <img  id="upload_sallary_slip" src="{{url('storage/media').'/'.$update_professional_info[0]->sallary_slip}}" style="margin:auto; border: 0px solid #f3dcdc;padding: 3px;margin-top: 4px;" height="auto" width="200px" height="auto" />
+                        {{-- <img  id="upload_sallary_slip" src="{{url('storage/media').'/'.$update_professional_info[0]->sallary_slip}}" style="margin:auto; border: 0px solid #f3dcdc;padding: 3px;margin-top: 4px;" height="auto" width="200px" height="auto" /> --}}
+                        <br>
+                        <embed
+                        id="upload_sallary_slip" 
+                        src="{{url('storage/media').'/'.$update_professional_info[0]->sallary_slip}}" 
+                        type="application/pdf"
+                        frameBorder="0"
+                        scrolling=""
+                        height="400px"
+                        width="100%"
+                    ></embed>
                       </div>
                     </div>
                    

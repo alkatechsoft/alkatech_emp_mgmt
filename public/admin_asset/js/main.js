@@ -362,11 +362,14 @@ function namevalidation1(){
       if($("#official_email").val().length<1){
         $("#error_official_email").html("This field required");
       }
+      if($("#salary").val().length<1){
+        $("#error_salary").html("This field required");
+      }
       if($("#password").val().length<1){
         $("#error_password").html("This field required");
       }
 
-      if($("#name").val().length>0 && $("#email").val().length>0 && $("#official_email").val().length>0 && $("#password").val().length>0){
+      if($("#name").val().length>0 && $("#email").val().length>0 && $("#official_email").val().length>0 && $("#salary").val().length>4 && $("#password").val().length>0){
         create_user();
       } 
 
@@ -378,6 +381,14 @@ function namevalidation1(){
            $('#error_name').html('');
           }else{
             $('#error_name').html('Please enter full name');
+      }
+    }
+    function user_salary(){
+      var regex_salary = /^[0-9]{4,6}$/;
+      if(regex_salary.test($('#salary').val())){
+           $('#error_salary').html('');
+          }else{
+            $('#error_salary').html('Please enter correct salary');
       }
     }
   
@@ -493,6 +504,23 @@ function namevalidation1(){
        $('#'+ errid).html('Please enter '+name+' field');
     }
     }
+    function address_validation(name,id, errid){
+      var regex_name = /^[#.0-9a-zA-Z\s,-/]+$/;
+    if(regex_name.test($("#"+ id).val())){
+      $('#'+ errid).html('');
+     }else{
+       $('#'+ errid).html('Please enter '+name+' field');
+    }
+    }
+ 
+    function file_validation(name,id, errid){
+      var regex_name = /^.*\.(jpg|JPG|png|PNG|pdf|PDF)$/;
+    if(regex_name.test($("#"+ id).val())){
+      $('#'+ errid).html('');
+     }else{
+       $('#'+ errid).html('Please enter jpg/png/pdf/doc type file only');
+    }
+    }
     function date_validation(name,id, errid){
       var date_name = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
     if(date_name.test($("#"+ id).val())){
@@ -522,7 +550,7 @@ function namevalidation1(){
 // Personal info management start
     
     $('#submit_personal_info_form').submit(function(e){
-      alert("ioio");
+      alert("ioio"+$("input[name=is_it_curent_address]").val());
       e.preventDefault();
   
       if($("#p_address").val().length<2){
@@ -710,8 +738,8 @@ function namevalidation1(){
       formData.append("qualification_certificate", file);
       // formData.append('qualification_certificate', $("#error_qualification_certificate").val(), 'fileName');
     
-      console.log(formData);
-      alert(formData);
+      // console.log(formData);
+      // alert(formData);
       emp_academic_info(formData);
     }
   })
@@ -752,7 +780,7 @@ function namevalidation1(){
   e.preventDefault();
 
   if($("#highest_qualification").val().length>2 && $("#university_college").val().length>2 && $("#from_date").val() != '' && $("#to_date").val() != ''){
-  alert("submit_update_academic_info_form");
+  // alert("submit_update_academic_info_form");
   let formData = new FormData(this);
   formData.append('highest_qualification', $("#highest_qualification").val());
   formData.append('university_college', $("#university_college").val());
@@ -763,7 +791,7 @@ function namevalidation1(){
   formData.append("qualification_certificate", file);
   // formData.append('qualification_certificate', $("#error_qualification_certificate").val(), 'fileName');
 
-   alert(formData);
+  //  alert(formData);
   emp_update_academic_info(formData);
   }
 })
@@ -856,7 +884,7 @@ formData.append("qualification_certificate", file);
 // formData.append('qualification_certificate', $("#error_qualification_certificate").val(), 'fileName');
 
 console.log(formData);
-alert(formData);
+// alert(formData);
 emp_professional_info(formData);
 }
 })
@@ -901,7 +929,7 @@ $('#submit_update_professional_info_form').submit(function(e){
   e.preventDefault();
 
   if($("#company_name").val().length>2 && $("#from_date").val() != '' && $("#to_date").val() != ''){
-  alert("submit_update_academic_info_form");
+  // alert("submit_update_academic_info_form");
   let formData = new FormData(this);
   formData.append('company_name', $("#company_name").val());
   formData.append('from_date', $("#from_date").val());
@@ -913,7 +941,7 @@ $('#submit_update_professional_info_form').submit(function(e){
   // formData.append("sallary_slip", file2);
   // formData.append('qualification_certificate', $("#error_qualification_certificate").val(), 'fileName');
 
-   alert(formData);
+  //  alert(formData);
  
   emp_update_professional_info(formData);
   }
@@ -940,7 +968,7 @@ $("#update_save_text_btn").html('processing...');
     success:function(result){
       setTimeout(function() {
         $("#update_save_text_btn").html('Save');
-      }, 200);
+      }, 20);
       console.log(result);
       if(result.status=="success"){
        Toast.fire({

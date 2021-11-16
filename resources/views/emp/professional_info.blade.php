@@ -57,15 +57,40 @@
                     <strong> TO</strong>
     
                     <p class="text-muted">{{$professional_info[0]->to_date}}</p>
-                    <hr>
-    
-                    <strong> EXPERIENCE LETTER</strong>
-                    <img style="height:auto; width:200px;"src="{{url('storage/media').'/'.$professional_info[0]->experience_letter}}" class="mt-2 text-muted">
-                    <hr>
-                  
-                    <strong> SALLARY SLIP</strong>
-                    <img style="height:auto; width:200px;"src="{{url('storage/media').'/'.$professional_info[0]->sallary_slip}}" class="mt-2 text-muted">
+
+                    <div class="row"> 
+                    <div class="col-xl-6">
+                    <label> EXPERIENCE LETTER</label>
+
+                    <div class="form-group">
+                        <embed
+                        id="experience_letter_preview1" 
+                        src="{{url('storage/media').'/'.$professional_info[0]->experience_letter}}" 
+                        type="application/pdf"
+                        frameBorder="0"
+                        scrolling=""
+                        height="400px"
+                        width="100%"
+                    ></embed>
+                    {{-- <img style="height:auto; width:200px;"src="{{url('storage/media').'/'.$professional_info[0]->experience_letter}}" class="mt-2 text-muted"> --}}
+                    </div>
+                    </div>
+                    <div class="col-xl-6">
+                    <label> SALLARY SLIP</label>
+
+                      <div class="form-group">
+                    {{-- <img style="height:auto; width:200px;"src="{{url('storage/media').'/'.$professional_info[0]->sallary_slip}}" class="mt-2 text-muted"> --}}
+                        <embed
+                        id="experience_letter_preview1" 
+                        src="{{url('storage/media').'/'.$professional_info[0]->sallary_slip}}" 
+                        type="application/pdf"
+                        frameBorder="0"
+                        scrolling=""
+                        height="400px"
+                        width="100%"
+                    ></embed>
                   </div>
+                    </div>
                 </div>
               
               </div>

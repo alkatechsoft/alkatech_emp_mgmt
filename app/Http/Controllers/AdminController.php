@@ -129,7 +129,10 @@ class AdminController extends Controller
     public function emp_list()
     {
         //
-        $employees=Emp::all();
+       $employees = DB::select(DB::raw("SELECT `emps`.id, `emps`.name, `emps`.email,`emps`.official_email,`emps`.salary,is_verify, status,`emp_personal_infos`.contact,`emp_professional_infos`.sallary_slip,`emp_professional_infos`.experience_letter,`emp_professional_infos`.professional_certificate,`emp_academic_infos`.qualification_certificate,`emp_personal_infos`.c_address,`emp_personal_infos`.p_address,`emp_personal_infos`.guardian_contact FROM emps LEFT JOIN emp_personal_infos ON emps.id=emp_personal_infos.emp_id LEFT JOIN emp_academic_infos ON emps.id=emp_academic_infos.emp_id LEFT JOIN emp_professional_infos ON emps.id=emp_professional_infos.emp_id"));
+// return $employees;
+        // $employees=Emp::all();
+        // return $employees;
         return view('admin.emp')->with('employees',$employees);
     }
     public function status(Request $request,$status,$id)
@@ -343,6 +346,7 @@ public function create_user(Request $request){
         $emp_create->name = $request->post('name');
         $emp_create->email = $request->post('email');
         $emp_create->official_email = $request->post('official_email');
+        $emp_create->salary = $request->post('salary');
         $emp_create->password = Crypt::encrypt($request->post('password'));
         $rand_id=rand(111111111,999999999);
         $emp_create->rand_id = $rand_id;

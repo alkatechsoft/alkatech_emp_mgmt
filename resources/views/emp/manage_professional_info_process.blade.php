@@ -66,11 +66,24 @@
                         <label for="p_pincode">EXPERIENCE LETTER*</label>
                         <input type="file" name="experience_letter" class="pb-4 form-control" style="padding:0.2rem 0rem 0rem 0.2rem" id="experience_letter" style="" oninput="pincode_validation('pincode','p_pincode','error_p_pincode')"
                         onchange="document.getElementById('experience_letter_preview').src = window.URL.createObjectURL(this.files[0])"
+                         accept="application/pdf"
+                         scrolling="auto"
                         placeholder="Pincode">
                         <span id="error_experience_letter" class="text-danger" role="alert">
                         </span>
-                        <img  id="experience_letter_preview" src="" style="margin:auto; border: 0px solid #f3dcdc;padding: 3px;margin-top: 4px;" height="auto" width="200px" height="auto" />
-
+                       
+                        {{-- <img  id="experience_letter_previewas" src="" style="margin:auto; border: 0px solid #f3dcdc;padding: 3px;margin-top: 4px;" height="auto" width="200px" height="auto" /> --}}
+                       <embed
+                        id="experience_letter_preview" 
+                        src=""
+                        type="application/pdf"
+                        frameBorder="0"
+                        scrolling="auto"
+                        height="auto"
+                        width="100%"
+                    ></embed>
+                         
+                  
                       </div>
                     </div>
                     <div class="col-xl-6">
@@ -82,7 +95,15 @@
                         placeholder="upload sallary slip">
                         <span id="error_sallary_slip" class="text-danger" role="alert">
                         </span>
-                        <img  id="sallary_slip_preview" src="" style="margin:auto; border: 0px solid #f3dcdc;padding: 3px;margin-top: 4px;" height="auto" width="200px" height="auto" />
+                        
+                        {{-- <img  id="sallary_slip_preview" src="" style="margin:auto; border: 0px solid #f3dcdc;padding: 3px;margin-top: 4px;" height="auto" width="200px" height="auto" /> --}}
+                         <iframe
+                        src=""
+                        frameBorder="0"
+                        height="auto"
+                        width="100%"
+                        id="sallary_slip_preview"
+                    ></iframe> 
                       </div>
                     </div>
                 </div>

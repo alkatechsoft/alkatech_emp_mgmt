@@ -1,5 +1,6 @@
 @extends('emp/layout')
 @section('page_title','emp | Update Academic Info')
+@section('academic_info_selected','active')
 @section('container')
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
@@ -27,7 +28,7 @@
           <div class="col-12">
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title"><b>MANAGE ACADEMIC INFORMATION.</b></h3>
+                <h3 class="card-title"><b>MANAGE ACADEMIC INFORMATION</b></h3>
               </div>
               <!-- /.card-header -->
               <form id="submit_academic_info_form" enctype="multipart/form-data">
@@ -73,15 +74,44 @@
                       <div class="form-group">
                         <label for="qualification_certificate">Upload certificate/marksheet copy*</label>
 
-                        <input type="file" name="qualification_certificate" class="pb-4 form-control" style="padding:0.2rem 0rem 0rem 0.2rem" id="qualification_certificate" oninput="pincode_validation('this','qualification_certificate','error_qualification_certificate')" 
+                        <input type="file" name="qualification_certificate" class="pb-4 form-control" style="padding:0.2rem 0rem 0rem 0.2rem" id="qualification_certificate" oninput="file_validation('this','qualification_certificate','error_qualification_certificate')" 
                         onchange="document.getElementById('upload_ctft').src = window.URL.createObjectURL(this.files[0])"
                         placeholder="upload certificate">
                         <span id="error_qualification_certificate" class="text-danger" role="alert">
                         </span>
-                        <img  id="upload_ctft" src="" style="margin:auto; border: 0px solid #f3dcdc;padding: 3px;margin-top: 4px;" height="auto" width="200px" height="auto" />
+                        {{-- <img  id="upload_ctft" src="" style="margin:auto; border: 0px solid #f3dcdc;padding: 3px;margin-top: 4px;" height="auto" width="200px" height="auto" /> --}}
+                        <embed
+                          id="upload_ctft" 
+                          src=""
+                          type="application/pdf"
+                          frameBorder="1"
+                          scrolling="auto"
+                          height="auto"
+                          width="100%"
+                      ></embed>
                       </div>
                     </div>
-                   
+                    <div class="col-xl-6">
+                      <div class="form-group">
+                        <label for="professional_certificate">Upload professional cerificate copy*</label>
+
+                        <input type="file" name="professional_certificate" class="pb-4 form-control" style="padding:0.2rem 0rem 0rem 0.2rem" id="professional_certificate" oninput="file_validation('this','professional_certificate','error_professional_certificate')" 
+                        onchange="document.getElementById('upload_professional_ctft').src = window.URL.createObjectURL(this.files[0])"
+                        placeholder="upload certificate">
+                        <span id="error_professional_certificate" class="text-danger" role="alert">
+                        </span>
+                        {{-- <img  id="upload_ctft" src="" style="margin:auto; border: 0px solid #f3dcdc;padding: 3px;margin-top: 4px;" height="auto" width="200px" height="auto" /> --}}
+                        <embed
+                          id="upload_professional_ctft" 
+                          src=""
+                          type="application/pdf"
+                          frameBorder="1"
+                          scrolling="auto"
+                          height="auto"
+                          width="100%"
+                      ></embed>
+                      </div>
+                    </div>
                 </div>
                    
                     <div class="col-xl-4">

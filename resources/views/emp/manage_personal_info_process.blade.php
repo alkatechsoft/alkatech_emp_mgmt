@@ -37,7 +37,7 @@
                     <div class="col-xl-12">
                         <div class="form-group">
                           <label for="p_address">Permanent Address*</label>
-                          <input type="text" name="p_address" class="form-control" name="p_address" id="p_address" oninput="field_validation('this','p_address','error_p_address')" placeholder="Permanent address" />
+                          <input type="text" name="p_address" class="form-control" name="p_address" id="p_address" oninput="address_validation('this','p_address','error_p_address')" placeholder="Permanent address" />
                           <span id="error_p_address" class="text-danger" role="alert">
                             
                          </span>
@@ -98,7 +98,7 @@
                             <div class="col-xl-12">
                                 <div class="form-group">
                                   <label for="c_address">Current Address</label>
-                                  <input type="textarea" name="c_address" class="form-control" id="c_address" placeholder="Current address">
+                                  <input type="textarea" name="c_address" class="form-control" id="c_address" oninput="address_validation('this','c_address','error_c_address')" placeholder="Current address">
                                   <span id="error_c_address" class="text-danger" role="alert">
                                   </span>
                                   @error('c_address')
@@ -111,7 +111,7 @@
                             <div class="col-xl-4">
                             <div class="form-group">
                                 <label for="c_city">City</label>
-                                <input type="text"  name="c_city" class="form-control" id="c_city" placeholder="City">
+                                <input type="text"  name="c_city" class="form-control" id="c_city" oninput="field_validation('city','c_city','error_c_city')" placeholder="City">
                                 <span id="error_c_city" class="text-danger" role="alert">
                                 </span>
                                 @error('c_city')
@@ -124,7 +124,7 @@
                             <div class="col-xl-4">
                               <div class="form-group">
                                 <label for="c_state">State</label>
-                                <input type="text" name="c_state" class="form-control" id="c_state" placeholder="State">
+                                <input type="text" name="c_state" class="form-control" id="c_state" oninput="field_validation('city','c_state','error_c_state')" placeholder="State">
                                 <span id="error_c_state" class="text-danger" role="alert">
                                 </span>
                                 @error('c_state')
@@ -137,7 +137,7 @@
                             <div class="col-xl-4">
                               <div class="form-group">
                                 <label for="c_pincode">Pincode</label>
-                                <input type="text" name="c_pincode" class="form-control" id="c_pincode" placeholder="Pincode">
+                                <input type="text" name="c_pincode" class="form-control" id="c_pincode" oninput="pincode_validation('pincode','c_pincode','error_c_pincode')" placeholder="Pincode">
                                 <span id="error_c_pincode" class="text-danger" role="alert">
                                 </span>
                                   @error('c_pincode')

@@ -65,9 +65,35 @@
                     <p class="text-muted">{{$academic_info[0]->to_date}}</p>
                     <hr>
     
-                    <strong> DEGREE/CERTIFICATE</strong>
-                    <img style="height:auto; width:200px;"src="{{url('storage/media').'/'.$academic_info[0]->qualification_certificate}}" class="mt-2 text-muted">
-                    
+                    <strong> DEGREE/CERTIFICATE <a class="btn-sm btn-primary"
+                      href="{{url('storage/media').'/'.$academic_info[0]->qualification_certificate}}">
+                      <i class="fa fa-eye">&nbsp;</i></a>
+                    </strong>
+                    {{-- <img style="height:auto; width:200px;"src="{{url('storage/media').'/'.$academic_info[0]->qualification_certificate}}" class="mt-2 text-muted"> --}}
+                    <embed
+                    type="application/pdf"
+                    src="{{url('storage/media').'/'.$academic_info[0]->qualification_certificate}}" 
+                    class="mt-2 text-muted
+                    frameBorder="0"
+                    scrolling="auto"
+                    height="200px"
+                    width="200px"
+                ></embed>
+                <br>
+                <strong> PROFESSIONAL CERTIFICATE <a class="btn-sm btn-primary"
+                  href="{{url('storage/media').'/'.$academic_info[0]->professional_certificate}}">
+                  <i class="fa fa-eye">&nbsp;</i></a>
+                </strong>
+                {{-- <img style="height:auto; width:200px;"src="{{url('storage/media').'/'.$academic_info[0]->qualification_certificate}}" class="mt-2 text-muted"> --}}
+                <embed
+                type="application/pdf"
+                src="{{url('storage/media').'/'.$academic_info[0]->professional_certificate}}" 
+                class="mt-2 text-muted
+                frameBorder="0"
+                scrolling="auto"
+                height="200px"
+                width="200px"
+            ></embed>
                   </div>
                 </div>
               
