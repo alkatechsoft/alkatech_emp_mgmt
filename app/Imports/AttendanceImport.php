@@ -20,7 +20,8 @@ class AttendanceImport implements ToModel, WithHeadingRow
             'emp_id'=>$row['emp_id'],
             'date'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['date']),
             'in_time'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['in_time']),
-            'out_time'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['out_time'])
+            'out_time'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['out_time']),
+            'status'=>$row['status'],
         ]);
  
     }
