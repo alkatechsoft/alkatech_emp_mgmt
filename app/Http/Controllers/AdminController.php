@@ -287,7 +287,7 @@ class AdminController extends Controller
    
        public function attendance_reporting_process(Request $request)
        {
-        $filterd_data =   DB::select(DB::raw("SELECT TIMEDIFF(`attendances`.`out_time`,`attendances`.`in_time`) AS 'working_hour',`attendances`.`date`,`attendances`.`in_time`,`attendances`.`out_time` FROM `attendances` where `attendances`.`emp_id` = '$request->emp_id' AND `attendances`.`date` >= '$request->from' AND `attendances`.`date` <= '$request->to'"));
+        $filterd_data =   DB::select(DB::raw("SELECT TIMEDIFF(`attendances`.`out_time`,`attendances`.`in_time`) AS 'working_hour',`attendances`.`date`,`attendances`.`in_time`,`attendances`.`out_time`,`attendances`.`status` FROM `attendances` where `attendances`.`emp_id` = '$request->emp_id' AND `attendances`.`date` >= '$request->from' AND `attendances`.`date` <= '$request->to'"));
         // return $dataaa;
            // $filterd_data = $filterd_data = Attendance::whereBetween('date',[$data[2],$data[3]])->get();
         //    $filterd_dataa = $filterd_data = Attendance::where('date', '>=', $request->from)

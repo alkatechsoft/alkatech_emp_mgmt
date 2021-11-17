@@ -305,14 +305,22 @@ function namevalidation1(){
           $.each(result.data, function (key,item){
               
             console.log(item.id)
+           if(item.status === 'a'){
+            table.row.add([
+              item.date,
+              "A",
+              "A",
+              "A"
+            ]).draw();
            
+          }else{
             table.row.add([
               item.date,
               item.in_time,
               item.out_time,
               item.working_hour
             ]).draw();
-    
+          }
           });
            
         }
@@ -408,7 +416,15 @@ function namevalidation1(){
             $('#error_official_email').html('Please enter email');
       }
     }
-  
+    var is_weekend =  function(date1){
+      var dt = new Date(date1);
+      if(dt.getDay() == 6 || dt.getDay() == 0)
+         {
+          return "weekend";
+          } 
+  }
+
+   
 
     function create_user(){
       var table = $('#emp_list').DataTable();

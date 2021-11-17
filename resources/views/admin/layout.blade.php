@@ -284,7 +284,7 @@ $( document ).ready(function() {
 });
 //Initialize Select2 Elements
 $('#attendance_reporting').prepend('<caption style="caption-side: top"><h2 id="report_emp_name"></h2></caption>');
-$('#attendance_reporting').append('<caption style="caption-side: bottom"><br><b>total Salary  : 20000</b></caption>');
+// $('#attendance_reporting').append('<caption style="caption-side: bottom"><br><b>total Salary  : 20000</b></caption>');
 
     $('.select2').select2();
     $("#attendance_reporting").DataTable({
