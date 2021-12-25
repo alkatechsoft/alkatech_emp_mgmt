@@ -1006,4 +1006,88 @@ $("#update_save_text_btn").html('processing...');
     }
  })
 }
-// professional info management
+// professional info management end
+// create leave management start
+
+    $('#create_leave').submit(function(e){
+      e.preventDefault();
+      if($("#date").val() !=''){
+        $("#error_date").html("");
+      }else{
+        $("#error_date").html("This field required");
+      }
+      if($("#leave_desc").val().length<2){
+        $("#error_leave_desc").html("This field required");
+      }else{
+        $("#error_leave_desc").html("");
+      }
+      if($("#date").val() != '' && $("#leave_desc").val().length>2    ){
+        alert('aaa');
+        create_leave();
+      } 
+    })
+    function create_leave(){
+      alert('create_leave');
+      var table = $('#leave_list').DataTable();
+      var Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000
+      });
+       $.ajax({
+           url: 'create-leave',
+           data:$('#create_leave').serialize(),
+           type:'post',
+           async: false,
+           success:function(result){
+             if(result.status=="success"){
+            $('#leave_list').dataTable().fnClearTable();
+
+              $('#create_leave')[0].reset();
+                Toast.fire({
+                icon: 'success',
+                title:'&nbsp;&nbsp;'+result.msg
+              })
+              // $.each(result.data, function (key,item){
+              //   console.log(item.id)
+              //   table.row.add([
+              //     item.date,
+              //     item.leave_desc,
+              //   ]).draw();
+              // });
+             window.location.href='leave-management';
+             }else{
+              Toast.fire({
+                icon: 'warning',
+                title:'&nbsp;&nbsp;'+result.msg
+              })
+             }
+              
+          } 
+         
+         })
+    }
+     function get_leave_by_id($id){
+      $.ajax({
+        url: 'get-leave-by-id',
+        type:'get',
+        data:"id="+$id, 
+        async: false,
+        success:function(result){
+          if(result.status=="success"){
+           $("#leave_desc").val(result.data[0]['leave_desc']);
+           $("#date").val(result.data[0]['date']);
+           $("#leave_id").val(result.data[0]['id']);
+          }else{
+           Toast.fire({
+             icon: 'warning',
+             title:'&nbsp;&nbsp;'+result.msg
+           })
+          }
+           
+       } 
+      
+      })
+    }
+// create leave management end

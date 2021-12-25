@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\Attendance;
 use App\Models\Emp;
+use App\Models\Leave_date;
 use App\Imports\AttendanceImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -153,6 +154,47 @@ class AdminController extends Controller
         return redirect('admin/emp');
         
     }
+    // leave management start
+    public function leave_management()
+    {
+         $leave_datas  =  Leave_date::get();
+     
+        return view('admin.leave')->with('leave_datas',$leave_datas);
+        if(isset($personal_info[0]->id)){
+            $request->session()->put('MY_PERSONAL_INFO',true);
+        return view('emp.personal_info')->with('personal_info',$personal_info);
+        }
+        return view('emp.manage_personal_info_process');
+     }
+
+     public function create_leave(Request $request){
+        $is_leave_date_exist=Leave_date::where(['date'=>$request->post('date')])->get();
+       if(isset($is_leave_date_exist[0])){
+           return response()->json(["status"=>"error", "msg"=>"This leave date allready exist"]);
+       }else{
+           $leave_create = new Leave_date();
+           $leave_create->date = $request->post('date');
+           $leave_create->leave_desc = $request->post('leave_desc');
+       
+           $leave_create_status = $leave_create->save();
+          if($leave_create_status){
+          $leave_datas  =  Leave_date::get();
+           return response()->json(["status"=>"success", "data"=> $leave_datas, "msg"=>"Leave created successfully"]);
+          }else {
+           return response()->json(["status"=>"error", "msg"=>"Something went wrong"]);
+          }
+   
+       }
+   }
+   public function get_leave_by_id(Request $request){
+    $leave_datas  =  Leave_date::where(['id'=>$request->id])->get();
+    if($leave_datas[0]->id){
+        return response()->json(["status"=>"success", "data"=> $leave_datas, "msg"=>"Leave created successfully"]);
+    }else{
+    return response()->json(["status"=>"error", "data"=> $leave_datas, "msg"=>"something went wrong"]);
+    }
+   }
+// leave management end
 
     /**
      * Store a newly created resource in storage.

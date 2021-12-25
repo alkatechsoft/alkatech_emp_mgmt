@@ -186,7 +186,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
                
             </ul>
           </li>
-           
+          <li class="nav-item menu-open mb-2">
+            <a href="#" class="nav-link" style="background: #343a40; color:#fff" class="@yield('leave_management_selected')"" >
+              <i class="fa fa-clock"></i>
+              <p>
+                Leave Management
+                <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{url('admin/leave-management')}}"  class="@yield('leave_management_selected') nav-link">
+                  <i class="fa fa-clock"></i>
+                  <p>
+                    All Leave 
+                  </p>
+                </a>
+              </li>
+             
+            </ul>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -293,6 +312,11 @@ $('#attendance_reporting').prepend('<caption style="caption-side: top"><h2 id="r
 
     }).buttons().container().appendTo('#attendance_reporting_wrapper .col-md-6:eq(0)');
     $("#emp_list").DataTable({
+      "paging": true,"responsive": true, "lengthChange": true, "autoWidth": true,
+      "buttons": ["csv", "excel"]
+
+    }).buttons().container().appendTo('#empl_list_wrapper .col-md-6:eq(0)');
+    $("#leave_list").DataTable({
       "paging": true,"responsive": true, "lengthChange": true, "autoWidth": true,
       "buttons": ["csv", "excel"]
 

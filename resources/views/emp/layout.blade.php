@@ -81,7 +81,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </a>
         <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right" style="margin-right: 13px !important;">
           <a href="#" class="dropdown-item">
-             Admin 
+             {{session('USER_NAME')}} 
           </a>
           <div class="dropdown-divider"></div>
           <a href="{{url('user/logout')}}" class="dropdown-item dropdown-footer">Logout</a>

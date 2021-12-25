@@ -58,6 +58,10 @@ Route::post('admin/attendance_filter_before_upload_process', [AdminController::c
 Route::get('admin/import-attendance', [AdminController::class, 'import_attendance_form']);
 Route::post('admin/import-attendance-process', [AdminController::class, 'import_attendance_form_process'])->name('admin.import_attendance_form_process');
 
+Route::get('admin/leave-management', [AdminController::class, 'leave_management']);
+Route::post('admin/create-leave', [AdminController::class, 'create_leave'])->name('admin.create_leave');
+Route::get('admin/get-leave-by-id', [AdminController::class, 'get_leave_by_id']);
+
 
 
 Route::post('admin/create_user', [AdminController::class, 'create_user'])->name('admin.create_user');
