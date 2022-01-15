@@ -20,9 +20,11 @@ use App\Http\Controllers\EmpReportController;
 Route::get('/', function () {
     return redirect('admin');
 });
-// Route::get('export-excel', [EmpreportController::class, 'export']);
-Route::get('export-excel', [AdminController::class, 'dataexport']);
-Route::get('email-report', [AdminController::class, 'send_report_alert_mail_to_emp']);
+Route::get('export-excel/{id}/{from}/{to}', [EmpreportController::class, 'export']);
+Route::get('downloadpdf', [EmpreportController::class, 'downloadpdf']);
+
+// Route::get('export-excel', [AdminController::class, 'dataexport']);
+// Route::get('email-report', [AdminController::class, 'send_report_alert_mail_to_emp']);
 
 // Route::get('/updatepassword', [AdminController::class, 'updatepassword']);
 Route::get('/registration', [EmpDataController::class, 'emp_registration_form']);
