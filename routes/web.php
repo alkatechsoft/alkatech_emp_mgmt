@@ -5,6 +5,7 @@ use App\Http\Controllers\EmpDataController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmpController;
 use App\Http\Controllers\EmpReportController;
+use App\Http\Controllers\SalaryreportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,7 @@ Route::get('/', function () {
     return redirect('admin');
 });
 Route::get('export-excel/{id}/{from}/{to}', [EmpreportController::class, 'export']);
-Route::get('downloadpdf', [EmpreportController::class, 'downloadpdf']);
+Route::get('downloadpdf/{id}/{from}/{to}', [SalaryreportController::class, 'downloadpdf']);
 
 // Route::get('export-excel', [AdminController::class, 'dataexport']);
 // Route::get('email-report', [AdminController::class, 'send_report_alert_mail_to_emp']);

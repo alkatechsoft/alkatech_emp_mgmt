@@ -17,9 +17,5 @@ public function export(){
     return Excel::download(new Empexport,'emp.xlsx');
 
 }
-public function downloadpdf(){
-    $emp = Emp::all();
-    $pdf = PDF::loadview('employee',compact('emp'));
-    return $pdf->download('employees.pdf');
-}
-}
+
+} 
